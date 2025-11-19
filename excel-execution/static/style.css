@@ -1,0 +1,45 @@
+html, body { height: 100%; margin:0; padding:0; font-family: Arial, sans-serif; }
+#app-root { display:flex; flex-direction:column; height:100%; }
+.top-bar { padding:6px 10px; background:#f5f5f5; border-bottom:1px solid #ddd; display:flex; align-items:center; gap:10px; }
+.top-bar form { display:flex; gap:10px; align-items:center; }
+.sheet-container { flex:1; position:relative; overflow:hidden; }
+.sheet { position:relative; width:100%; height:100%; overflow:auto; display:none; }
+.sheet.active { display:block; }
+.excel-table { border-collapse:collapse; width:100%; min-width:1500px; background:white; }
+.excel-table th, .excel-table td { border:1px solid #ccc; padding:4px 6px; font-size:12px; }
+.excel-table th { background:#fafafa; position:sticky; top:0; z-index:2; }
+.excel-table tbody tr:nth-child(even){ background:#fbfbfb; }
+.empty { text-align:center; color:#666; }
+.sheet-tabs { display:flex; gap:4px; background:#eee; padding:4px 8px; border-top:1px solid #ccc; }
+.sheet-tab { background:#ddd; border:1px solid #bbb; padding:4px 10px; cursor:pointer; font-size:12px; }
+.sheet-tab.active { background:white; border-bottom:2px solid #4caf50; }
+body { background:#fff; }
+
+/* Editable cells */
+.cell { min-width:120px; outline:none; }
+.cell:focus { background:#eaffea; outline:2px solid #4caf50; }
+
+/* Row insertion trigger */
+.add-row-trigger { display:none; }
+.data-row:hover + .add-row-trigger,
+.add-row-trigger:hover { display:table-row; }
+.add-row-trigger.always-show { display:table-row; }
+.add-row-cell { text-align:center; background:#f0f9ff; padding:2px !important; }
+.add-row-btn { background:#4caf50; color:#fff; border:none; padding:2px 8px; cursor:pointer; font-size:12px; border-radius:3px; }
+.add-row-btn:hover { background:#43a047; }
+.delete-row-btn { background:#f44336; color:#fff; border:none; padding:2px 8px; cursor:pointer; font-size:12px; border-radius:3px; margin-left:4px; }
+.delete-row-btn:hover { background:#d32f2f; }
+
+/* Project link highlight */
+.project-link { cursor:pointer; background:#fff8e1; }
+.project-link:hover { background:#ffe0b2; }
+.mapped-highlight { animation: flash-highlight 2s ease-in-out; background:#c8e6c9 !important; }
+@keyframes flash-highlight {
+	0% { background:#c8e6c9; }
+	50% { background:#a5d6a7; }
+	100% { background:#c8e6c9; }
+}
+
+.export-btn { background:#1976d2; color:#fff; padding:4px 10px; text-decoration:none; font-size:12px; border-radius:3px; }
+.export-btn:hover { background:#1565c0; }
+.mapped-row { outline:2px solid #2e7d32; }

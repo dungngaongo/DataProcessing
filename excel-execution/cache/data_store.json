@@ -1,0 +1,127 @@
+{
+  "Sizing": [
+    {
+      "STT": 1,
+      "Mã PYC": "PYC-2025-002",
+      "Đơn vị": "Ban Marketing",
+      "Đầu mối tạo PYC": "Lê Văn C",
+      "Đầu mối xử lý": "Hoàng Đình D",
+      "Status": "Đang xử lý",
+      "Thời điểm đẩy y/c": "2025-11-16",
+      "Thời gian hoàn thành theo KPI": "2025-11-18",
+      "Thời gian hoàn thành ký PNX và đóng y/c": NaN,
+      "Thời gian ký bản chốt sizing": "2025-11-17",
+      "Tên dự án - Mục đích sizing": "Chiến dịch Black Friday - Mở rộng Database",
+      "Ghi chú": "Cần thêm 500GB ổ cứng"
+    },
+    {
+      "STT": 2,
+      "Mã PYC": "PYC-2025-003",
+      "Đơn vị": "Ban Kế toán",
+      "Đầu mối tạo PYC": "Phạm Thị E",
+      "Đầu mối xử lý": "Trần Thị B",
+      "Status": "Chờ ký PNX",
+      "Thời điểm đẩy y/c": "2025-11-17",
+      "Thời gian hoàn thành theo KPI": "2025-11-19",
+      "Thời gian hoàn thành ký PNX và đóng y/c": NaN,
+      "Thời gian ký bản chốt sizing": "2025-11-18",
+      "Tên dự án - Mục đích sizing": "Nâng cấp ERP - Cấp phát Load Balancer",
+      "Ghi chú": "Đã cấp, chờ đơn vị nghiệm thu"
+    },
+    {
+      "STT": 3,
+      "Mã PYC": "PYC-2025-004",
+      "Đơn vị": "Ban R&D",
+      "Đầu mối tạo PYC": "Đỗ Minh F",
+      "Đầu mối xử lý": "Hoàng Đình D",
+      "Status": "Đã hủy",
+      "Thời điểm đẩy y/c": "2025-11-17",
+      "Thời gian hoàn thành theo KPI": "2025-11-20",
+      "Thời gian hoàn thành ký PNX và đóng y/c": NaN,
+      "Thời gian ký bản chốt sizing": NaN,
+      "Tên dự án - Mục đích sizing": "Nghiên cứu sản phẩm mới - Môi trường Dev/Test",
+      "Ghi chú": "Yêu cầu không còn cần thiết"
+    },
+    {
+      "STT": 4,
+      "Mã PYC": "PYC-2025-005",
+      "Đơn vị": "Ban CNTT",
+      "Đầu mối tạo PYC": "Nguyễn Văn A",
+      "Đầu mối xử lý": "Đỗ Văn G",
+      "Status": "Mới tạo",
+      "Thời điểm đẩy y/c": "2025-11-18",
+      "Thời gian hoàn thành theo KPI": "2025-11-20",
+      "Thời gian hoàn thành ký PNX và đóng y/c": NaN,
+      "Thời gian ký bản chốt sizing": NaN,
+      "Tên dự án - Mục đích sizing": "Dự án Mobile App - Cấp phát Storage",
+      "Ghi chú": "Cần phân tích chi tiết sizing"
+    }
+  ],
+  "CapPhat": [
+    {
+      "STT": 1,
+      "Dự án": "Dự án E-Office",
+      "Đơn vị": "Ban CNTT",
+      "Đầu mối y/c": "Nguyễn Văn A",
+      "Đầu mối P.HT": "Trần Thị B",
+      "Mã SR": "SR-2025-0101",
+      "Tiến độ, vướng mắc, đề xuất": "Đã cấp phát, đang chờ nghiệm thu UAT",
+      "Thời gian tiếp nhận y/c": "2025-11-15",
+      "Timeline thực hiện theo GNOC": "3 ngày",
+      "Thời gian hoàn thành": "2025-11-17",
+      "Hoàn thành": "Có"
+    },
+    {
+      "STT": 2,
+      "Dự án": "Chiến dịch Black Friday",
+      "Đơn vị": "Ban Marketing",
+      "Đầu mối y/c": "Lê Văn C",
+      "Đầu mối P.HT": "Hoàng Đình D",
+      "Mã SR": "SR-2025-0102",
+      "Tiến độ, vướng mắc, đề xuất": "Đã cấu hình 80% DB, vướng mắc: cần xác nhận lại cấu hình HA",
+      "Thời gian tiếp nhận y/c": "2025-11-16",
+      "Timeline thực hiện theo GNOC": "5 ngày",
+      "Thời gian hoàn thành": NaN,
+      "Hoàn thành": "Không"
+    },
+    {
+      "STT": 3,
+      "Dự án": "Nâng cấp ERP",
+      "Đơn vị": "Ban Kế toán",
+      "Đầu mối y/c": "Phạm Thị E",
+      "Đầu mối P.HT": "Trần Thị B",
+      "Mã SR": "SR-2025-0103",
+      "Tiến độ, vướng mắc, đề xuất": "Đã bàn giao tài nguyên, chờ đầu mối Kế toán ký PNX",
+      "Thời gian tiếp nhận y/c": "2025-11-17",
+      "Timeline thực hiện theo GNOC": "2 ngày",
+      "Thời gian hoàn thành": "2025-11-18",
+      "Hoàn thành": "Có"
+    },
+    {
+      "STT": 4,
+      "Dự án": "Nghiên cứu sản phẩm mới",
+      "Đơn vị": "Ban R&D",
+      "Đầu mối y/c": "Đỗ Minh F",
+      "Đầu mối P.HT": "Hoàng Đình D",
+      "Mã SR": "SR-2025-0104",
+      "Tiến độ, vướng mắc, đề xuất": "Đề xuất: nên sử dụng cloud thay vì on-prem cho môi trường này để tiết kiệm chi phí",
+      "Thời gian tiếp nhận y/c": "2025-11-17",
+      "Timeline thực hiện theo GNOC": "4 ngày",
+      "Thời gian hoàn thành": NaN,
+      "Hoàn thành": "Không"
+    },
+    {
+      "STT": 5,
+      "Dự án": "Dự án Mobile App",
+      "Đơn vị": "Ban CNTT",
+      "Đầu mối y/c": "Nguyễn Văn A",
+      "Đầu mối P.HT": "Đỗ Văn G",
+      "Mã SR": "SR-2025-0105",
+      "Tiến độ, vướng mắc, đề xuất": "Mới tiếp nhận, đang tiến hành phân tích sizing và lên kế hoạch thực hiện",
+      "Thời gian tiếp nhận y/c": "2025-11-18",
+      "Timeline thực hiện theo GNOC": "7 ngày",
+      "Thời gian hoàn thành": NaN,
+      "Hoàn thành": "Không"
+    }
+  ]
+}

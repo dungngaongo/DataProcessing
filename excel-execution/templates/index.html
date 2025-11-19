@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="top-bar">
+    <form id="import-form" hx-post="/import" hx-encoding="multipart/form-data" hx-target="#tables-container" hx-swap="innerHTML">
+        <input type="file" name="excel_file" accept=".xlsx,.xls" />
+        <button type="submit">Import</button>
+    </form>
+    <a href="/export" class="export-btn" title="Xuất dữ liệu ra Excel">Export Excel</a>
+</div>
+<div id="tables-container">
+    {% include 'tables.html' %}
+</div>
+<div class="sheet-tabs">
+    <button class="sheet-tab active" data-sheet="sizing-sheet">Sizing</button>
+    <button class="sheet-tab" data-sheet="cap-phat-sheet">Cấp phát tài nguyên</button>
+</div>
+{% endblock %}
