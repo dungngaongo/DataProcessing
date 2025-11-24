@@ -17,6 +17,10 @@ CAP_PHAT_COLUMNS = [
     "STT","Dự án","Đơn vị","Đầu mối y/c","Đầu mối P.HT","Mã SR","Tiến độ, vướng mắc, đề xuất","Thời gian tiếp nhận y/c","Timeline thực hiện theo GNOC","Thời gian hoàn thành","Hoàn thành"
 ]
 
+CHI_TIET_COLUMNS = [
+    "STT","Dự án","Đơn vị","Đầu mối y/c","Đầu mối P.HT","Mã SR","Qúy cấp phát","Số lượng máy chủ","vCPU","Cint","RAM(GB)","SAN(GB)","NAS(GB)","Ceph(GB)","Bigdata(GB)","Archiving(GB)","S3 Object(GB)","Pool/Nguồn tài nguyên","Nhóm tài nguyên","Ghi chú"
+]
+
 def blank_row(columns):
     return {col: '' for col in columns}
 
@@ -25,7 +29,8 @@ def initial_rows(columns, count=5):
 
 data_store = {
     'Sizing': initial_rows(SIZING_COLUMNS),
-    'CapPhat': initial_rows(CAP_PHAT_COLUMNS)
+    'CapPhat': initial_rows(CAP_PHAT_COLUMNS),
+    'ChiTiet': initial_rows(CHI_TIET_COLUMNS)
 }
 
 def ensure_stt(rows):
@@ -50,6 +55,7 @@ def sanitize_rows(rows, columns):
 
 ensure_stt(data_store['Sizing'])
 ensure_stt(data_store['CapPhat'])
+ensure_stt(data_store['ChiTiet'])
 
 CACHE_DIR = os.path.join(os.path.dirname(__file__), 'cache')
 os.makedirs(CACHE_DIR, exist_ok=True)
@@ -67,11 +73,15 @@ def load_cache():
         try:
             with open(CACHE_FILE, 'r', encoding='utf-8') as f:
                 loaded = json.load(f)
-            if 'Sizing' in loaded and 'CapPhat' in loaded:
+            if 'Sizing' in loaded:
                 data_store['Sizing'] = sanitize_rows(loaded['Sizing'], SIZING_COLUMNS)
-                data_store['CapPhat'] = sanitize_rows(loaded['CapPhat'], CAP_PHAT_COLUMNS)
                 ensure_stt(data_store['Sizing'])
+            if 'CapPhat' in loaded:
+                data_store['CapPhat'] = sanitize_rows(loaded['CapPhat'], CAP_PHAT_COLUMNS)
                 ensure_stt(data_store['CapPhat'])
+            if 'ChiTiet' in loaded:
+                data_store['ChiTiet'] = sanitize_rows(loaded['ChiTiet'], CHI_TIET_COLUMNS)
+                ensure_stt(data_store['ChiTiet'])
         except Exception:
             pass
 
@@ -83,8 +93,10 @@ def index():
         'index.html',
         sizing_columns=SIZING_COLUMNS,
         cap_phat_columns=CAP_PHAT_COLUMNS,
+        chi_tiet_columns=CHI_TIET_COLUMNS,
         sizing_rows=data_store['Sizing'],
-        cap_phat_rows=data_store['CapPhat']
+        cap_phat_rows=data_store['CapPhat'],
+        chi_tiet_rows=data_store['ChiTiet']
     )
 
 
@@ -113,35 +125,47 @@ def import_excel():
         xl = pd.ExcelFile(path)
         sizing_df = pd.read_excel(xl, sheet_name='Sizing') if 'Sizing' in xl.sheet_names else pd.DataFrame(columns=SIZING_COLUMNS)
         cap_phat_df = pd.read_excel(xl, sheet_name='Cấp phát tài nguyên') if 'Cấp phát tài nguyên' in xl.sheet_names else pd.DataFrame(columns=CAP_PHAT_COLUMNS)
+        chi_tiet_df = pd.read_excel(xl, sheet_name='Chi tiết') if 'Chi tiết' in xl.sheet_names else pd.DataFrame(columns=CHI_TIET_COLUMNS)
 
         sizing_df = _read_sheet(sizing_df, SIZING_COLUMNS)
         cap_phat_df = _read_sheet(cap_phat_df, CAP_PHAT_COLUMNS)
+        chi_tiet_df = _read_sheet(chi_tiet_df, CHI_TIET_COLUMNS)
 
         data_store['Sizing'] = sanitize_rows(sizing_df.to_dict(orient='records'), SIZING_COLUMNS)
         data_store['CapPhat'] = sanitize_rows(cap_phat_df.to_dict(orient='records'), CAP_PHAT_COLUMNS)
+        data_store['ChiTiet'] = sanitize_rows(chi_tiet_df.to_dict(orient='records'), CHI_TIET_COLUMNS)
         ensure_stt(data_store['Sizing'])
         ensure_stt(data_store['CapPhat'])
+        ensure_stt(data_store['ChiTiet'])
         save_cache()
 
         return render_template('tables.html', sizing_columns=SIZING_COLUMNS, cap_phat_columns=CAP_PHAT_COLUMNS,
-                               sizing_rows=data_store['Sizing'], cap_phat_rows=data_store['CapPhat'])
+                               chi_tiet_columns=CHI_TIET_COLUMNS,
+                               sizing_rows=data_store['Sizing'], cap_phat_rows=data_store['CapPhat'], chi_tiet_rows=data_store['ChiTiet'])
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 @app.route('/sheet/<name>')
 def sheet(name):
-    if name not in ['Sizing', 'CapPhat']:
+    if name not in ['Sizing', 'CapPhat', 'ChiTiet']:
         abort(404)
-    columns = SIZING_COLUMNS if name == 'Sizing' else CAP_PHAT_COLUMNS
+    if name == 'Sizing':
+        columns = SIZING_COLUMNS
+        sheet_id = 'sizing-sheet'
+    elif name == 'CapPhat':
+        columns = CAP_PHAT_COLUMNS
+        sheet_id = 'cap-phat-sheet'
+    else:
+        columns = CHI_TIET_COLUMNS
+        sheet_id = 'chi-tiet-sheet'
     rows = data_store[name]
-    sheet_id = 'sizing-sheet' if name == 'Sizing' else 'cap-phat-sheet'
     return render_template('sheet.html', sheet_name=name, sheet_id=sheet_id, columns=columns, rows=rows)
 
 @app.route('/add-row/<sheet>/<int:after_index>', methods=['POST'])
 def add_row(sheet, after_index):
-    if sheet not in ['Sizing', 'CapPhat']:
+    if sheet not in ['Sizing', 'CapPhat', 'ChiTiet']:
         abort(404)
-    columns = SIZING_COLUMNS if sheet == 'Sizing' else CAP_PHAT_COLUMNS
+    columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else CHI_TIET_COLUMNS)
     new_row = {col: '' for col in columns}
     target_list = data_store[sheet]
     if after_index < -1 or after_index >= len(target_list):
@@ -150,12 +174,12 @@ def add_row(sheet, after_index):
         target_list.insert(after_index + 1, new_row)
     ensure_stt(target_list)
     save_cache()
-    sheet_id = 'sizing-sheet' if sheet == 'Sizing' else 'cap-phat-sheet'
+    sheet_id = 'sizing-sheet' if sheet == 'Sizing' else ('cap-phat-sheet' if sheet == 'CapPhat' else 'chi-tiet-sheet')
     return render_template('sheet.html', sheet_name=sheet, sheet_id=sheet_id, columns=columns, rows=target_list)
 
 @app.route('/delete-row/<sheet>/<int:row_index>', methods=['POST'])
 def delete_row(sheet, row_index):
-    if sheet not in ['Sizing', 'CapPhat']:
+    if sheet not in ['Sizing', 'CapPhat', 'ChiTiet']:
         abort(404)
     target_list = data_store[sheet]
     if row_index < 0 or row_index >= len(target_list):
@@ -164,8 +188,8 @@ def delete_row(sheet, row_index):
     if target_list:
         ensure_stt(target_list)
     save_cache()
-    columns = SIZING_COLUMNS if sheet == 'Sizing' else CAP_PHAT_COLUMNS
-    sheet_id = 'sizing-sheet' if sheet == 'Sizing' else 'cap-phat-sheet'
+    columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else CHI_TIET_COLUMNS)
+    sheet_id = 'sizing-sheet' if sheet == 'Sizing' else ('cap-phat-sheet' if sheet == 'CapPhat' else 'chi-tiet-sheet')
     return render_template('sheet.html', sheet_name=sheet, sheet_id=sheet_id, columns=columns, rows=target_list)
 
 @app.route('/update-cell', methods=['POST'])
@@ -176,12 +200,12 @@ def update_cell():
     col = data.get('col')
     value = data.get('value', '')
 
-    if sheet not in ['Sizing', 'CapPhat']:
+    if sheet not in ['Sizing', 'CapPhat', 'ChiTiet']:
         return jsonify({'error': 'Invalid sheet'}), 400
     target_list = data_store[sheet]
     if not isinstance(row_index, int) or row_index < 0 or row_index >= len(target_list):
         return jsonify({'error': 'Invalid row index'}), 400
-    columns = SIZING_COLUMNS if sheet == 'Sizing' else CAP_PHAT_COLUMNS
+    columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else CHI_TIET_COLUMNS)
     if col not in columns:
         return jsonify({'error': 'Invalid column'}), 400
     target_list[row_index][col] = value
@@ -210,8 +234,10 @@ def export_excel():
         with pd.ExcelWriter(path, engine='openpyxl') as writer:
             sizing_df = pd.DataFrame(data_store['Sizing'])[SIZING_COLUMNS] if data_store['Sizing'] else pd.DataFrame(columns=SIZING_COLUMNS)
             cap_df = pd.DataFrame(data_store['CapPhat'])[CAP_PHAT_COLUMNS] if data_store['CapPhat'] else pd.DataFrame(columns=CAP_PHAT_COLUMNS)
+            chi_tiet_df = pd.DataFrame(data_store['ChiTiet'])[CHI_TIET_COLUMNS] if data_store['ChiTiet'] else pd.DataFrame(columns=CHI_TIET_COLUMNS)
             sizing_df.to_excel(writer, sheet_name='Sizing', index=False)
             cap_df.to_excel(writer, sheet_name='Cấp phát tài nguyên', index=False)
+            chi_tiet_df.to_excel(writer, sheet_name='Chi tiết', index=False)
         return send_file(path, as_attachment=True, download_name=filename)
     except Exception as e:
         return jsonify({'error': str(e)}), 500

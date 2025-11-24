@@ -77,4 +77,39 @@
             </tbody>
         </table>
     </div>
+    <div id="chi-tiet-sheet" class="sheet">
+        <table class="excel-table">
+            <thead>
+                <tr>
+                {% for col in chi_tiet_columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+            {% if chi_tiet_rows and chi_tiet_rows|length > 0 %}
+                {% for row in chi_tiet_rows %}
+                    <tr class="data-row" data-row="{{ loop.index0 }}">
+                        {% for col in chi_tiet_columns %}
+                            <td contenteditable="true" class="cell" data-sheet="ChiTiet" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr class="add-row-trigger" data-after="{{ loop.index0 }}">
+                        <td colspan="{{ chi_tiet_columns|length }}" class="add-row-cell">
+                            <button type="button" class="add-row-btn" hx-post="/add-row/ChiTiet/{{ loop.index0 }}" hx-target="#chi-tiet-sheet" hx-swap="outerHTML">+</button>
+                            <button type="button" class="delete-row-btn" hx-post="/delete-row/ChiTiet/{{ loop.index0 }}" hx-target="#chi-tiet-sheet" hx-swap="outerHTML">×</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="{{ chi_tiet_columns|length }}" class="empty">(Chưa có dữ liệu)</td></tr>
+                <tr class="add-row-trigger always-show" data-after="-1">
+                    <td colspan="{{ chi_tiet_columns|length }}" class="add-row-cell">
+                        <button type="button" class="add-row-btn" hx-post="/add-row/ChiTiet/-1" hx-target="#chi-tiet-sheet" hx-swap="outerHTML">+</button>
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
 </div>
