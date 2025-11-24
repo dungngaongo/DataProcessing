@@ -33,6 +33,8 @@ body { background:#fff; }
 /* Project link highlight */
 .project-link { cursor:pointer; background:#fff8e1; }
 .project-link:hover { background:#ffe0b2; }
+.cap-project-link { cursor:pointer; background:#fff8e1; }
+.cap-project-link:hover { background:#ffe0b2; }
 .mapped-highlight { animation: flash-highlight 2s ease-in-out; background:#c8e6c9 !important; }
 @keyframes flash-highlight {
 	0% { background:#c8e6c9; }

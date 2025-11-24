@@ -59,3 +59,39 @@ document.addEventListener('click', function(e){
     }, 80);
   }
 });
+
+// CapPhat -> ChiTiet mapping on project click
+document.addEventListener('click', function(e){
+  if(e.target.classList && e.target.classList.contains('cap-project-link')){
+    const projectName = ((e.target.dataset.capProject || e.target.textContent) || '').trim();
+    if(!projectName){ return; }
+    const chiTietTab = document.querySelector('.sheet-tab[data-sheet="chi-tiet-sheet"]');
+    if(chiTietTab){ chiTietTab.click(); }
+    setTimeout(() => {
+      const rows = document.querySelectorAll('#chi-tiet-sheet .data-row');
+      let targetRow = null;
+      const lowerName = projectName.toLowerCase();
+      rows.forEach(r => {
+        if(targetRow) return;
+        const projCell = r.querySelector('td[data-col="Dự án"]');
+        if(projCell){
+          const text = (projCell.textContent || '').trim().toLowerCase();
+          if(text){
+            if(text === lowerName || text.includes(lowerName)){
+              targetRow = r;
+            }
+          }
+        }
+      });
+      if(targetRow){
+        targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetRow.classList.add('mapped-row');
+        targetRow.querySelectorAll('td').forEach(td => td.classList.add('mapped-highlight'));
+        setTimeout(() => {
+          targetRow.querySelectorAll('td').forEach(td => td.classList.remove('mapped-highlight'));
+          targetRow.classList.remove('mapped-row');
+        }, 2500);
+      }
+    }, 80);
+  }
+});

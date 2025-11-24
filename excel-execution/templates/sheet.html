@@ -15,7 +15,7 @@
                 {% if sheet_name == 'Sizing' and col == 'Tên dự án - Mục đích sizing' %}
                 <td contenteditable="true" class="cell project-link" data-project="{{ row[col]|blanknan }}" data-sheet="{{ sheet_name }}" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
                 {% elif sheet_name == 'CapPhat' and col == 'Dự án' %}
-                <td contenteditable="true" class="cell" data-cap-project="{{ row[col]|blanknan }}" data-sheet="{{ sheet_name }}" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
+                <td contenteditable="true" class="cell cap-project-link" data-cap-project="{{ row[col]|blanknan }}" data-sheet="{{ sheet_name }}" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
                 {% else %}
                 <td contenteditable="true" class="cell" data-sheet="{{ sheet_name }}" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
                 {% endif %}

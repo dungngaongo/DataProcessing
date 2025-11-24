@@ -53,7 +53,7 @@
                     <tr class="data-row" data-row="{{ loop.index0 }}">
                         {% for col in cap_phat_columns %}
                             {% if col == 'Dự án' %}
-                            <td contenteditable="true" class="cell" data-sheet="CapPhat" data-row="{{ loop.index0 }}" data-col="{{ col }}" data-cap-project="{{ row[col]|blanknan }}">{{ row[col]|blanknan }}</td>
+                            <td contenteditable="true" class="cell cap-project-link" data-sheet="CapPhat" data-row="{{ loop.index0 }}" data-col="{{ col }}" data-cap-project="{{ row[col]|blanknan }}">{{ row[col]|blanknan }}</td>
                             {% else %}
                             <td contenteditable="true" class="cell" data-sheet="CapPhat" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
                             {% endif %}
