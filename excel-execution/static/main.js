@@ -16,13 +16,70 @@ document.addEventListener('blur', function(e){
     const row = parseInt(e.target.dataset.row, 10);
     const col = e.target.dataset.col;
     const value = e.target.textContent.trim();
+
     fetch('/update-cell', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sheet, row, col, value })
     });
+
+    // Nếu là Sizing và cột Thời điểm đẩy yêu cầu thì tự động tính KPI
+    if(sheet === 'Sizing' && col === 'Thời điểm đẩy yêu cầu'){
+      // Tính ngày làm việc thứ 3 tiếp theo
+      const kpiCol = 'Thời gian hoàn thành theo KPI';
+      let date = parseDateVN(value);
+      if(date){
+        let daysAdded = 0;
+        while(daysAdded < 3){
+          date.setDate(date.getDate() + 1);
+          const day = date.getDay();
+          if(day !== 0 && day !== 6){ // 0: CN, 6: T7
+            daysAdded++;
+          }
+        }
+        const kpiDate = formatDateVN(date);
+        // Gửi lên server cập nhật KPI
+        fetch('/update-cell', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sheet, row, col: kpiCol, value: kpiDate })
+        });
+        // Cập nhật trực tiếp giao diện
+        const table = document.getElementById('sizing-sheet');
+        if(table){
+          const kpiCell = table.querySelector(`.data-row[data-row="${row}"] td[data-col="${kpiCol}"]`);
+          if(kpiCell){
+            kpiCell.textContent = kpiDate;
+          }
+        }
+      }
+    }
   }
 }, true);
+
+function parseDateVN(str){
+  // Chấp nhận dd/mm/yyyy hoặc yyyy-mm-dd
+  if(!str) return null;
+  let parts = str.split('/');
+  if(parts.length === 3){
+    let d = parseInt(parts[0],10), m = parseInt(parts[1],10)-1, y = parseInt(parts[2],10);
+    if(!isNaN(d) && !isNaN(m) && !isNaN(y)) return new Date(y,m,d);
+  }
+  parts = str.split('-');
+  if(parts.length === 3){
+    let y = parseInt(parts[0],10), m = parseInt(parts[1],10)-1, d = parseInt(parts[2],10);
+    if(!isNaN(d) && !isNaN(m) && !isNaN(y)) return new Date(y,m,d);
+  }
+  return null;
+}
+
+function formatDateVN(date){
+  if(!(date instanceof Date)) return '';
+  let d = date.getDate().toString().padStart(2,'0');
+  let m = (date.getMonth()+1).toString().padStart(2,'0');
+  let y = date.getFullYear();
+  return `${d}/${m}/${y}`;
+}
 
 // Project mapping
 document.addEventListener('click', function(e){

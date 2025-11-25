@@ -126,24 +126,30 @@ def _read_sheet(df: pd.DataFrame, expected_cols):
     # Giữ đúng thứ tự cột
     df = df[expected_cols].fillna("").replace({pd.NaT: ""})
 
-    DATE_KEYWORDS = ["Thời", "Timeline", "Qúy"]
-
-    def is_date_column(col_name: str) -> bool:
-        for kw in DATE_KEYWORDS:
-            if kw.lower() in col_name.lower():
-                return True
-        return False
+    def is_date_column_by_sample(series):
+        # Lấy tối đa 10 giá trị đầu
+        sample = series.dropna().head(10)
+        if sample.empty:
+            return False
+        parse_count = 0
+        for v in sample:
+            try:
+                dt = pd.to_datetime(v, dayfirst=True, errors='coerce')
+                if not pd.isna(dt):
+                    parse_count += 1
+            except Exception:
+                pass
+        return (parse_count / len(sample)) >= 0.6
 
     processed = {}
     for col in df.columns:
         series = df[col]
-        if pd.api.types.is_datetime64_any_dtype(series) or is_date_column(col):
-            # Chỉ format nếu thực sự parse được
+        if pd.api.types.is_datetime64_any_dtype(series) or is_date_column_by_sample(series):
+            # Chỉ format nếu thực sự là cột ngày
             def fmt(v):
                 if v is None or (isinstance(v, float) and pd.isna(v)):
                     return ""
                 try:
-                    # Giữ nguyên nếu là chuỗi không parse được
                     dt = pd.to_datetime(v, dayfirst=True, errors='coerce')
                     if pd.isna(dt):
                         return str(v).strip()
