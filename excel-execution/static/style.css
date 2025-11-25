@@ -1,16 +1,22 @@
 html, body { height: 100%; margin:0; padding:0; font-family: Arial, sans-serif; }
-#app-root { display:flex; flex-direction:column; height:100%; }
-.top-bar { padding:6px 10px; background:#f5f5f5; border-bottom:1px solid #ddd; display:flex; align-items:center; gap:10px; }
+#app-root { display:flex; flex-direction:column; height:100%; overflow-y: auto;}
+.top-bar {
+    padding:6px 10px; background:#f5f5f5; border-bottom:1px solid #ddd; display:flex; align-items:center; gap:10px;
+    position: sticky; top: 0; z-index: 10;
+}
 .top-bar form { display:flex; gap:10px; align-items:center; }
-.sheet-container { flex:1; position:relative; overflow:hidden; }
-.sheet { position:relative; width:100%; height:100%; overflow:auto; display:none; }
+.sheet-container { flex:1; position:relative; }
+.sheet { position:relative; width:100%; display:none; }
 .sheet.active { display:block; }
 .excel-table { border-collapse:collapse; width:100%; min-width:1500px; background:white; }
 .excel-table th, .excel-table td { border:1px solid #ccc; padding:4px 6px; font-size:12px; }
-.excel-table th { background:#fafafa; position:sticky; top:0; z-index:2; }
+.excel-table th { background:#fafafa; position:sticky; top:27.319px; z-index:11; }
 .excel-table tbody tr:nth-child(even){ background:#fbfbfb; }
 .empty { text-align:center; color:#666; }
-.sheet-tabs { display:flex; gap:4px; background:#eee; padding:4px 8px; border-top:1px solid #ccc; }
+.sheet-tabs {
+    display:flex; gap:4px; background:#eee; padding:4px 8px; border-top:1px solid #ccc;
+    position: sticky; bottom: 0; z-index: 10;
+}
 .sheet-tab { background:#ddd; border:1px solid #bbb; padding:4px 10px; cursor:pointer; font-size:12px; }
 .sheet-tab.active { background:white; border-bottom:2px solid #4caf50; }
 body { background:#fff; }
@@ -37,11 +43,58 @@ body { background:#fff; }
 .cap-project-link:hover { background:#ffe0b2; }
 .mapped-highlight { animation: flash-highlight 2s ease-in-out; background:#c8e6c9 !important; }
 @keyframes flash-highlight {
-	0% { background:#c8e6c9; }
-	50% { background:#a5d6a7; }
-	100% { background:#c8e6c9; }
+    0% { background:#c8e6c9; }
+    50% { background:#a5d6a7; }
+    100% { background:#c8e6c9; }
 }
 
 .export-btn { background:#1976d2; color:#fff; padding:4px 10px; text-decoration:none; font-size:12px; border-radius:3px; }
 .export-btn:hover { background:#1565c0; }
 .mapped-row { outline:2px solid #2e7d32; }
+
+/* Column controls */
+.col-header-cell {
+    position: relative;
+    padding: 0;
+}
+.col-header-name {
+    display: block;
+    padding: 4px 6px;
+    height: 100%;
+    min-width: 120px;
+    outline: none;
+    cursor: text;
+    background: #fafafa;
+}
+.col-header-name:focus {
+    background: #ffffe0;
+    outline: 2px solid #ffcc80;
+}
+.col-controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background: rgba(0,0,0,0.1);
+    z-index: 12;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.excel-table th:hover .col-controls {
+    opacity: 1;
+}
+.col-controls button {
+    background: none;
+    border: none;
+    color: #444;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 4px;
+    height: 100%;
+}
+.col-controls button:hover {
+    background: #ccc;
+    color: #000;
+}

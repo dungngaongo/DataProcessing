@@ -11,7 +11,7 @@ app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'uploads')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 SIZING_COLUMNS = [
-    "STT","Mã PYC","Đơn vị","Đầu mối tạo PYC","Đầu mối xử lý","Status","Thời điểm đẩy y/c","Thời gian hoàn thành theo KPI","Thời gian hoàn thành ký PNX và đóng y/c","Thời gian ký bản chốt sizing","Tên dự án - Mục đích sizing","Ghi chú"
+    "STT","Mã PYC","Đơn vị","Đầu mối tạo PYC","Đầu mối xử lý","Trạng thái","Thời điểm đẩy yêu cầu","Thời gian hoàn thành theo KPI","Thời gian hoàn thành ký PNX và đóng y/c","Thời gian ký bản chốt sizing","Tên dự án - Mục đích sizing","Ghi chú"
 ]
 CAP_PHAT_COLUMNS = [
     "STT","Dự án","Đơn vị","Đầu mối y/c","Đầu mối P.HT","Mã SR","Tiến độ, vướng mắc, đề xuất","Thời gian tiếp nhận y/c","Timeline thực hiện theo GNOC","Thời gian hoàn thành","Hoàn thành"
@@ -99,17 +99,63 @@ def index():
         chi_tiet_rows=data_store['ChiTiet']
     )
 
+def _format_date(val) -> str:
+    if val is None:
+        return ""
+
+    if isinstance(val, float) and pd.isna(val):
+        return ""
+
+    if isinstance(val, (datetime, pd.Timestamp)):
+        return val.strftime("%d/%m/%Y")
+
+    try:
+        dt = pd.to_datetime(str(val), dayfirst=True, errors="coerce")
+        if pd.isna(dt):
+            return ""
+        return dt.strftime("%d/%m/%Y")
+    except Exception:
+        return ""
 
 def _read_sheet(df: pd.DataFrame, expected_cols):
+    # Bổ sung cột thiếu với giá trị rỗng
     for col in expected_cols:
         if col not in df.columns:
             df[col] = ""
-    df = df[expected_cols]
-    df = df.fillna("").replace({pd.NaT: ""})
+
+    # Giữ đúng thứ tự cột
+    df = df[expected_cols].fillna("").replace({pd.NaT: ""})
+
+    DATE_KEYWORDS = ["Thời", "Timeline", "Qúy"]
+
+    def is_date_column(col_name: str) -> bool:
+        for kw in DATE_KEYWORDS:
+            if kw.lower() in col_name.lower():
+                return True
+        return False
+
+    processed = {}
     for col in df.columns:
-        if pd.api.types.is_datetime64_any_dtype(df[col]):
-            df[col] = df[col].dt.strftime('%Y-%m-%d').replace('NaT', '')
-    return df
+        series = df[col]
+        if pd.api.types.is_datetime64_any_dtype(series) or is_date_column(col):
+            # Chỉ format nếu thực sự parse được
+            def fmt(v):
+                if v is None or (isinstance(v, float) and pd.isna(v)):
+                    return ""
+                try:
+                    # Giữ nguyên nếu là chuỗi không parse được
+                    dt = pd.to_datetime(v, dayfirst=True, errors='coerce')
+                    if pd.isna(dt):
+                        return str(v).strip()
+                    return dt.strftime('%d/%m/%Y')
+                except Exception:
+                    return str(v).strip()
+            processed[col] = series.apply(fmt)
+        else:
+            # Giữ nguyên nội dung text; chỉ strip khoảng trắng
+            processed[col] = series.astype(str).apply(lambda x: '' if x.lower() in ['nan','nat'] else x.strip())
+
+    return pd.DataFrame(processed)[expected_cols]
 
 @app.route('/import', methods=['POST'])
 def import_excel():
@@ -124,7 +170,7 @@ def import_excel():
     try:
         xl = pd.ExcelFile(path)
         sizing_df = pd.read_excel(xl, sheet_name='Sizing') if 'Sizing' in xl.sheet_names else pd.DataFrame(columns=SIZING_COLUMNS)
-        cap_phat_df = pd.read_excel(xl, sheet_name='Cấp phát tài nguyên') if 'Cấp phát tài nguyên' in xl.sheet_names else pd.DataFrame(columns=CAP_PHAT_COLUMNS)
+        cap_phat_df = pd.read_excel(xl, sheet_name='Cấp phát TN') if 'Cấp phát TN' in xl.sheet_names else pd.DataFrame(columns=CAP_PHAT_COLUMNS)
         chi_tiet_df = pd.read_excel(xl, sheet_name='Chi tiết') if 'Chi tiết' in xl.sheet_names else pd.DataFrame(columns=CHI_TIET_COLUMNS)
 
         sizing_df = _read_sheet(sizing_df, SIZING_COLUMNS)
@@ -225,6 +271,10 @@ def blanknan(val):
         return ''
     return val
 
+@app.template_filter("format_date")
+def format_date_filter(val):
+    return _format_date(val)
+
 @app.route('/export')
 def export_excel():
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -232,16 +282,148 @@ def export_excel():
     path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     try:
         with pd.ExcelWriter(path, engine='openpyxl') as writer:
-            sizing_df = pd.DataFrame(data_store['Sizing'])[SIZING_COLUMNS] if data_store['Sizing'] else pd.DataFrame(columns=SIZING_COLUMNS)
-            cap_df = pd.DataFrame(data_store['CapPhat'])[CAP_PHAT_COLUMNS] if data_store['CapPhat'] else pd.DataFrame(columns=CAP_PHAT_COLUMNS)
-            chi_tiet_df = pd.DataFrame(data_store['ChiTiet'])[CHI_TIET_COLUMNS] if data_store['ChiTiet'] else pd.DataFrame(columns=CHI_TIET_COLUMNS)
+            def build_df(rows, cols):
+                if not rows:
+                    return pd.DataFrame(columns=cols)
+                df = pd.DataFrame(rows)
+                DATE_KEYWORDS = ["Thời", "Timeline", "Qúy"]
+                def is_date_col(name):
+                    return any(kw.lower() in name.lower() for kw in DATE_KEYWORDS)
+                for c in cols:
+                    if c in df.columns and is_date_col(c):
+                        df[c] = df[c].apply(lambda v: _format_date(v) if v not in [None,''] else '')
+                return df[cols]
+
+            sizing_df = build_df(data_store['Sizing'], SIZING_COLUMNS)
+            cap_df = build_df(data_store['CapPhat'], CAP_PHAT_COLUMNS)
+            chi_tiet_df = build_df(data_store['ChiTiet'], CHI_TIET_COLUMNS)
+
             sizing_df.to_excel(writer, sheet_name='Sizing', index=False)
-            cap_df.to_excel(writer, sheet_name='Cấp phát tài nguyên', index=False)
+            cap_df.to_excel(writer, sheet_name='Cấp phát TN', index=False)
             chi_tiet_df.to_excel(writer, sheet_name='Chi tiết', index=False)
         return send_file(path, as_attachment=True, download_name=filename)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# Column execution
+def get_sheet_info(sheet_name):
+    if sheet_name == 'Sizing':
+        return data_store['Sizing'], SIZING_COLUMNS, 'sizing-sheet'
+    elif sheet_name == 'CapPhat':
+        return data_store['CapPhat'], CAP_PHAT_COLUMNS, 'cap-phat-sheet'
+    elif sheet_name == 'ChiTiet':
+        return data_store['ChiTiet'], CHI_TIET_COLUMNS, 'chi-tiet-sheet'
+    abort(404)
+
+def update_columns_constant(sheet_name, new_columns):
+    global SIZING_COLUMNS, CAP_PHAT_COLUMNS, CHI_TIET_COLUMNS
+
+    if sheet_name == 'Sizing':
+        SIZING_COLUMNS = new_columns
+    elif sheet_name == 'CapPhat':
+        CAP_PHAT_COLUMNS = new_columns
+    elif sheet_name == 'ChiTiet':
+        CHI_TIET_COLUMNS = new_columns
+
+@app.route('/update-col-name', methods=['POST'])
+def update_col_name():
+    data = request.get_json() or {}
+    sheet = data.get('sheet')
+    old_col_name = data.get('oldCol')
+    new_col_name = data.get('newCol', '').strip()
+
+    if sheet not in data_store or not new_col_name:
+        return jsonify({'error': 'Invalid request'}), 400
+
+    rows, columns, sheet_id = get_sheet_info(sheet)
+
+    try:
+        col_index = columns.index(old_col_name)
+    except ValueError:
+        return jsonify({'error': 'Column not found'}), 400
+
+    new_columns = columns[:]
+    new_columns[col_index] = new_col_name
+    update_columns_constant(sheet, new_columns)
+
+    for row in rows:
+        if old_col_name in row:
+            row[new_col_name] = row.pop(old_col_name)
+
+    save_cache()
+    return ('', 204)
+
+@app.route('/handle-col/<sheet>/<action>/<int:col_index>', methods=['POST'])
+def handle_col(sheet, action, col_index):
+    if sheet not in data_store:
+        abort(404, description=f"Sheet '{sheet}' không tồn tại")
+
+    rows, columns, sheet_id = get_sheet_info(sheet)
+
+    new_col_name = ''
+    if action == 'insert':
+        new_col_name = request.values.get('new_col_name', '').strip()
+
+        if not new_col_name and request.is_json:
+            payload = request.get_json(silent=True) or {}
+            new_col_name = payload.get('new_col_name', '').strip()
+
+    if action == 'insert':
+        if not new_col_name:
+            return jsonify({'error': 'Tên cột không được để trống'}), 400
+        if new_col_name in columns:
+            return jsonify({'error': f"Tên cột '{new_col_name}' đã tồn tại"}), 400
+        if col_index < 0 or col_index > len(columns):
+            return jsonify({'error': 'Vị trí cột không hợp lệ'}), 400
+
+        new_columns = columns[:]
+        new_columns.insert(col_index, new_col_name)
+
+        update_columns_constant(sheet, new_columns)
+
+        for row in rows:
+            temp_row = {col: row.get(col, '') for col in new_columns}
+            temp_row[new_col_name] = ''
+            row.clear()
+            row.update(temp_row)
+
+        return render_template(
+            'tables.html',
+            sizing_columns=SIZING_COLUMNS,
+            sizing_rows=data_store['Sizing'],
+            cap_phat_columns=CAP_PHAT_COLUMNS,
+            cap_phat_rows=data_store['CapPhat'],
+            chi_tiet_columns=CHI_TIET_COLUMNS,
+            chi_tiet_rows=data_store['ChiTiet']
+        ), 200
+
+    if action == 'delete':
+        if col_index < 0 or col_index >= len(columns):
+            return jsonify({'error': 'Vị trí cột không hợp lệ'}), 400
+        col_name_to_delete = columns[col_index]
+
+        if col_name_to_delete == 'STT':
+            return jsonify({'error': 'Không thể xóa cột STT'}), 400
+
+        new_columns = columns[:]
+        del new_columns[col_index]
+
+        for row in rows:
+            row.pop(col_name_to_delete, None)
+
+        update_columns_constant(sheet, new_columns)
+
+        return render_template(
+            'tables.html',
+            sizing_columns=SIZING_COLUMNS,
+            sizing_rows=data_store['Sizing'],
+            cap_phat_columns=CAP_PHAT_COLUMNS,
+            cap_phat_rows=data_store['CapPhat'],
+            chi_tiet_columns=CHI_TIET_COLUMNS,
+            chi_tiet_rows=data_store['ChiTiet']
+        ), 200
+
+    return jsonify({'error': f'Hành động {action} không được hỗ trợ'}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)

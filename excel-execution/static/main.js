@@ -63,7 +63,7 @@ document.addEventListener('click', function(e){
 // CapPhat -> ChiTiet mapping on project click
 document.addEventListener('click', function(e){
   if(e.target.classList && e.target.classList.contains('cap-project-link')){
-    const projectName = ((e.target.dataset.capProject || e.target.textContent) || '').trim();
+    const projectName = ((e.target.dataset.capProject || e.target.textContent) || '').trim()
     if(!projectName){ return; }
     const chiTietTab = document.querySelector('.sheet-tab[data-sheet="chi-tiet-sheet"]');
     if(chiTietTab){ chiTietTab.click(); }
@@ -95,3 +95,35 @@ document.addEventListener('click', function(e){
     }, 80);
   }
 });
+
+// Column name update logic
+document.addEventListener('blur', function(e){
+  if(e.target.classList && e.target.classList.contains('col-header-name')){
+    const sheet = e.target.dataset.sheet;
+    const oldCol = e.target.dataset.oldColName;
+    const newCol = e.target.textContent.trim();
+
+    if(!newCol || newCol === oldCol) {
+        e.target.textContent = oldCol;
+        return;
+    }
+
+    fetch('/update-col-name', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sheet, oldCol, newCol })
+    })
+    .then(response => {
+        if(response.ok) {
+            e.target.dataset.oldColName = newCol;
+        } else {
+            alert('Lỗi cập nhật tên cột!');
+            e.target.textContent = oldCol;
+        }
+    })
+    .catch(() => {
+        alert('Lỗi mạng khi cập nhật tên cột.');
+        e.target.textContent = oldCol;
+    });
+  }
+}, true);

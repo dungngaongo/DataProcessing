@@ -4,7 +4,32 @@
             <thead>
                 <tr>
                 {% for col in sizing_columns %}
-                    <th>{{ col }}</th>
+                    <th class="col-header-cell">
+                        <span contenteditable="true"
+                            class="col-header-name"
+                            data-sheet="Sizing"
+                            data-col-index="{{ loop.index0 }}"
+                            data-old-col-name="{{ col }}">
+                            {{ col }}
+                        </span>
+                        <div class="col-controls">
+                            <button type="button"
+                                    title="Thêm cột bên trái"
+                                    hx-prompt="Nhập tên cột mới (ví dụ: 'Cột mới'):"
+                                    hx-vals='{"new_col_name": "${prompt}"}'
+                                    hx-post="/handle-col/Sizing/insert/{{ loop.index0 }}"
+                                    hx-target="#tables-container"
+                                    hx-swap="innerHTML">↤+</button>
+                            {% if col != 'STT' %}
+                            <button type="button"
+                                    title="Xóa cột này"
+                                    hx-confirm="Bạn có chắc muốn xóa cột {{ col }}?"
+                                    hx-post="/handle-col/Sizing/delete/{{ loop.index0 }}"
+                                    hx-target="#tables-container"
+                                    hx-swap="innerHTML">×</button>
+                            {% endif %}
+                        </div>
+                    </th>
                 {% endfor %}
                 </tr>
             </thead>
@@ -43,7 +68,32 @@
             <thead>
                 <tr>
                 {% for col in cap_phat_columns %}
-                    <th>{{ col }}</th>
+                    <th class="col-header-cell">
+                        <span contenteditable="true"
+                            class="col-header-name"
+                            data-sheet="CapPhat"
+                            data-col-index="{{ loop.index0 }}"
+                            data-old-col-name="{{ col }}">
+                            {{ col }}
+                        </span>
+                        <div class="col-controls">
+                            <button type="button"
+                                    title="Thêm cột bên trái"
+                                    hx-prompt="Nhập tên cột mới (ví dụ: 'Cột mới'):"
+                                    hx-vals='{"new_col_name": "${prompt}"}'
+                                    hx-post="/handle-col/CapPhat/insert/{{ loop.index0 }}"
+                                    hx-target="#tables-container"
+                                    hx-swap="innerHTML">↤+</button>
+                            {% if col != 'STT' %}
+                            <button type="button"
+                                    title="Xóa cột này"
+                                    hx-confirm="Bạn có chắc muốn xóa cột {{ col }}?"
+                                    hx-post="/handle-col/CapPhat/delete/{{ loop.index0 }}"
+                                    hx-target="#tables-container"
+                                    hx-swap="innerHTML">×</button>
+                            {% endif %}
+                        </div>
+                    </th>
                 {% endfor %}
                 </tr>
             </thead>
@@ -82,7 +132,32 @@
             <thead>
                 <tr>
                 {% for col in chi_tiet_columns %}
-                    <th>{{ col }}</th>
+                    <th class="col-header-cell">
+                        <span contenteditable="true"
+                            class="col-header-name"
+                            data-sheet="ChiTiet"
+                            data-col-index="{{ loop.index0 }}"
+                            data-old-col-name="{{ col }}">
+                            {{ col }}
+                        </span>
+                        <div class="col-controls">
+                            <button type="button"
+                                    title="Thêm cột bên trái"
+                                    hx-prompt="Nhập tên cột mới (ví dụ: 'Cột mới'):"
+                                    hx-vals='{"new_col_name": "${prompt}"}'
+                                    hx-post="/handle-col/ChiTiet/insert/{{ loop.index0 }}"
+                                    hx-target="#tables-container"
+                                    hx-swap="innerHTML">↤+</button>
+                            {% if col != 'STT' %}
+                            <button type="button"
+                                    title="Xóa cột này"
+                                    hx-confirm="Bạn có chắc muốn xóa cột {{ col }}?"
+                                    hx-post="/handle-col/ChiTiet/delete/{{ loop.index0 }}"
+                                    hx-target="#tables-container"
+                                    hx-swap="innerHTML">×</button>
+                            {% endif %}
+                        </div>
+                    </th>
                 {% endfor %}
                 </tr>
             </thead>
@@ -113,3 +188,4 @@
         </table>
     </div>
 </div>
+<script src="{{ url_for('static', filename='js/kpi.js') }}"></script>
