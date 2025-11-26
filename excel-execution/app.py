@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 import os
 import json
 from datetime import datetime
+import uuid
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024  # 200MB limit
@@ -22,7 +23,9 @@ CHI_TIET_COLUMNS = [
 ]
 
 def blank_row(columns):
-    return {col: '' for col in columns}
+    row = {col: '' for col in columns}
+    row['row_id'] = str(uuid.uuid4())
+    return row
 
 def initial_rows(columns, count=5):
     return [blank_row(columns) for _ in range(count)]
@@ -50,6 +53,9 @@ def sanitize_rows(rows, columns):
                 if sval.lower() in ['nan', 'nat']:
                     val = ''
             new_row[c] = val
+        # preserve or assign stable row_id
+        rid = r.get('row_id') or str(uuid.uuid4())
+        new_row['row_id'] = rid
         sanitized.append(new_row)
     return sanitized
 
@@ -77,16 +83,31 @@ def _calc_progress_status(kpi_str):
     if not kpi:
         return ""
     today = pd.Timestamp('today').normalize()
-    diff = (kpi - today).days
-    if diff < 0:
+    kpi = pd.Timestamp(kpi).normalize()
+
+    # Quá hạn nếu KPI trước hôm nay (không tính ngày làm việc)
+    if kpi < today:
         return "Quá hạn"
-    if diff == 0:
+
+    # Số ngày làm việc còn lại (loại trừ T7, CN)
+    try:
+        wdays = len(pd.bdate_range(start=today, end=kpi, closed='right'))
+    except Exception:
+        # Fallback nếu có lỗi, dùng vòng lặp thủ công
+        d = today
+        wdays = 0
+        while d < kpi:
+            if d.weekday() < 5:
+                wdays += 1
+            d += pd.Timedelta(days=1)
+
+    if wdays == 0:
         return "Đến hạn"
-    if diff == 1:
+    if wdays == 1:
         return "Còn 1 ngày"
-    if diff == 2:
+    if wdays == 2:
         return "Còn 2 ngày"
-    if diff == 3:
+    if wdays == 3:
         return "Còn 3 ngày"
     return ""
 
@@ -94,6 +115,13 @@ def _update_progress_for_row(row):
     row["Tiến độ"] = _calc_progress_status(
         row.get("Thời gian hoàn thành theo KPI", "")
     )
+
+def _refresh_sizing_progress():
+    try:
+        for row in data_store.get('Sizing', []):
+            _update_progress_for_row(row)
+    except Exception:
+        pass
 
 def save_cache():
     try:
@@ -125,6 +153,7 @@ load_cache()
 
 @app.route('/')
 def index():
+    _refresh_sizing_progress()
     return render_template(
         'index.html',
         sizing_columns=SIZING_COLUMNS,
@@ -223,8 +252,7 @@ def import_excel():
         data_store['CapPhat'] = sanitize_rows(cap_phat_df.to_dict(orient='records'), CAP_PHAT_COLUMNS)
         data_store['ChiTiet'] = sanitize_rows(chi_tiet_df.to_dict(orient='records'), CHI_TIET_COLUMNS)
 
-        for row in data_store['Sizing']:
-            _update_progress_for_row(row)
+        _refresh_sizing_progress()
 
         ensure_stt(data_store['Sizing'])
         ensure_stt(data_store['CapPhat'])
@@ -250,6 +278,8 @@ def sheet(name):
     else:
         columns = CHI_TIET_COLUMNS
         sheet_id = 'chi-tiet-sheet'
+    if name == 'Sizing':
+        _refresh_sizing_progress()
     rows = data_store[name]
     return render_template('sheet.html', sheet_name=name, sheet_id=sheet_id, columns=columns, rows=rows)
 
@@ -259,12 +289,15 @@ def add_row(sheet, after_index):
         abort(404)
     columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else CHI_TIET_COLUMNS)
     new_row = {col: '' for col in columns}
+    new_row['row_id'] = str(uuid.uuid4())
     target_list = data_store[sheet]
     if after_index < -1 or after_index >= len(target_list):
         target_list.append(new_row)
     else:
         target_list.insert(after_index + 1, new_row)
     ensure_stt(target_list)
+    if sheet == 'Sizing':
+        _refresh_sizing_progress()
     save_cache()
     sheet_id = 'sizing-sheet' if sheet == 'Sizing' else ('cap-phat-sheet' if sheet == 'CapPhat' else 'chi-tiet-sheet')
     return render_template('sheet.html', sheet_name=sheet, sheet_id=sheet_id, columns=columns, rows=target_list)
@@ -279,6 +312,8 @@ def delete_row(sheet, row_index):
     target_list.pop(row_index)
     if target_list:
         ensure_stt(target_list)
+    if sheet == 'Sizing':
+        _refresh_sizing_progress()
     save_cache()
     columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else CHI_TIET_COLUMNS)
     sheet_id = 'sizing-sheet' if sheet == 'Sizing' else ('cap-phat-sheet' if sheet == 'CapPhat' else 'chi-tiet-sheet')
@@ -289,22 +324,31 @@ def update_cell():
     data = request.get_json() or {}
     sheet = data.get('sheet')
     row_index = data.get('row')
+    row_id = data.get('rowId')
     col = data.get('col')
     value = data.get('value', '')
 
     if sheet not in ['Sizing', 'CapPhat', 'ChiTiet']:
         return jsonify({'error': 'Invalid sheet'}), 400
     target_list = data_store[sheet]
-    if not isinstance(row_index, int) or row_index < 0 or row_index >= len(target_list):
-        return jsonify({'error': 'Invalid row index'}), 400
+    target_row = None
+    if row_id:
+        for r in target_list:
+            if r.get('row_id') == row_id:
+                target_row = r
+                break
+        if target_row is None:
+            return jsonify({'error': 'Row not found'}), 400
+    else:
+        if not isinstance(row_index, int) or row_index < 0 or row_index >= len(target_list):
+            return jsonify({'error': 'Invalid row index'}), 400
+        target_row = target_list[row_index]
     columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else CHI_TIET_COLUMNS)
     if col not in columns:
         return jsonify({'error': 'Invalid column'}), 400
-    target_list[row_index][col] = value
+    target_row[col] = value
     if sheet == 'Sizing' and col == 'Thời gian hoàn thành theo KPI':
-        _update_progress_for_row(target_list[row_index])
-    if col != 'STT':  
-        ensure_stt(target_list)
+        _update_progress_for_row(target_row)
     save_cache()
     return ('', 204)
 
@@ -443,6 +487,8 @@ def handle_col(sheet, action, col_index):
         for row in rows:
             temp_row = {col: row.get(col, '') for col in new_columns}
             temp_row[new_col_name] = ''
+            # keep row_id stable
+            temp_row['row_id'] = row.get('row_id') or str(uuid.uuid4())
             row.clear()
             row.update(temp_row)
 
@@ -469,6 +515,9 @@ def handle_col(sheet, action, col_index):
 
         for row in rows:
             row.pop(col_name_to_delete, None)
+            # ensure row_id remains
+            if 'row_id' not in row:
+                row['row_id'] = str(uuid.uuid4())
 
         update_columns_constant(sheet, new_columns)
 

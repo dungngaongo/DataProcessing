@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const row = cell.closest('tr[data-row]');
         const kpiCell = row?.querySelector('[data-col="Thời gian hoàn thành theo KPI"]');
+        const progressCell = row?.querySelector('[data-col="Tiến độ"]');
         if (!kpiCell) return;
 
         const raw = cell.textContent.trim();
@@ -43,26 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         kpiCell.textContent = `${dd}/${mm}/${yy}`;
 
         if (progressCell) {
-            const status = computeProgressStatus(raw, kpiCell.textContent);
-            progressCell.textContent = status;
-            const classMap = {
-                'Quá hạn': 'status-overdue',
-                'Đến hạn': 'status-due',
-                'Còn 1 ngày': 'status-1day',
-                'Còn 2 ngày': 'status-2day',
-                'Còn 3 ngày': 'status-3day',
-            };
-            progressCell.className = 'cell';
-            if (classMap[status]) {
-                progressCell.classList.add(classMap[status]);
-            }
-        }
-
-        kpiCell.dispatchEvent(new Event('input', {bubbles:true}));
-
-        if (progressCell) {
-            const status = computeProgressStatus(raw, kpiCell.textContent);
-            progressCell.textContent = status;
+            const status = computeProgressStatus(kpiCell.textContent);
             const classMap = {
                 'Quá hạn': 'status-overdue',
                 'Đến hạn': 'status-due',
@@ -70,11 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Còn 2 ngày': 'status-2day',
                 'Còn 3 ngày': 'status-3day'
             };
+            progressCell.textContent = status;
             progressCell.className = 'cell';
-            if (classMap[status]) {
-                progressCell.classList.add(classMap[status]);
-            }
+            if (classMap[status]) progressCell.classList.add(classMap[status]);
         }
+
+        kpiCell.dispatchEvent(new Event('input', {bubbles:true}));
 
         if (row) {
             const sheetName = 'Sizing';
@@ -94,6 +77,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
         kpiCell.dispatchEvent(new Event('input', {bubbles:true}));
     }, true);  
+
+    function computeProgressStatus(kpiText){
+        const kpi = parseVNDate(kpiText);
+        if(!kpi) return '';
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        const k = new Date(kpi.getFullYear(), kpi.getMonth(), kpi.getDate());
+        if(k < today) return 'Quá hạn';
+        const wdays = businessDaysBetween(today, k); 
+        if(wdays === 0) return 'Đến hạn';
+        if(wdays === 1) return 'Còn 1 ngày';
+        if(wdays === 2) return 'Còn 2 ngày';
+        if(wdays === 3) return 'Còn 3 ngày';
+        return '';
+    }
+
+    function businessDaysBetween(start, end){
+        let cnt = 0;
+        const d = new Date(start);
+        while(d < end){
+            const dw = d.getDay();
+            if(dw !== 0 && dw !== 6){ cnt++; }
+            d.setDate(d.getDate() + 1);
+        }
+        return cnt;
+    }
+
+    function parseVNDate(text){
+        if(!text) return null;
+        let parts = text.split('/');
+        if(parts.length === 3){
+            const d = parseInt(parts[0],10), m = parseInt(parts[1],10)-1, y = parseInt(parts[2],10);
+            const dt = new Date(y,m,d);
+            return isNaN(dt) ? null : dt;
+        }
+        const t = new Date(text);
+        return isNaN(t) ? null : t;
+    }
 
     function addWorkingDays(date, days) {
         const result = new Date(date);

@@ -36,16 +36,16 @@
             <tbody>
             {% if sizing_rows and sizing_rows|length > 0 %}
                 {% for row in sizing_rows %}
-                    <tr class="data-row" data-row="{{ loop.index0 }}">
+                    <tr class="data-row" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}">
                         {% for col in sizing_columns %}
                             {% if col == 'Tên dự án - Mục đích sizing' %}
-                            <td contenteditable="true" class="cell project-link" data-project="{{ row[col]|blanknan }}" data-sheet="Sizing" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
+                            <td contenteditable="true" class="cell project-link" data-project="{{ row[col]|blanknan }}" data-sheet="Sizing" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
                             {% elif col == 'Thời gian hoàn thành theo KPI' %}
-                            <td class="cell kpi-date-cell" data-sheet="Sizing" data-row="{{ loop.index0 }}" data-col="{{ col }}" style="background:#f5f5f5;color:#888;">{{ row[col]|blanknan }}</td>
+                            <td class="cell kpi-date-cell" data-sheet="Sizing" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="{{ col }}" style="background:#f5f5f5;color:#888;">{{ row[col]|blanknan }}</td>
                             {% elif col == 'Tiến độ' %}
-                            <td class="cell {{ row[col]|progress_class }}" data-sheet="Sizing" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
+                            <td class="cell {{ row[col]|progress_class }}" data-sheet="Sizing" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
                             {% else %}
-                            <td contenteditable="true" class="cell" data-sheet="Sizing" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Sizing" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -104,12 +104,12 @@
             <tbody>
             {% if cap_phat_rows and cap_phat_rows|length > 0 %}
                 {% for row in cap_phat_rows %}
-                    <tr class="data-row" data-row="{{ loop.index0 }}">
+                    <tr class="data-row" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}">
                         {% for col in cap_phat_columns %}
                             {% if col == 'Dự án' %}
-                            <td contenteditable="true" class="cell cap-project-link" data-sheet="CapPhat" data-row="{{ loop.index0 }}" data-col="{{ col }}" data-cap-project="{{ row[col]|blanknan }}">{{ row[col]|blanknan }}</td>
+                            <td contenteditable="true" class="cell cap-project-link" data-sheet="CapPhat" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="{{ col }}" data-cap-project="{{ row[col]|blanknan }}">{{ row[col]|blanknan }}</td>
                             {% else %}
-                            <td contenteditable="true" class="cell" data-sheet="CapPhat" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="CapPhat" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
@@ -168,9 +168,9 @@
             <tbody>
             {% if chi_tiet_rows and chi_tiet_rows|length > 0 %}
                 {% for row in chi_tiet_rows %}
-                    <tr class="data-row" data-row="{{ loop.index0 }}">
+                    <tr class="data-row" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}">
                         {% for col in chi_tiet_columns %}
-                            <td contenteditable="true" class="cell" data-sheet="ChiTiet" data-row="{{ loop.index0 }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="ChiTiet" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="{{ col }}">{{ row[col]|blanknan }}</td>
                         {% endfor %}
                     </tr>
                     <tr class="add-row-trigger" data-after="{{ loop.index0 }}">

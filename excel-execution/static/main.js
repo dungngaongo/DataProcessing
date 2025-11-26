@@ -14,14 +14,23 @@ document.addEventListener('blur', function(e){
   if(e.target.classList && e.target.classList.contains('cell')){
     const sheet = e.target.dataset.sheet;
     const row = parseInt(e.target.dataset.row, 10);
+    const rowId = e.target.dataset.rowId || (e.target.closest('tr[data-row-id]')?.dataset.rowId);
     const col = e.target.dataset.col;
     const value = e.target.textContent.trim();
 
-    fetch('/update-cell', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sheet, row, col, value })
-    });
+    // Debounce quick successive blurs to avoid out-of-order updates
+    if(!window.__cellUpdateTimers){ window.__cellUpdateTimers = new Map(); }
+    const key = `${sheet}:${rowId || row}:${col}`;
+    const prev = window.__cellUpdateTimers.get(key);
+    if(prev){ clearTimeout(prev); }
+    window.__cellUpdateTimers.set(key, setTimeout(() => {
+      fetch('/update-cell', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sheet, row, rowId, col, value })
+      }).catch(() => {});
+      window.__cellUpdateTimers.delete(key);
+    }, 200));
 
     // Nếu là Sizing và cột Thời điểm đẩy yêu cầu thì tự động tính KPI
     if(sheet === 'Sizing' && col === 'Thời điểm đẩy yêu cầu'){
@@ -39,15 +48,17 @@ document.addEventListener('blur', function(e){
         }
         const kpiDate = formatDateVN(date);
         // Gửi lên server cập nhật KPI
+        // Update KPI using stable rowId
         fetch('/update-cell', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sheet, row, col: kpiCol, value: kpiDate })
-        });
+          body: JSON.stringify({ sheet, row, rowId, col: kpiCol, value: kpiDate })
+        }).catch(() => {});
         // Cập nhật trực tiếp giao diện
         const table = document.getElementById('sizing-sheet');
         if(table){
-          const kpiCell = table.querySelector(`.data-row[data-row="${row}"] td[data-col="${kpiCol}"]`);
+          const selector = rowId ? `.data-row[data-row-id="${rowId}"] td[data-col="${kpiCol}"]` : `.data-row[data-row="${row}"] td[data-col="${kpiCol}"]`;
+          const kpiCell = table.querySelector(selector);
           if(kpiCell){
             kpiCell.textContent = kpiDate;
           }
