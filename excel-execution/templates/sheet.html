@@ -1,3 +1,8 @@
+{#
+    Partial cho render một sheet đơn lẻ (tái sử dụng):
+    - Dùng trong thêm/xoá dòng qua HTMX để cập nhật một sheet
+    - Giữ cấu trúc bảng và các thuộc tính data-* cho JS
+#}
 <div id="{{ sheet_id }}" class="sheet active">
     <table class="excel-table">
         <thead>

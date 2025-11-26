@@ -1,3 +1,16 @@
+"""
+Ứng dụng Flask xử lý import/chỉnh sửa/xuất Excel theo 3 sheet chính.
+
+Cấu trúc tổng quát:
+- Cấu hình ứng dụng & thư mục tải lên/cache
+- Định nghĩa cột chuẩn cho từng sheet
+- Bộ hàm tiện ích xử lý hàng/cột, ngày tháng, tiến độ
+- Cơ chế cache JSON: load/save trạng thái `data_store`
+- Endpoint giao diện chính và các hành động (import, add/delete row, update cell,
+  đổi tên cột, chèn/xóa cột, export)
+- Bộ filter Jinja hỗ trợ hiển thị
+"""
+
 from flask import Flask, render_template, request, jsonify, abort, send_file
 import pandas as pd
 from werkzeug.utils import secure_filename
@@ -6,11 +19,13 @@ import json
 from datetime import datetime
 import uuid
 
+"""Khởi tạo ứng dụng và cấu hình chung."""
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024 
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'uploads')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
+"""Định nghĩa cột chuẩn cho từng sheet."""
 SIZING_COLUMNS = [
     "STT","Mã PYC","Đơn vị","Đầu mối tạo PYC","Đầu mối xử lý","Trạng thái","Thời điểm đẩy yêu cầu","Thời gian hoàn thành theo KPI","Tiến độ","Thời gian hoàn thành ký PNX và đóng y/c","Thời gian ký bản chốt sizing","Tên dự án - Mục đích sizing","Ghi chú"
 ]
@@ -22,6 +37,7 @@ CHI_TIET_COLUMNS = [
     "STT","Dự án","Đơn vị","Đầu mối y/c","Đầu mối P.HT","Mã SR","Qúy cấp phát","Số lượng máy chủ","vCPU","Cint","RAM(GB)","SAN(GB)","NAS(GB)","Ceph(GB)","Bigdata(GB)","Archiving(GB)","S3 Object(GB)","Pool/Nguồn tài nguyên","Nhóm tài nguyên","Ghi chú"
 ]
 
+"""Tiện ích tạo một hàng trống với `row_id` duy nhất."""
 def blank_row(columns):
     row = {col: '' for col in columns}
     row['row_id'] = str(uuid.uuid4())
@@ -30,16 +46,19 @@ def blank_row(columns):
 def initial_rows(columns, count=5):
     return [blank_row(columns) for _ in range(count)]
 
+"""Bộ nhớ dữ liệu chính trong runtime (3 sheet)."""
 data_store = {
     'Sizing': initial_rows(SIZING_COLUMNS),
     'CapPhat': initial_rows(CAP_PHAT_COLUMNS),
     'ChiTiet': initial_rows(CHI_TIET_COLUMNS)
 }
 
+"""Đánh lại số thứ tự STT theo vị trí hiện tại."""
 def ensure_stt(rows):
     for idx, row in enumerate(rows, start=1):
         row['STT'] = idx
 
+"""Chuẩn hoá dữ liệu hàng theo danh sách cột (loại bỏ NaN/NaT/None)."""
 def sanitize_rows(rows, columns):
     sanitized = []
     for r in rows:
@@ -62,10 +81,12 @@ ensure_stt(data_store['Sizing'])
 ensure_stt(data_store['CapPhat'])
 ensure_stt(data_store['ChiTiet'])
 
+"""Thiết lập đường dẫn cache để lưu/khôi phục `data_store`."""
 CACHE_DIR = os.path.join(os.path.dirname(__file__), 'cache')
 os.makedirs(CACHE_DIR, exist_ok=True)
 CACHE_FILE = os.path.join(CACHE_DIR, 'data_store.json')
 
+"""Cố gắng parse chuỗi ngày thành Timestamp; lỗi trả về None."""
 def _parse_date(val):
     if not val:
         return None
@@ -77,6 +98,7 @@ def _parse_date(val):
     except Exception:
         return None
 
+"""Tính trạng thái tiến độ dựa trên ngày KPI so với hôm nay."""
 def _calc_progress_status(kpi_str):
     kpi = _parse_date(kpi_str)
     if not kpi:
@@ -107,11 +129,13 @@ def _calc_progress_status(kpi_str):
         return "Còn 3 ngày"
     return ""
 
+"""Cập nhật trường 'Tiến độ' của một hàng Sizing."""
 def _update_progress_for_row(row):
     row["Tiến độ"] = _calc_progress_status(
         row.get("Thời gian hoàn thành theo KPI", "")
     )
 
+"""Quét toàn bộ sheet Sizing để cập nhật tiến độ."""
 def _refresh_sizing_progress():
     try:
         for row in data_store.get('Sizing', []):
@@ -119,6 +143,7 @@ def _refresh_sizing_progress():
     except Exception:
         pass
 
+"""Ghi `data_store` ra file JSON cache (best-effort)."""
 def save_cache():
     try:
         with open(CACHE_FILE, 'w', encoding='utf-8') as f:
@@ -126,6 +151,7 @@ def save_cache():
     except Exception:
         pass
 
+"""Đọc cache JSON nếu có và hợp nhất vào `data_store`."""
 def load_cache():
     if os.path.exists(CACHE_FILE):
         try:
@@ -147,6 +173,7 @@ def load_cache():
 
 load_cache()
 
+"""Trang chính: render giao diện với 3 bảng dữ liệu."""
 @app.route('/')
 def index():
     _refresh_sizing_progress()
@@ -160,6 +187,7 @@ def index():
         chi_tiet_rows=data_store['ChiTiet']
     )
 
+"""Chuẩn hoá hiển thị ngày về định dạng dd/mm/YYYY (hoặc rỗng)."""
 def _format_date(val) -> str:
     if val is None:
         return ""
@@ -178,6 +206,7 @@ def _format_date(val) -> str:
     except Exception:
         return ""
 
+"""Đảm bảo DataFrame có đủ cột, làm sạch và format ngày theo mẫu."""
 def _read_sheet(df: pd.DataFrame, expected_cols):
     for col in expected_cols:
         if col not in df.columns:
@@ -219,6 +248,7 @@ def _read_sheet(df: pd.DataFrame, expected_cols):
 
     return pd.DataFrame(processed)[expected_cols]
 
+"""Import file Excel: đọc 3 sheet, chuẩn hoá và cập nhật `data_store`."""
 @app.route('/import', methods=['POST'])
 def import_excel():
     file = request.files.get('excel_file')
@@ -256,6 +286,7 @@ def import_excel():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+"""Render partial cho một sheet bất kỳ (HTMX sử dụng)."""
 @app.route('/sheet/<name>')
 def sheet(name):
     if name not in ['Sizing', 'CapPhat', 'ChiTiet']:
@@ -274,6 +305,7 @@ def sheet(name):
     rows = data_store[name]
     return render_template('sheet.html', sheet_name=name, sheet_id=sheet_id, columns=columns, rows=rows)
 
+"""Thêm một hàng mới sau vị trí chỉ định trong sheet."""
 @app.route('/add-row/<sheet>/<int:after_index>', methods=['POST'])
 def add_row(sheet, after_index):
     if sheet not in ['Sizing', 'CapPhat', 'ChiTiet']:
@@ -293,6 +325,7 @@ def add_row(sheet, after_index):
     sheet_id = 'sizing-sheet' if sheet == 'Sizing' else ('cap-phat-sheet' if sheet == 'CapPhat' else 'chi-tiet-sheet')
     return render_template('sheet.html', sheet_name=sheet, sheet_id=sheet_id, columns=columns, rows=target_list)
 
+"""Xoá một hàng theo chỉ số trong sheet."""
 @app.route('/delete-row/<sheet>/<int:row_index>', methods=['POST'])
 def delete_row(sheet, row_index):
     if sheet not in ['Sizing', 'CapPhat', 'ChiTiet']:
@@ -310,6 +343,7 @@ def delete_row(sheet, row_index):
     sheet_id = 'sizing-sheet' if sheet == 'Sizing' else ('cap-phat-sheet' if sheet == 'CapPhat' else 'chi-tiet-sheet')
     return render_template('sheet.html', sheet_name=sheet, sheet_id=sheet_id, columns=columns, rows=target_list)
 
+"""Cập nhật một ô dữ liệu (JSON) và xử lý phụ thuộc tiến độ/KPI."""
 @app.route('/update-cell', methods=['POST'])
 def update_cell():
     data = request.get_json() or {}
@@ -343,6 +377,7 @@ def update_cell():
     save_cache()
     return ('', 204)
 
+"""Các filter Jinja hỗ trợ hiển thị rỗng/ngày/đánh class tiến độ."""
 @app.template_filter('blanknan')
 def blanknan(val):
     if val is None:
@@ -369,6 +404,7 @@ def progress_class(status):
     }
     return mapping.get(status, '')
 
+"""Xuất toàn bộ dữ liệu hiện tại ra file Excel (3 sheet)."""
 @app.route('/export')
 def export_excel():
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -399,6 +435,7 @@ def export_excel():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+"""Truy xuất cặp (rows, columns, sheet_id) theo tên sheet."""
 def get_sheet_info(sheet_name):
     if sheet_name == 'Sizing':
         return data_store['Sizing'], SIZING_COLUMNS, 'sizing-sheet'
@@ -408,6 +445,7 @@ def get_sheet_info(sheet_name):
         return data_store['ChiTiet'], CHI_TIET_COLUMNS, 'chi-tiet-sheet'
     abort(404)
 
+"""Cập nhật danh sách cột chuẩn tương ứng theo tên sheet."""
 def update_columns_constant(sheet_name, new_columns):
     global SIZING_COLUMNS, CAP_PHAT_COLUMNS, CHI_TIET_COLUMNS
 
@@ -418,6 +456,7 @@ def update_columns_constant(sheet_name, new_columns):
     elif sheet_name == 'ChiTiet':
         CHI_TIET_COLUMNS = new_columns
 
+"""Đổi tên cột trong một sheet và đồng bộ dữ liệu hàng tương ứng."""
 @app.route('/update-col-name', methods=['POST'])
 def update_col_name():
     data = request.get_json() or {}
@@ -446,6 +485,7 @@ def update_col_name():
     save_cache()
     return ('', 204)
 
+"""Chèn/Xoá cột tại vị trí chỉ định, giữ đồng bộ cấu trúc hàng."""
 @app.route('/handle-col/<sheet>/<action>/<int:col_index>', methods=['POST'])
 def handle_col(sheet, action, col_index):
     if sheet not in data_store:
@@ -521,5 +561,6 @@ def handle_col(sheet, action, col_index):
 
     return jsonify({'error': f'Hành động {action} không được hỗ trợ'}), 400
 
+"""Điểm vào ứng dụng (chạy development server)."""
 if __name__ == '__main__':
     app.run(debug=True)

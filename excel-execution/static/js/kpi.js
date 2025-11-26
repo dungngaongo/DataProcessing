@@ -1,3 +1,10 @@
+//
+// Logic KPI riêng cho sheet Sizing:
+// - Khi người dùng điền "Thời điểm đẩy yêu cầu", tự cộng 3 ngày làm việc
+//   để ra "Thời gian hoàn thành theo KPI"
+// - Tính trạng thái tiến độ (Quá hạn/Đến hạn/Còn x ngày) và gán class
+// - Gửi cập nhật ô KPI lên server
+//
 document.addEventListener('DOMContentLoaded', () => {
     const sizingSheet = document.getElementById('sizing-sheet');
     if (!sizingSheet) return;        
@@ -77,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         kpiCell.dispatchEvent(new Event('input', {bubbles:true}));
     }, true);  
 
+    // Tính trạng thái tiến độ dựa trên khoảng cách ngày làm việc
     function computeProgressStatus(kpiText){
         const kpi = parseVNDate(kpiText);
         if(!kpi) return '';
@@ -92,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return '';
     }
 
+    // Đếm số ngày làm việc giữa hai mốc (bỏ cuối tuần)
     function businessDaysBetween(start, end){
         let cnt = 0;
         const d = new Date(start);
@@ -103,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return cnt;
     }
 
+    // Parse ngày từ chuỗi dạng dd/mm/yyyy hoặc Date-compatible
     function parseVNDate(text){
         if(!text) return null;
         let parts = text.split('/');
@@ -115,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return isNaN(t) ? null : t;
     }
 
+    // Cộng thêm số ngày làm việc (bỏ thứ 7, chủ nhật)
     function addWorkingDays(date, days) {
         const result = new Date(date);
         let added = 0;

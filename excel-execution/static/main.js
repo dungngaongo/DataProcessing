@@ -1,3 +1,12 @@
+//
+// Giao diện JS tổng hợp cho tương tác bảng:
+// - Chuyển tab giữa các sheet
+// - Lưu ô khi blur (debounce nhẹ)
+// - Tự tính KPI + cập nhật ô liên quan từ "Thời điểm đẩy yêu cầu"
+// - Điều hướng/mapping dự án giữa các sheet và highlight dòng mục tiêu
+// - Đổi tên cột ngay trên header
+//
+
 document.addEventListener('click', function(e){
   if(e.target.classList.contains('sheet-tab')){
     document.querySelectorAll('.sheet-tab').forEach(btn => btn.classList.remove('active'));
@@ -9,6 +18,7 @@ document.addEventListener('click', function(e){
   }
 });
 
+// Lưu ô khi blur, và xử lý lan truyền KPI cho Sizing
 document.addEventListener('blur', function(e){
   if(e.target.classList && e.target.classList.contains('cell')){
     const sheet = e.target.dataset.sheet;
@@ -61,6 +71,7 @@ document.addEventListener('blur', function(e){
   }
 }, true);
 
+// Tiện ích parse/format ngày theo dạng Việt Nam (dd/mm/yyyy)
 function parseDateVN(str){
   if(!str) return null;
   let parts = str.split('/');
@@ -84,6 +95,7 @@ function formatDateVN(date){
   return `${d}/${m}/${y}`;
 }
 
+// Mapping từ Sizing → Cấp phát TN theo "Tên dự án"
 document.addEventListener('click', function(e){
   if(e.target.classList && e.target.classList.contains('project-link')){
     const projectName = (e.target.dataset.project || '').trim();
@@ -119,6 +131,7 @@ document.addEventListener('click', function(e){
   }
 });
 
+// Mapping từ Cấp phát TN → Chi tiết theo "Dự án"
 document.addEventListener('click', function(e){
   if(e.target.classList && e.target.classList.contains('cap-project-link')){
     const projectName = ((e.target.dataset.capProject || e.target.textContent) || '').trim()
@@ -154,6 +167,7 @@ document.addEventListener('click', function(e){
   }
 });
 
+// Đổi tên cột trực tiếp trên header, đồng bộ lên server
 document.addEventListener('blur', function(e){
   if(e.target.classList && e.target.classList.contains('col-header-name')){
     const sheet = e.target.dataset.sheet;
