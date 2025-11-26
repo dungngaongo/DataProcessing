@@ -21,7 +21,6 @@ import uuid
 import requests  
 
 # --- Cảnh báo WhatsApp ---
-
 TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', '')
 TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', '')
 TWILIO_WHATSAPP_FROM = os.environ.get('TWILIO_WHATSAPP_FROM', '')  
@@ -94,6 +93,12 @@ CHI_TIET_COLUMNS = [
     "STT","Dự án","Đơn vị","Đầu mối y/c","Đầu mối P.HT","Mã SR","Qúy cấp phát","Số lượng máy chủ","vCPU","Cint","RAM(GB)","SAN(GB)","NAS(GB)","Ceph(GB)","Bigdata(GB)","Archiving(GB)","S3 Object(GB)","Pool/Nguồn tài nguyên","Nhóm tài nguyên","Ghi chú"
 ]
 
+# Các cột của sheet Chi tiết phải là số, tuyệt đối không parse ngày
+CHI_TIET_NUMERIC_COLS = {
+    "Số lượng máy chủ","vCPU","Cint","RAM(GB)","SAN(GB)","NAS(GB)",
+    "Ceph(GB)","Bigdata(GB)","Archiving(GB)","S3 Object(GB)"
+}
+
 """Tiện ích tạo một hàng trống với `row_id` duy nhất."""
 def blank_row(columns):
     row = {col: '' for col in columns}
@@ -133,6 +138,44 @@ def sanitize_rows(rows, columns):
         new_row['row_id'] = rid
         sanitized.append(new_row)
     return sanitized
+
+def _clean_numeric_string(v):
+    """Đưa giá trị về chuỗi số đẹp: bỏ .0 nếu là số nguyên; giữ rỗng nếu không phải số."""
+    try:
+        num = pd.to_numeric(v, errors='coerce')
+        if pd.isna(num):
+            return ''
+        if float(num).is_integer():
+            return str(int(num))
+        return str(num)
+    except Exception:
+        return ''
+
+def _fix_chitiet_numeric_rows(rows):
+    """Sửa các giá trị bị hiển thị kiểu ngày ở các cột số của sheet Chi tiết.
+    Nếu bắt gặp chuỗi dạng dd/mm/yyyy hoặc Timestamp -> chuyển thành rỗng.
+    Nếu là số -> chuẩn hoá về chuỗi số.
+    """
+    import re
+    date_re = re.compile(r"^\d{2}/\d{2}/\d{4}$")
+    for r in rows:
+        for c in CHI_TIET_NUMERIC_COLS:
+            val = r.get(c, '')
+            if val is None:
+                r[c] = ''
+                continue
+            if isinstance(val, (datetime, pd.Timestamp)):
+                r[c] = ''
+                continue
+            s = str(val).strip()
+            if not s:
+                r[c] = ''
+                continue
+            if date_re.match(s):
+                r[c] = ''
+                continue
+            # chuẩn hoá số
+            r[c] = _clean_numeric_string(s)
 
 ensure_stt(data_store['Sizing'])
 ensure_stt(data_store['CapPhat'])
@@ -225,6 +268,8 @@ def load_cache():
                 ensure_stt(data_store['CapPhat'])
             if 'ChiTiet' in loaded:
                 data_store['ChiTiet'] = sanitize_rows(loaded['ChiTiet'], CHI_TIET_COLUMNS)
+                # Sửa các ô số nếu từng bị lưu dạng ngày (01/01/1970, ...)
+                _fix_chitiet_numeric_rows(data_store['ChiTiet'])
                 ensure_stt(data_store['ChiTiet'])
         except Exception:
             pass
@@ -264,7 +309,12 @@ def _format_date(val) -> str:
     except Exception:
         return ""
 
-"""Đảm bảo DataFrame có đủ cột, làm sạch và format ngày theo mẫu."""
+"""Đảm bảo DataFrame có đủ cột, làm sạch và format ngày theo mẫu.
+
+Chú ý: Chỉ định dạng ngày theo TÊN CỘT (keyword) để tránh việc
+các cột số (ví dụ trong sheet 'Chi tiết': 'Số lượng máy chủ', 'S3 Object(GB)', ...)
+bị hiểu nhầm thành ngày tháng.
+"""
 def _read_sheet(df: pd.DataFrame, expected_cols):
     for col in expected_cols:
         if col not in df.columns:
@@ -272,24 +322,16 @@ def _read_sheet(df: pd.DataFrame, expected_cols):
 
     df = df[expected_cols].fillna("").replace({pd.NaT: ""})
 
-    def is_date_column_by_sample(series):
-        sample = series.dropna().head(10)
-        if sample.empty:
-            return False
-        parse_count = 0
-        for v in sample:
-            try:
-                dt = pd.to_datetime(v, dayfirst=True, errors='coerce')
-                if not pd.isna(dt):
-                    parse_count += 1
-            except Exception:
-                pass
-        return (parse_count / len(sample)) >= 0.6
+    # Chỉ nhận diện cột ngày theo tên cột để tránh nhầm lẫn
+    DATE_KEYWORDS = ["Thời", "Timeline", "Qúy"]
+    def is_date_col_by_name(name: str) -> bool:
+        n = (name or "").lower()
+        return any(kw.lower() in n for kw in DATE_KEYWORDS)
 
     processed = {}
     for col in df.columns:
         series = df[col]
-        if pd.api.types.is_datetime64_any_dtype(series) or is_date_column_by_sample(series):
+        if is_date_col_by_name(col):
             def fmt(v):
                 if v is None or (isinstance(v, float) and pd.isna(v)):
                     return ""
@@ -301,7 +343,11 @@ def _read_sheet(df: pd.DataFrame, expected_cols):
                 except Exception:
                     return str(v).strip()
             processed[col] = series.apply(fmt)
+        elif col in CHI_TIET_NUMERIC_COLS:
+            # Ép về dạng số và xuất chuỗi số; tránh bị hiểu thành ngày
+            processed[col] = series.apply(_clean_numeric_string)
         else:
+            # Không cố parse ngày ở các cột còn lại; giữ nguyên như chuỗi sạch.
             processed[col] = series.astype(str).apply(lambda x: '' if x.lower() in ['nan','nat'] else x.strip())
 
     return pd.DataFrame(processed)[expected_cols]
@@ -330,6 +376,7 @@ def import_excel():
         data_store['Sizing'] = sanitize_rows(sizing_df.to_dict(orient='records'), SIZING_COLUMNS)
         data_store['CapPhat'] = sanitize_rows(cap_phat_df.to_dict(orient='records'), CAP_PHAT_COLUMNS)
         data_store['ChiTiet'] = sanitize_rows(chi_tiet_df.to_dict(orient='records'), CHI_TIET_COLUMNS)
+        _fix_chitiet_numeric_rows(data_store['ChiTiet'])
 
         _refresh_sizing_progress()
 

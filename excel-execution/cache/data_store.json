@@ -14,7 +14,7 @@
       "Thời gian ký bản chốt sizing": "01/04/2025",
       "Tên dự án - Mục đích sizing": "Dự án Xây dựng Ứng dụng Bán hàng V2",
       "Ghi chú": "Sizing cho môi trường Production",
-      "row_id": "bca2f43b-2bed-4e12-bcbd-76e736340d73"
+      "row_id": "4f0c111e-7661-48f5-a379-a952eff07c1b"
     },
     {
       "STT": 2,
@@ -30,7 +30,7 @@
       "Thời gian ký bản chốt sizing": "01/03/2025",
       "Tên dự án - Mục đích sizing": "Nâng cấp Hệ thống ERP - Mở rộng Module Kế toán",
       "Ghi chú": "Cần gấp vCPU và RAM",
-      "row_id": "9f81900f-e821-4e1a-8b7a-bad8fd6b4766"
+      "row_id": "c7bd5147-8c9c-4fd3-867d-e10f41dbf99f"
     },
     {
       "STT": 3,
@@ -46,7 +46,7 @@
       "Thời gian ký bản chốt sizing": "01/06/2025",
       "Tên dự án - Mục đích sizing": "Dự án Triển khai Data Lake cho Phân tích Dữ liệu",
       "Ghi chú": "Sizing dung lượng Bigdata",
-      "row_id": "19d145e9-7a5a-408b-b0e9-ca0b8ef0bbf7"
+      "row_id": "33a5a4c8-bc37-4be7-8415-715782143456"
     },
     {
       "STT": 4,
@@ -62,7 +62,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Yêu cầu bổ sung Tài nguyên Archiving",
       "Ghi chú": "Yêu cầu bị hủy do thay đổi phạm vi",
-      "row_id": "f72e828b-bb38-4fbb-8f24-e428982f3d06"
+      "row_id": "815c5206-cd67-46b3-b0de-2ae9abb0c7f3"
     },
     {
       "STT": 5,
@@ -78,7 +78,7 @@
       "Thời gian ký bản chốt sizing": "01/08/2025",
       "Tên dự án - Mục đích sizing": "Hệ thống Quản lý Khách hàng (CRM) - Môi trường Test",
       "Ghi chú": "Sizing cho môi trường Testing",
-      "row_id": "d6b81fe3-907d-4008-8f60-9a4409027424"
+      "row_id": "1e424f19-dd21-41d0-b360-a9f1b1bf4653"
     },
     {
       "STT": 6,
@@ -94,7 +94,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Sizing cho Hệ thống Báo cáo Tài chính",
       "Ghi chú": "Đang chờ xác nhận lại cấu hình DB",
-      "row_id": "df4faab4-ece9-4e6a-a7ae-b678bef94d1d"
+      "row_id": "8077c532-70a0-4507-89ef-d400174a204b"
     },
     {
       "STT": 7,
@@ -110,7 +110,7 @@
       "Thời gian ký bản chốt sizing": "01/10/2025",
       "Tên dự án - Mục đích sizing": "Dự án Phát triển Mobile App - Pha 1",
       "Ghi chú": "Sizing cho Web Server và App Server",
-      "row_id": "d0be3a1d-3d3d-4ac2-9913-798677c47630"
+      "row_id": "56bb2c60-3cfd-416c-b8f6-73e6ed5d484a"
     },
     {
       "STT": 8,
@@ -126,7 +126,7 @@
       "Thời gian ký bản chốt sizing": "01/11/2025",
       "Tên dự án - Mục đích sizing": "Nâng cấp Storage cho Hệ thống File Server",
       "Ghi chú": "Chỉ yêu cầu SAN và NAS",
-      "row_id": "7e91fd3b-32f0-4141-9a7f-757b2e6e5f5e"
+      "row_id": "4e4c4499-114d-456e-bf72-b7191fcb09fc"
     },
     {
       "STT": 9,
@@ -142,7 +142,7 @@
       "Thời gian ký bản chốt sizing": "01/11/2025",
       "Tên dự án - Mục đích sizing": "Dự án Tối ưu hóa Quy trình (BPM)",
       "Ghi chú": "Sizing cho môi trường Prod",
-      "row_id": "65e4f700-5609-4cf1-8fcb-cdc300e75f64"
+      "row_id": "065d52e8-7fe9-48ca-9625-37bbab195527"
     },
     {
       "STT": 10,
@@ -158,7 +158,7 @@
       "Thời gian ký bản chốt sizing": "13/01/2025",
       "Tên dự án - Mục đích sizing": "Triển khai Dịch vụ S3 Object Storage",
       "Ghi chú": "Chỉ yêu cầu dung lượng S3",
-      "row_id": "54eb2ccc-e1be-401d-a9b1-15e7fe5eb2e1"
+      "row_id": "76667b77-a91c-4e79-a0a9-7ba35ecb3016"
     },
     {
       "STT": 11,
@@ -174,7 +174,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Sizing cho Platform CI/CD",
       "Ghi chú": "Yêu cầu được gộp vào PYC khác",
-      "row_id": "c1198a16-b95a-4966-8472-32e45bea585e"
+      "row_id": "bbd9cff5-3074-4471-b0ea-838ab51c1026"
     },
     {
       "STT": 12,
@@ -190,7 +190,7 @@
       "Thời gian ký bản chốt sizing": "15/01/2025",
       "Tên dự án - Mục đích sizing": "Hệ thống Quản lý Nhân sự (HRM) - Môi trường Dev",
       "Ghi chú": "Sizing VM Dev",
-      "row_id": "1132d406-a681-45eb-be3f-2db951ac8712"
+      "row_id": "c4797207-8149-457f-954f-b62105d0be7d"
     },
     {
       "STT": 13,
@@ -206,7 +206,7 @@
       "Thời gian ký bản chốt sizing": "16/01/2025",
       "Tên dự án - Mục đích sizing": "Sizing cho Database Production",
       "Ghi chú": "Ưu tiên cao",
-      "row_id": "90b1488c-d5a2-4aa7-b9ae-4a6f2c8e4b16"
+      "row_id": "7519b048-d866-438b-94f8-aa3244fee070"
     },
     {
       "STT": 14,
@@ -222,7 +222,7 @@
       "Thời gian ký bản chốt sizing": "17/01/2025",
       "Tên dự án - Mục đích sizing": "Dự án Cổng thông tin Đối tác",
       "Ghi chú": "Sizing Web và DB",
-      "row_id": "069f2af6-a778-4a83-8711-ed728ce63e8f"
+      "row_id": "3476da58-226d-4707-977f-f254132d99df"
     },
     {
       "STT": 15,
@@ -238,7 +238,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Sizing cho Hệ thống Logger tập trung",
       "Ghi chú": "Cần xác định lại nhu cầu Ceph",
-      "row_id": "2d7574f0-c20a-48a0-88f5-4c1a87e5803c"
+      "row_id": "caf3e68f-0189-43f9-bac4-4884ef241cfc"
     },
     {
       "STT": 16,
@@ -254,7 +254,7 @@
       "Thời gian ký bản chốt sizing": "19/01/2025",
       "Tên dự án - Mục đích sizing": "Triển khai môi trường Lab/PoC",
       "Ghi chú": "Sizing tạm thời cho PoC",
-      "row_id": "ede2f23c-99aa-4b11-9475-f49f3426c3d2"
+      "row_id": "7f39f2a5-9484-47a1-b5d1-954666efed81"
     },
     {
       "STT": 17,
@@ -270,7 +270,7 @@
       "Thời gian ký bản chốt sizing": "20/01/2025",
       "Tên dự án - Mục đích sizing": "Nâng cấp Ứng dụng Bán hàng V2 - Tăng RAM",
       "Ghi chú": "Chỉ yêu cầu tăng RAM cho VM hiện tại",
-      "row_id": "8c90de66-2070-43b5-ba0f-e5db5cbdf485"
+      "row_id": "aada5527-7e2a-4828-830c-d93431cb7a3d"
     },
     {
       "STT": 18,
@@ -286,7 +286,7 @@
       "Thời gian ký bản chốt sizing": "21/01/2025",
       "Tên dự án - Mục đích sizing": "Mở rộng Hệ thống Thanh toán Trực tuyến",
       "Ghi chú": "Sizing cho môi trường Prod",
-      "row_id": "195e7e7a-3523-407f-ae3e-d76eba88522b"
+      "row_id": "ffa9b7a0-6653-4ff8-a686-f3cf2907b03b"
     },
     {
       "STT": 19,
@@ -302,7 +302,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Sizing Archiving cho log cũ",
       "Ghi chú": "Tạm hoãn do chưa chốt chính sách",
-      "row_id": "42f1c3b3-05ad-46ff-be7b-246534b2bf0f"
+      "row_id": "08d320a7-a5ef-4d32-9d03-233fa6987ae9"
     },
     {
       "STT": 20,
@@ -318,7 +318,7 @@
       "Thời gian ký bản chốt sizing": "23/01/2025",
       "Tên dự án - Mục đích sizing": "Triển khai Hệ thống Vận hành Mạng (NOC)",
       "Ghi chú": "Sizing VM và SAN",
-      "row_id": "396a2c0e-2ba9-49dd-98dd-a4e7bb162770"
+      "row_id": "ff7e91c9-bae9-46c3-9763-e3ab9de0f845"
     },
     {
       "STT": 21,
@@ -334,7 +334,7 @@
       "Thời gian ký bản chốt sizing": "24/01/2025",
       "Tên dự án - Mục đích sizing": "Cổng thông tin nội bộ - Môi trường Prod",
       "Ghi chú": "Sizing cho Web Prod",
-      "row_id": "4dd320e9-c912-4d13-9196-4ed707dba4f1"
+      "row_id": "9360d363-8e1a-47ac-9b90-8b66d29f7c29"
     },
     {
       "STT": 22,
@@ -350,7 +350,7 @@
       "Thời gian ký bản chốt sizing": "25/01/2025",
       "Tên dự án - Mục đích sizing": "Hệ thống Báo cáo Tài chính - Tăng cường DB",
       "Ghi chú": "Chỉ yêu cầu tăng vCPU DB",
-      "row_id": "a15cc2d4-6055-4794-805a-953aab77e6f6"
+      "row_id": "7c5d498e-54c7-424e-ab16-f2e5c626a255"
     },
     {
       "STT": 23,
@@ -366,7 +366,7 @@
       "Thời gian ký bản chốt sizing": "26/01/2025",
       "Tên dự án - Mục đích sizing": "Phân tích Rủi ro Tín dụng - Môi trường PoC",
       "Ghi chú": "Sizing Bigdata tạm thời",
-      "row_id": "a51fb532-bf55-4968-b4d3-054b20f8dad4"
+      "row_id": "1d69604c-2d56-4c91-a71e-9f927f735efd"
     },
     {
       "STT": 24,
@@ -382,7 +382,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Triển khai Ứng dụng Quản lý Tài sản",
       "Ghi chú": "Chưa chốt OS và cấu hình chi tiết",
-      "row_id": "60d25f79-1512-4a13-830e-09c3109a51f8"
+      "row_id": "a2585755-bae6-4a69-acaf-baf15050dd5b"
     },
     {
       "STT": 25,
@@ -398,7 +398,7 @@
       "Thời gian ký bản chốt sizing": "28/01/2025",
       "Tên dự án - Mục đích sizing": "Cập nhật Hệ thống Giám sát Hiệu năng",
       "Ghi chú": "Sizing VM nhỏ",
-      "row_id": "727a305e-003b-48bd-b256-e71bfed9f693"
+      "row_id": "1da24b1b-b823-48ab-8cc7-e0e6e030705c"
     },
     {
       "STT": 26,
@@ -414,7 +414,7 @@
       "Thời gian ký bản chốt sizing": "29/01/2025",
       "Tên dự án - Mục đích sizing": "Mở rộng S3 Object cho Dữ liệu Ảnh",
       "Ghi chú": "Chỉ yêu cầu S3 Object",
-      "row_id": "e79ba9cd-6b55-45df-a949-9495250c192d"
+      "row_id": "a3df7071-706e-401f-a05d-aa4cace4d264"
     },
     {
       "STT": 27,
@@ -430,7 +430,7 @@
       "Thời gian ký bản chốt sizing": "30/01/2025",
       "Tên dự án - Mục đích sizing": "Cải tiến Hệ thống DevOps Toolchain",
       "Ghi chú": "Sizing cho môi trường Testing",
-      "row_id": "3e172364-b5cb-493a-9915-feff723ed2a9"
+      "row_id": "784bbffd-9be4-43c6-896f-6d6b607c84d5"
     },
     {
       "STT": 28,
@@ -446,7 +446,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Yêu cầu NAS cho chia sẻ File",
       "Ghi chú": "Yêu cầu được chuyển sang kênh khác",
-      "row_id": "b2be2ccd-3c1c-41cc-bc09-9ed43584f0de"
+      "row_id": "15dcc29d-f7f3-4b07-a049-2aaebcc55725"
     },
     {
       "STT": 29,
@@ -462,7 +462,7 @@
       "Thời gian ký bản chốt sizing": "02/01/2025",
       "Tên dự án - Mục đích sizing": "Hệ thống Quản lý Văn bản",
       "Ghi chú": "Sizing cho môi trường Prod",
-      "row_id": "e746fd17-a7c4-41f8-b53a-6c677e04aaae"
+      "row_id": "c754bc00-509b-4eb6-b910-b8ac557c2f41"
     },
     {
       "STT": 30,
@@ -478,7 +478,7 @@
       "Thời gian ký bản chốt sizing": "02/02/2025",
       "Tên dự án - Mục đích sizing": "Sizing Ceph cho Hệ thống Logging",
       "Ghi chú": "Chỉ yêu cầu dung lượng Ceph",
-      "row_id": "9a3306b8-88a5-4bc7-8c30-8e0823cafe11"
+      "row_id": "003b0fab-780d-45a6-8986-edf533e06820"
     },
     {
       "STT": 31,
@@ -494,7 +494,7 @@
       "Thời gian ký bản chốt sizing": "02/03/2025",
       "Tên dự án - Mục đích sizing": "Dự án Tích hợp Hệ thống Khách hàng",
       "Ghi chú": "Sizing cho môi trường Prod",
-      "row_id": "8eaa7995-0fb4-46d4-9b35-c451e45132aa"
+      "row_id": "bfcc697b-ad2b-4c3c-a782-62398e6c122d"
     },
     {
       "STT": 32,
@@ -510,7 +510,7 @@
       "Thời gian ký bản chốt sizing": "02/05/2025",
       "Tên dự án - Mục đích sizing": "Nâng cấp Archiving cho Dữ liệu Lịch sử",
       "Ghi chú": "Chỉ yêu cầu tăng dung lượng Archiving",
-      "row_id": "cf457b5f-1eea-420a-918e-8b7b7230eac4"
+      "row_id": "890e8aa5-c58c-4230-9432-0d4bef7c31eb"
     },
     {
       "STT": 33,
@@ -526,7 +526,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Mở rộng SAN cho Database Staging",
       "Ghi chú": "Cần chốt lại loại SAN",
-      "row_id": "c10d1ddf-676f-4a73-94b6-20213c6e2661"
+      "row_id": "141dcb63-a99a-490b-92cd-a7226bc513e1"
     },
     {
       "STT": 34,
@@ -542,7 +542,7 @@
       "Thời gian ký bản chốt sizing": "02/07/2025",
       "Tên dự án - Mục đích sizing": "Triển khai Hệ thống E-learning",
       "Ghi chú": "Sizing cho Web và App",
-      "row_id": "a5ec86e6-c3f4-49b1-9ccf-bed9d882599f"
+      "row_id": "85b647c3-d27a-4bcc-b58d-5f1ccb1f0c9f"
     },
     {
       "STT": 35,
@@ -558,7 +558,7 @@
       "Thời gian ký bản chốt sizing": "02/08/2025",
       "Tên dự án - Mục đích sizing": "Sizing Bigdata cho Project AI/ML",
       "Ghi chú": "Yêu cầu dung lượng Bigdata lớn",
-      "row_id": "84e7e46f-96cf-4f2d-90cd-20a8c38d7ddd"
+      "row_id": "93b5e090-6b7f-4599-963b-b6f2f7510512"
     },
     {
       "STT": 36,
@@ -574,7 +574,7 @@
       "Thời gian ký bản chốt sizing": "02/09/2025",
       "Tên dự án - Mục đích sizing": "Hệ thống Giám sát Camera - Lưu trữ Ceph",
       "Ghi chú": "Sizing Ceph",
-      "row_id": "1d483b90-94a6-452a-b629-df9731fd9e8a"
+      "row_id": "2f308964-a50b-4ad4-ae8b-4343c14e3a53"
     },
     {
       "STT": 37,
@@ -590,7 +590,7 @@
       "Thời gian ký bản chốt sizing": "02/10/2025",
       "Tên dự án - Mục đích sizing": "Nâng cấp DB cho Hệ thống CRM",
       "Ghi chú": "Chỉ yêu cầu tăng vCPU và RAM DB",
-      "row_id": "f0179d5a-0751-40f0-9266-41b700b56f9f"
+      "row_id": "e6fdb057-4fda-4f84-8a5b-4283a253d8dc"
     },
     {
       "STT": 38,
@@ -606,7 +606,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Sizing cho Ứng dụng Quản lý Hợp đồng",
       "Ghi chú": "Tạm dừng triển khai",
-      "row_id": "d123d308-2ee6-4be5-ab3a-afcc191fb881"
+      "row_id": "76077c93-f5c8-46c3-9d9b-03197658bd5c"
     },
     {
       "STT": 39,
@@ -622,7 +622,7 @@
       "Thời gian ký bản chốt sizing": "02/12/2025",
       "Tên dự án - Mục đích sizing": "Hệ thống Quản lý Chuỗi Cung ứng (SCM)",
       "Ghi chú": "Sizing cho môi trường Prod",
-      "row_id": "31a62532-c97e-4c60-8333-d6ad746744a1"
+      "row_id": "6480a1e6-d444-47a0-a7e1-62b5185f6f4e"
     },
     {
       "STT": 40,
@@ -638,7 +638,7 @@
       "Thời gian ký bản chốt sizing": "13/02/2025",
       "Tên dự án - Mục đích sizing": "Triển khai Web Portal mới",
       "Ghi chú": "Sizing cho Web Server",
-      "row_id": "a1792e0a-ddc8-4162-aa0d-9d1ae3ae1ab0"
+      "row_id": "f8213ef8-7e2c-4028-9fc1-16223380218d"
     },
     {
       "STT": 41,
@@ -654,7 +654,7 @@
       "Thời gian ký bản chốt sizing": "14/02/2025",
       "Tên dự án - Mục đích sizing": "Cấu hình môi trường PoC mới (DevOps)",
       "Ghi chú": "Sizing VM nhỏ và NAS",
-      "row_id": "91fc4622-6aa6-4c83-831c-ce31f308263e"
+      "row_id": "98591cd4-289d-4ead-beaa-c3dd04da1fd5"
     },
     {
       "STT": 42,
@@ -670,7 +670,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Nâng cấp SAN cho Hệ thống Mail Server",
       "Ghi chú": "Chưa chốt dung lượng",
-      "row_id": "196507bb-03d4-43bc-9e35-667a1f579aa1"
+      "row_id": "47cdccff-6b4c-46bc-8695-a47e32c83729"
     },
     {
       "STT": 43,
@@ -686,7 +686,7 @@
       "Thời gian ký bản chốt sizing": "16/02/2025",
       "Tên dự án - Mục đích sizing": "Mở rộng Archiving cho log hệ thống",
       "Ghi chú": "Chỉ yêu cầu dung lượng Archiving",
-      "row_id": "1a0d3505-64cb-4d95-941d-ea73474e5ed0"
+      "row_id": "21e3dbd4-6ba8-4599-b872-940ee2ad64a5"
     },
     {
       "STT": 44,
@@ -702,7 +702,7 @@
       "Thời gian ký bản chốt sizing": "17/02/2025",
       "Tên dự án - Mục đích sizing": "Hệ thống Quản lý Dự án (PMS)",
       "Ghi chú": "Sizing cho môi trường Prod",
-      "row_id": "251d22a3-9790-491d-a9e2-fe7853909755"
+      "row_id": "f0b8895a-1b71-40b1-a658-05e23bf2583a"
     },
     {
       "STT": 45,
@@ -718,7 +718,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Sizing S3 Object cho Dữ liệu Phân tích",
       "Ghi chú": "Yêu cầu bị rút lại",
-      "row_id": "006672ef-c2a0-4e90-941b-5d026bad2b2b"
+      "row_id": "6d3adc43-d70e-4b4b-b3a0-c72253961734"
     },
     {
       "STT": 46,
@@ -734,7 +734,7 @@
       "Thời gian ký bản chốt sizing": "19/02/2025",
       "Tên dự án - Mục đích sizing": "Triển khai Hệ thống Quản lý Văn thư",
       "Ghi chú": "Sizing VM",
-      "row_id": "ef7b9323-2d92-4633-b043-fb12f7abb232"
+      "row_id": "efe2dd68-7bd8-4bc5-8b2a-4d10e3e563d0"
     },
     {
       "STT": 47,
@@ -750,7 +750,7 @@
       "Thời gian ký bản chốt sizing": "20/02/2025",
       "Tên dự án - Mục đích sizing": "Nâng cấp vCPU cho DB dự án SCM",
       "Ghi chú": "Chỉ yêu cầu tăng vCPU",
-      "row_id": "6369e614-3ab8-4111-9672-96c80c07150d"
+      "row_id": "e12dab4a-be3a-4cd3-8c27-29848720e324"
     },
     {
       "STT": 48,
@@ -766,7 +766,7 @@
       "Thời gian ký bản chốt sizing": "21/02/2025",
       "Tên dự án - Mục đích sizing": "Sizing NAS cho File Server Mới",
       "Ghi chú": "Chỉ yêu cầu NAS",
-      "row_id": "50b5e522-09f9-442d-a073-3c038d9b6b2d"
+      "row_id": "0d362ae2-b565-47dc-a8ca-e4d0e57d1c6e"
     },
     {
       "STT": 49,
@@ -782,7 +782,7 @@
       "Thời gian ký bản chốt sizing": "",
       "Tên dự án - Mục đích sizing": "Mở rộng RAM cho Web App",
       "Ghi chú": "Đang chờ phê duyệt ngân sách",
-      "row_id": "74eaf7b9-5056-4f93-9bc7-2b326efded8e"
+      "row_id": "8cdf32e8-5883-4043-9519-56461ffb08cc"
     },
     {
       "STT": 50,
@@ -798,23 +798,7 @@
       "Thời gian ký bản chốt sizing": "23/02/2025",
       "Tên dự án - Mục đích sizing": "Dự án Cải tiến Hệ thống Quản lý Kho bãi",
       "Ghi chú": "Sizing cho môi trường DEV",
-      "row_id": "439087a2-d5b4-499d-9d6e-c79b50a0ae54"
-    },
-    {
-      "STT": 51,
-      "Mã PYC": "PYC-051",
-      "Đơn vị": "CN",
-      "Đầu mối tạo PYC": "CN",
-      "Đầu mối xử lý": "CN",
-      "Trạng thái": "Hoàn thành",
-      "Thời điểm đẩy yêu cầu": "24/11/2025",
-      "Thời gian hoàn thành theo KPI": "27/11/2025",
-      "Tiến độ": "Đến hạn",
-      "Thời gian hoàn thành ký PNX và đóng y/c": "",
-      "Thời gian ký bản chốt sizing": "",
-      "Tên dự án - Mục đích sizing": "",
-      "Ghi chú": "",
-      "row_id": "51ae0d4a-4021-476e-8f6d-d21742682dff"
+      "row_id": "4f39c3a5-d4ee-4e4d-b4fd-448923e07139"
     }
   ],
   "CapPhat": [
@@ -830,7 +814,7 @@
       "Timeline thực hiện theo GNOC": "01/10/2025",
       "Thời gian hoàn thành": "01/09/2025",
       "Hoàn thành": "Y",
-      "row_id": "a3dc710d-db72-4e5c-9b15-f8458459718c"
+      "row_id": "82857689-51a6-4748-83db-d03af5a38608"
     },
     {
       "STT": 2,
@@ -844,7 +828,7 @@
       "Timeline thực hiện theo GNOC": "01/11/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "01455930-4965-47dc-be09-56b3471f9057"
+      "row_id": "8b6d573e-a626-443f-96fc-689c19acc695"
     },
     {
       "STT": 3,
@@ -858,7 +842,7 @@
       "Timeline thực hiện theo GNOC": "01/12/2025",
       "Thời gian hoàn thành": "01/11/2025",
       "Hoàn thành": "Y",
-      "row_id": "ee18cd06-2ab3-4d0e-968f-90dcb0d1ae18"
+      "row_id": "73756489-ecf3-4d8f-a8ad-625311e8d152"
     },
     {
       "STT": 4,
@@ -872,7 +856,7 @@
       "Timeline thực hiện theo GNOC": "14/01/2025",
       "Thời gian hoàn thành": "13/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "7bfef0ae-8266-4f4a-bd54-09090dce9756"
+      "row_id": "52ef8ea3-10dc-4e65-9b31-739edd14fe10"
     },
     {
       "STT": 5,
@@ -886,7 +870,7 @@
       "Timeline thực hiện theo GNOC": "15/01/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "c08421d9-5081-4a19-a02a-1a6354dbf641"
+      "row_id": "dadfdb8a-d386-4401-9371-4535d0031199"
     },
     {
       "STT": 6,
@@ -900,7 +884,7 @@
       "Timeline thực hiện theo GNOC": "16/01/2025",
       "Thời gian hoàn thành": "15/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "3cd8d64c-9ade-4b9a-9f10-3b3360bbba2d"
+      "row_id": "7f161809-752c-437e-b9b7-9ca0b9ee5539"
     },
     {
       "STT": 7,
@@ -914,7 +898,7 @@
       "Timeline thực hiện theo GNOC": "17/01/2025",
       "Thời gian hoàn thành": "16/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "b50b418d-ace2-442b-b9ad-935f7027add8"
+      "row_id": "fcc9f3b3-170d-4a00-9102-ee9520be855b"
     },
     {
       "STT": 8,
@@ -928,7 +912,7 @@
       "Timeline thực hiện theo GNOC": "18/01/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "0c7646ff-2747-4b24-934f-2e794122d2bf"
+      "row_id": "cda33300-e3a4-409e-96d2-9521087485ad"
     },
     {
       "STT": 9,
@@ -942,7 +926,7 @@
       "Timeline thực hiện theo GNOC": "19/01/2025",
       "Thời gian hoàn thành": "17/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "11f7daa4-1421-4151-b201-ecddf32efa5a"
+      "row_id": "23c108ea-696d-43ac-aa0c-8524bb0386f0"
     },
     {
       "STT": 10,
@@ -956,7 +940,7 @@
       "Timeline thực hiện theo GNOC": "21/01/2025",
       "Thời gian hoàn thành": "20/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "45dfe5e9-ca6e-46b2-ac6c-88fb4577ca22"
+      "row_id": "eb67b217-989e-42de-8170-b89a7cc0b7d4"
     },
     {
       "STT": 11,
@@ -970,7 +954,7 @@
       "Timeline thực hiện theo GNOC": "22/01/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "baaf11ee-08dc-4a59-b4d9-98f4ef1866ad"
+      "row_id": "5d416b54-f0a0-4d98-bdf6-859b44245fd7"
     },
     {
       "STT": 12,
@@ -984,7 +968,7 @@
       "Timeline thực hiện theo GNOC": "23/01/2025",
       "Thời gian hoàn thành": "22/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "bfa3ff9a-50cc-4352-9798-a2de701ba14b"
+      "row_id": "30dcec37-7ac2-48e0-84b6-8e8bbd7f1b9a"
     },
     {
       "STT": 13,
@@ -998,7 +982,7 @@
       "Timeline thực hiện theo GNOC": "24/01/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "a8b2c7e2-5b68-4a0a-bb85-a2852c8f49cb"
+      "row_id": "554f7fc0-6233-4329-a6d9-3c0801889f3d"
     },
     {
       "STT": 14,
@@ -1012,7 +996,7 @@
       "Timeline thực hiện theo GNOC": "25/01/2025",
       "Thời gian hoàn thành": "24/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "fef5a1c4-a6a5-42fd-a5d9-4be3ba6de713"
+      "row_id": "fc738a08-4135-4ed4-9558-6abbbce5a5c9"
     },
     {
       "STT": 15,
@@ -1026,7 +1010,7 @@
       "Timeline thực hiện theo GNOC": "26/01/2025",
       "Thời gian hoàn thành": "25/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "bbb68aa2-32a7-4d8d-89b7-f7e306351fce"
+      "row_id": "48063bbd-7b48-41fa-9e09-accb1aea73ab"
     },
     {
       "STT": 16,
@@ -1040,7 +1024,7 @@
       "Timeline thực hiện theo GNOC": "27/01/2025",
       "Thời gian hoàn thành": "26/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "cd39308f-0376-47df-aae6-49666127c483"
+      "row_id": "61dae239-42b2-4ebb-beee-213721243ab9"
     },
     {
       "STT": 17,
@@ -1054,7 +1038,7 @@
       "Timeline thực hiện theo GNOC": "29/01/2025",
       "Thời gian hoàn thành": "28/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "89a312ed-0493-4dfe-b7d2-ed07329d8db2"
+      "row_id": "350ba2f8-aa0e-420a-8f96-6699c8272fe4"
     },
     {
       "STT": 18,
@@ -1068,7 +1052,7 @@
       "Timeline thực hiện theo GNOC": "30/01/2025",
       "Thời gian hoàn thành": "29/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "d90c5abe-1caf-4274-a773-85b0e29e8834"
+      "row_id": "fed9b271-1741-409b-a459-807662c326d4"
     },
     {
       "STT": 19,
@@ -1082,7 +1066,7 @@
       "Timeline thực hiện theo GNOC": "31/01/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "09023686-e3d7-421b-8895-dc9bba6cbd76"
+      "row_id": "1490a358-b215-40ff-92dc-ae942903161c"
     },
     {
       "STT": 20,
@@ -1096,7 +1080,7 @@
       "Timeline thực hiện theo GNOC": "02/01/2025",
       "Thời gian hoàn thành": "31/01/2025",
       "Hoàn thành": "Y",
-      "row_id": "1ea4f9ba-b402-46d2-9da1-12b7ff99e970"
+      "row_id": "e8e3d57f-53cd-4862-aa3d-c16063e823d8"
     },
     {
       "STT": 21,
@@ -1110,7 +1094,7 @@
       "Timeline thực hiện theo GNOC": "02/02/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "878b2173-8fdc-4a4e-917e-206539801566"
+      "row_id": "3388912d-4592-4948-b8af-330bcab2ddd6"
     },
     {
       "STT": 22,
@@ -1124,7 +1108,7 @@
       "Timeline thực hiện theo GNOC": "02/03/2025",
       "Thời gian hoàn thành": "02/02/2025",
       "Hoàn thành": "Y",
-      "row_id": "aa902bde-1002-4e25-a285-ff254d05d251"
+      "row_id": "c55655ac-bc68-47ec-a5ed-302d909193d0"
     },
     {
       "STT": 23,
@@ -1138,7 +1122,7 @@
       "Timeline thực hiện theo GNOC": "02/04/2025",
       "Thời gian hoàn thành": "02/03/2025",
       "Hoàn thành": "Y",
-      "row_id": "f2bad715-06d7-4ce8-a9b2-41e0ad856aff"
+      "row_id": "9fc5ba3d-3497-47a7-813a-3b67166b93d7"
     },
     {
       "STT": 24,
@@ -1152,7 +1136,7 @@
       "Timeline thực hiện theo GNOC": "02/05/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "db816b39-c72d-4897-90f6-92e5f034599a"
+      "row_id": "c399642f-7cb4-4a61-bccb-61db66db28d2"
     },
     {
       "STT": 25,
@@ -1166,7 +1150,7 @@
       "Timeline thực hiện theo GNOC": "02/07/2025",
       "Thời gian hoàn thành": "02/06/2025",
       "Hoàn thành": "Y",
-      "row_id": "0d9fc3d0-cc67-4da6-ab08-92a42dccd6bf"
+      "row_id": "aed3db97-92ac-4d23-bd47-00b65145f2b3"
     },
     {
       "STT": 26,
@@ -1180,7 +1164,7 @@
       "Timeline thực hiện theo GNOC": "02/08/2025",
       "Thời gian hoàn thành": "02/07/2025",
       "Hoàn thành": "Y",
-      "row_id": "277517ae-004d-4122-9125-f0d656c8947f"
+      "row_id": "a05daeab-81f3-4893-95ba-9d9e2dbe3637"
     },
     {
       "STT": 27,
@@ -1194,7 +1178,7 @@
       "Timeline thực hiện theo GNOC": "02/09/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "9141b08a-b738-481f-a66c-60010cd6c0ce"
+      "row_id": "feef5a55-38dd-4166-b6cd-098c8b74cae9"
     },
     {
       "STT": 28,
@@ -1208,7 +1192,7 @@
       "Timeline thực hiện theo GNOC": "02/11/2025",
       "Thời gian hoàn thành": "02/10/2025",
       "Hoàn thành": "Y",
-      "row_id": "cc88c39e-6172-406b-a46b-e563da339f2b"
+      "row_id": "d2c0928f-4424-49dd-81d7-c1b2a43225ae"
     },
     {
       "STT": 29,
@@ -1222,7 +1206,7 @@
       "Timeline thực hiện theo GNOC": "02/12/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "b89d1013-b0ec-4bbc-9320-e3a06301e1dc"
+      "row_id": "a4b20eca-0f03-4221-b151-ae4d2409f0f9"
     },
     {
       "STT": 30,
@@ -1236,7 +1220,7 @@
       "Timeline thực hiện theo GNOC": "13/02/2025",
       "Thời gian hoàn thành": "02/12/2025",
       "Hoàn thành": "Y",
-      "row_id": "241b703d-4383-4b9c-92b7-d71682bfac81"
+      "row_id": "8430f7d9-5e51-4c32-a711-d3cfdad6c3d5"
     },
     {
       "STT": 31,
@@ -1250,7 +1234,7 @@
       "Timeline thực hiện theo GNOC": "14/02/2025",
       "Thời gian hoàn thành": "13/02/2025",
       "Hoàn thành": "Y",
-      "row_id": "4013c3d9-57fe-428d-b3b5-bc8e536d4690"
+      "row_id": "6bcde35c-85e0-419b-8a95-d112477c1420"
     },
     {
       "STT": 32,
@@ -1264,7 +1248,7 @@
       "Timeline thực hiện theo GNOC": "15/02/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "65b292ad-d625-4ef0-a6f7-b32544924bd3"
+      "row_id": "6f3f9def-4a5e-4ec2-858f-558d014d4618"
     },
     {
       "STT": 33,
@@ -1278,7 +1262,7 @@
       "Timeline thực hiện theo GNOC": "16/02/2025",
       "Thời gian hoàn thành": "15/02/2025",
       "Hoàn thành": "Y",
-      "row_id": "9ba24532-3433-4db7-90c3-6304c797474a"
+      "row_id": "f892a9ce-c118-42fd-a6d5-8fa4babbec68"
     },
     {
       "STT": 34,
@@ -1292,7 +1276,7 @@
       "Timeline thực hiện theo GNOC": "18/02/2025",
       "Thời gian hoàn thành": "17/02/2025",
       "Hoàn thành": "Y",
-      "row_id": "1330bc2f-7ed0-44a4-8e44-3c1f30c72c94"
+      "row_id": "f0c78731-2d53-45b8-9b61-c343e4c4710a"
     },
     {
       "STT": 35,
@@ -1306,7 +1290,7 @@
       "Timeline thực hiện theo GNOC": "19/02/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "33ef33de-2346-4d66-b864-0d25659f9182"
+      "row_id": "6fc6a30c-06b6-4267-9d77-b892ead395e9"
     },
     {
       "STT": 36,
@@ -1320,7 +1304,7 @@
       "Timeline thực hiện theo GNOC": "20/02/2025",
       "Thời gian hoàn thành": "19/02/2025",
       "Hoàn thành": "Y",
-      "row_id": "688db521-815f-47c7-909f-98c9f1e56664"
+      "row_id": "429caeaa-aec9-4094-977b-d53fc76cfdef"
     },
     {
       "STT": 37,
@@ -1334,7 +1318,7 @@
       "Timeline thực hiện theo GNOC": "21/02/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "72fc3985-d2b1-4b21-b2ba-1f3c6b210c00"
+      "row_id": "b18f432a-01e8-4a1d-b1bb-6dc51553d4b7"
     },
     {
       "STT": 38,
@@ -1348,7 +1332,7 @@
       "Timeline thực hiện theo GNOC": "22/02/2025",
       "Thời gian hoàn thành": "21/02/2025",
       "Hoàn thành": "Y",
-      "row_id": "2bc47b83-74f1-43b6-849e-2ae3fd6ef2b3"
+      "row_id": "511ee9fe-db1e-4429-91ae-b867378d7739"
     },
     {
       "STT": 39,
@@ -1362,7 +1346,7 @@
       "Timeline thực hiện theo GNOC": "23/02/2025",
       "Thời gian hoàn thành": "22/02/2025",
       "Hoàn thành": "Y",
-      "row_id": "5568d793-5619-48e1-907b-d76c5f4b5e97"
+      "row_id": "07a03ed7-add3-46bc-86a3-b2a0663ca583"
     },
     {
       "STT": 40,
@@ -1376,7 +1360,7 @@
       "Timeline thực hiện theo GNOC": "25/02/2025",
       "Thời gian hoàn thành": "24/02/2025",
       "Hoàn thành": "Y",
-      "row_id": "b3f640f9-c359-4977-8ae8-5b7ee4201547"
+      "row_id": "8f308b6f-f2f2-4100-a2b2-4d8b8990b84a"
     },
     {
       "STT": 41,
@@ -1390,7 +1374,7 @@
       "Timeline thực hiện theo GNOC": "26/02/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "85b5c77a-f6c0-4658-b2c4-b267d7c6d554"
+      "row_id": "7e0f5061-d6f3-4583-862b-13b0106329c5"
     },
     {
       "STT": 42,
@@ -1404,7 +1388,7 @@
       "Timeline thực hiện theo GNOC": "27/02/2025",
       "Thời gian hoàn thành": "26/02/2025",
       "Hoàn thành": "Y",
-      "row_id": "acc02c66-a3c4-4530-ac2d-aff49fcf912b"
+      "row_id": "8b4ce7eb-83a2-4f70-a024-8684052c2dfc"
     },
     {
       "STT": 43,
@@ -1418,7 +1402,7 @@
       "Timeline thực hiện theo GNOC": "28/02/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "e705b8ca-4ea7-4eab-b94d-0113c8ecdef5"
+      "row_id": "fffa9582-ab9d-4e7e-8046-e13196008474"
     },
     {
       "STT": 44,
@@ -1432,7 +1416,7 @@
       "Timeline thực hiện theo GNOC": "03/01/2025",
       "Thời gian hoàn thành": "28/02/2025",
       "Hoàn thành": "Y",
-      "row_id": "09c859a3-22ce-4d90-a0a2-d76767b51a08"
+      "row_id": "e63c8ba4-4e87-455d-946d-fc9ea481774f"
     },
     {
       "STT": 45,
@@ -1446,7 +1430,7 @@
       "Timeline thực hiện theo GNOC": "03/05/2025",
       "Thời gian hoàn thành": "03/04/2025",
       "Hoàn thành": "Y",
-      "row_id": "ee8e9f64-1d82-40dc-87ec-6f9e42b32137"
+      "row_id": "1d2a3ad3-13af-437f-9abf-7478ba9a49a4"
     },
     {
       "STT": 46,
@@ -1460,7 +1444,7 @@
       "Timeline thực hiện theo GNOC": "03/06/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "a62dc4ae-fa74-4211-ae65-64ccaa839184"
+      "row_id": "5047fdcc-d0e0-4b8d-b6fd-49a7a7472106"
     },
     {
       "STT": 47,
@@ -1474,7 +1458,7 @@
       "Timeline thực hiện theo GNOC": "03/07/2025",
       "Thời gian hoàn thành": "03/06/2025",
       "Hoàn thành": "Y",
-      "row_id": "21f86223-c60b-4f30-aa6e-512bf35a857b"
+      "row_id": "fc2cb5e9-7701-48d1-ab0f-72c7dfa570cc"
     },
     {
       "STT": 48,
@@ -1488,7 +1472,7 @@
       "Timeline thực hiện theo GNOC": "03/08/2025",
       "Thời gian hoàn thành": "03/07/2025",
       "Hoàn thành": "Y",
-      "row_id": "594f57fc-b9f9-4dcb-a71f-f8364ea5ce7c"
+      "row_id": "8d4e7987-5198-4f5d-bffc-b591d33e200a"
     },
     {
       "STT": 49,
@@ -1502,7 +1486,7 @@
       "Timeline thực hiện theo GNOC": "03/09/2025",
       "Thời gian hoàn thành": "",
       "Hoàn thành": "N",
-      "row_id": "3f24b33d-e7ae-40eb-9287-f2dc4447a900"
+      "row_id": "f208e349-39d9-4eed-ad01-7d8942277975"
     },
     {
       "STT": 50,
@@ -1516,7 +1500,7 @@
       "Timeline thực hiện theo GNOC": "03/10/2025",
       "Thời gian hoàn thành": "03/09/2025",
       "Hoàn thành": "Y",
-      "row_id": "7bf60af0-3535-4b39-98a5-6f9338d90e88"
+      "row_id": "c84936f9-fc53-4dea-a5be-70ae7dc67dcb"
     }
   ],
   "ChiTiet": [
@@ -1528,20 +1512,20 @@
       "Đầu mối P.HT": "Trần B",
       "Mã SR": "SR-001",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "4",
+      "vCPU": "24",
+      "Cint": "12",
+      "RAM(GB)": "128",
+      "SAN(GB)": "500",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App/Web",
       "Ghi chú": "2 VM Web",
-      "row_id": "8ac11ab7-c797-4d95-829a-138b9c31f3ae"
+      "row_id": "1ed23a14-a9f9-428e-985c-c87be8d83b91"
     },
     {
       "STT": 2,
@@ -1551,20 +1535,20 @@
       "Đầu mối P.HT": "Phạm D",
       "Mã SR": "SR-002",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "16",
+      "Cint": "8",
+      "RAM(GB)": "64",
+      "SAN(GB)": "300",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod KVM",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "Môi trường UAT",
-      "row_id": "71d87152-b24a-4d1e-90a6-6fbb9ed79475"
+      "row_id": "fe1fb3e3-5cc1-4c4a-be61-1fa5ffc27a74"
     },
     {
       "STT": 3,
@@ -1574,20 +1558,20 @@
       "Đầu mối P.HT": "Mai G",
       "Mã SR": "SR-003",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "10",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "10000",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Bigdata Cluster",
       "Nhóm tài nguyên": "Data/BI",
       "Ghi chú": "Cấp phát dung lượng HDFS",
-      "row_id": "0a89e534-a2a3-46ce-8e9b-7e5a5101ccda"
+      "row_id": "6390e214-a5db-4f7c-b6a4-1be8d4b3c2c3"
     },
     {
       "STT": 4,
@@ -1597,20 +1581,20 @@
       "Đầu mối P.HT": "Đinh L",
       "Mã SR": "SR-005",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "8",
+      "Cint": "4",
+      "RAM(GB)": "32",
+      "SAN(GB)": "100",
+      "NAS(GB)": "50",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Test VMW",
       "Nhóm tài nguyên": "Dev/Test",
       "Ghi chú": "VM Test",
-      "row_id": "a3240a6d-5767-4bd9-b586-b384a413432b"
+      "row_id": "e1d20eff-0098-4e9f-8881-af193017d8ae"
     },
     {
       "STT": 5,
@@ -1620,20 +1604,20 @@
       "Đầu mối P.HT": "Nguyễn P",
       "Mã SR": "SR-007",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "4",
+      "vCPU": "32",
+      "Cint": "16",
+      "RAM(GB)": "192",
+      "SAN(GB)": "400",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App/Web",
       "Ghi chú": "2 Web",
-      "row_id": "76d496da-8490-493e-bccf-024bf9e42c6d"
+      "row_id": "4fa5a110-ff43-4164-8914-4b8576a6edc9"
     },
     {
       "STT": 6,
@@ -1643,20 +1627,20 @@
       "Đầu mối P.HT": "Hoàng R",
       "Mã SR": "SR-008",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "2000",
+      "NAS(GB)": "500",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "SAN/NAS Array",
       "Nhóm tài nguyên": "Storage",
       "Ghi chú": "Dung lượng cho File Server",
-      "row_id": "bb6b755e-7a4a-4e9f-b124-e526ae84d26e"
+      "row_id": "9cf79e06-d294-4936-8e65-742941e97ac4"
     },
     {
       "STT": 7,
@@ -1666,20 +1650,20 @@
       "Đầu mối P.HT": "Trần B",
       "Mã SR": "SR-009",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "12",
+      "Cint": "6",
+      "RAM(GB)": "48",
+      "SAN(GB)": "250",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod KVM",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "Môi trường Prod",
-      "row_id": "8fbbad10-d20c-4dc8-81c1-851c1e51d4f6"
+      "row_id": "6f1b261b-f285-4faf-b61d-a1da855366d2"
     },
     {
       "STT": 8,
@@ -1689,20 +1673,20 @@
       "Đầu mối P.HT": "Phạm D",
       "Mã SR": "SR-010",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "5000",
       "Pool/Nguồn tài nguyên": "S3 Cluster",
       "Nhóm tài nguyên": "Storage",
       "Ghi chú": "Lưu trữ Object",
-      "row_id": "16efad61-92ef-4ee5-aad2-8c5ecf382076"
+      "row_id": "5f4a479b-5712-4970-b2a8-f24b9129a99e"
     },
     {
       "STT": 9,
@@ -1712,20 +1696,20 @@
       "Đầu mối P.HT": "Vũ I",
       "Mã SR": "SR-012",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "1",
+      "vCPU": "4",
+      "Cint": "2",
+      "RAM(GB)": "16",
+      "SAN(GB)": "50",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Dev KVM",
       "Nhóm tài nguyên": "Dev/Test",
       "Ghi chú": "VM Dev",
-      "row_id": "a5908dff-08d1-48d7-a335-edbe466b9ab5"
+      "row_id": "1f50aaa9-cfbd-404f-bcc2-d9f2968fe130"
     },
     {
       "STT": 10,
@@ -1735,20 +1719,20 @@
       "Đầu mối P.HT": "Đinh L",
       "Mã SR": "SR-013",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "1",
+      "vCPU": "32",
+      "Cint": "16",
+      "RAM(GB)": "256",
+      "SAN(GB)": "1000",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "VM DB Prod",
-      "row_id": "bee17530-1a9b-4c15-9381-4b49d6b40411"
+      "row_id": "3200caa8-1c57-40b9-8132-a24ad5907e96"
     },
     {
       "STT": 11,
@@ -1758,20 +1742,20 @@
       "Đầu mối P.HT": "Trần N",
       "Mã SR": "SR-014",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "3",
+      "vCPU": "18",
+      "Cint": "9",
+      "RAM(GB)": "96",
+      "SAN(GB)": "300",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App/Web",
       "Ghi chú": "1 Web",
-      "row_id": "2afd71c6-22b0-4439-96b0-fc12dfdf6506"
+      "row_id": "a74997d6-6fff-4322-8d7e-748d525e787b"
     },
     {
       "STT": 12,
@@ -1781,20 +1765,20 @@
       "Đầu mối P.HT": "Nguyễn P",
       "Mã SR": "SR-015",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "5000",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Ceph Cluster",
       "Nhóm tài nguyên": "Storage",
       "Ghi chú": "Dung lượng log (Pending)",
-      "row_id": "3e82b177-4712-422c-9b76-ee73ae5d064b"
+      "row_id": "eb17f6a9-cda1-4b84-92bf-d93562ea5446"
     },
     {
       "STT": 13,
@@ -1804,20 +1788,20 @@
       "Đầu mối P.HT": "Hoàng R",
       "Mã SR": "SR-016",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "3",
+      "vCPU": "6",
+      "Cint": "3",
+      "RAM(GB)": "24",
+      "SAN(GB)": "100",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool PoC VMW",
       "Nhóm tài nguyên": "Dev/Test",
       "Ghi chú": "VM PoC",
-      "row_id": "31286124-0fd3-44c9-b4e6-62cabb74e7e2"
+      "row_id": "e7e27ddb-3884-4684-a767-1e8328a465cb"
     },
     {
       "STT": 14,
@@ -1827,20 +1811,20 @@
       "Đầu mối P.HT": "Trần B",
       "Mã SR": "SR-017",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "64",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App/Web",
       "Ghi chú": "Tăng thêm 64GB RAM cho VM DB",
-      "row_id": "6afbc57f-5e09-4d4e-a65e-0f641c80b233"
+      "row_id": "70526221-c2c5-42a2-9f70-0ffa6103bca1"
     },
     {
       "STT": 15,
@@ -1850,20 +1834,20 @@
       "Đầu mối P.HT": "Phạm D",
       "Mã SR": "SR-018",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "4",
+      "vCPU": "20",
+      "Cint": "10",
+      "RAM(GB)": "120",
+      "SAN(GB)": "400",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod KVM",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "4 VM Prod",
-      "row_id": "05f16513-3130-4498-b8ab-8f1f7e0b7020"
+      "row_id": "e297b0d2-3a93-4a59-a659-701e0f012f34"
     },
     {
       "STT": 16,
@@ -1873,20 +1857,20 @@
       "Đầu mối P.HT": "Vũ I",
       "Mã SR": "SR-020",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "8",
+      "Cint": "4",
+      "RAM(GB)": "32",
+      "SAN(GB)": "150",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "VM NOC",
-      "row_id": "7a3b5e01-1043-4399-8f00-54a73c41f0fa"
+      "row_id": "7765978e-b6f8-4c8b-8c00-ec74e33124d1"
     },
     {
       "STT": 17,
@@ -1896,20 +1880,20 @@
       "Đầu mối P.HT": "Đinh L",
       "Mã SR": "SR-021",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "16",
+      "Cint": "8",
+      "RAM(GB)": "64",
+      "SAN(GB)": "200",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App/Web",
       "Ghi chú": "2 Web Prod",
-      "row_id": "385f4d14-ac24-4bd2-8f2f-299d1b6c5587"
+      "row_id": "b05291ac-ef6a-4856-947b-cfe424350f37"
     },
     {
       "STT": 18,
@@ -1919,20 +1903,20 @@
       "Đầu mối P.HT": "Trần N",
       "Mã SR": "SR-022",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "8",
+      "Cint": "4",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "Tăng thêm 8 vCPU cho DB (Pending)",
-      "row_id": "6e21c74d-e139-4d19-bb98-0563a5d27fc7"
+      "row_id": "9691fa08-fa10-42c6-b84d-2ffa34f84ed0"
     },
     {
       "STT": 19,
@@ -1942,20 +1926,20 @@
       "Đầu mối P.HT": "Nguyễn P",
       "Mã SR": "SR-023",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "5",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "5000",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Bigdata Cluster",
       "Nhóm tài nguyên": "Data/BI",
       "Ghi chú": "Dung lượng HDFS PoC",
-      "row_id": "7d69e206-edcc-4df6-be39-3e05ade470f8"
+      "row_id": "4b834c6d-062d-448c-99dc-698a01e76fd9"
     },
     {
       "STT": 20,
@@ -1965,20 +1949,20 @@
       "Đầu mối P.HT": "Trần B",
       "Mã SR": "SR-025",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "4",
+      "Cint": "2",
+      "RAM(GB)": "16",
+      "SAN(GB)": "50",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Dev VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "VM Monitoring",
-      "row_id": "632df16f-842d-4462-899e-8d0fafaa6e10"
+      "row_id": "a42362fa-b5dc-4b09-af94-a02fcc690390"
     },
     {
       "STT": 21,
@@ -1988,20 +1972,20 @@
       "Đầu mối P.HT": "Phạm D",
       "Mã SR": "SR-026",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "10000",
       "Pool/Nguồn tài nguyên": "S3 Cluster",
       "Nhóm tài nguyên": "Storage",
       "Ghi chú": "Thêm 10TB S3",
-      "row_id": "88d4b07e-6e4f-4199-9292-3d1d95d34486"
+      "row_id": "53ac00e9-1a67-44fb-a595-1ffc84455bea"
     },
     {
       "STT": 22,
@@ -2011,20 +1995,20 @@
       "Đầu mối P.HT": "Mai G",
       "Mã SR": "SR-027",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "3",
+      "vCPU": "12",
+      "Cint": "6",
+      "RAM(GB)": "48",
+      "SAN(GB)": "200",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Test KVM",
       "Nhóm tài nguyên": "Dev/Test",
       "Ghi chú": "VM Testing",
-      "row_id": "23881b64-e790-4a88-aaf4-b2a8afd90a70"
+      "row_id": "6c2ded4e-db04-4129-b797-f3ad0fa3587d"
     },
     {
       "STT": 23,
@@ -2034,20 +2018,20 @@
       "Đầu mối P.HT": "Đinh L",
       "Mã SR": "SR-029",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "3",
+      "vCPU": "16",
+      "Cint": "8",
+      "RAM(GB)": "96",
+      "SAN(GB)": "350",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "3 VM Prod",
-      "row_id": "40afba55-45d6-4246-8cb5-877c18ac52fc"
+      "row_id": "98be962d-ece8-4ec1-bf66-8864f9a8f4d8"
     },
     {
       "STT": 24,
@@ -2057,20 +2041,20 @@
       "Đầu mối P.HT": "Trần N",
       "Mã SR": "SR-030",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "2000",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Ceph Cluster",
       "Nhóm tài nguyên": "Storage",
       "Ghi chú": "Thêm 2TB Ceph",
-      "row_id": "2f06798f-da0f-47d7-b5d6-e4e539cdc95c"
+      "row_id": "3905084e-c428-4c33-9ca1-e1ba298c8777"
     },
     {
       "STT": 25,
@@ -2080,20 +2064,20 @@
       "Đầu mối P.HT": "Nguyễn P",
       "Mã SR": "SR-031",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "4",
+      "vCPU": "28",
+      "Cint": "14",
+      "RAM(GB)": "144",
+      "SAN(GB)": "500",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App/Web",
       "Ghi chú": "4 VM Prod",
-      "row_id": "d723e67e-22c5-4dfc-b0ca-7b6efef32cee"
+      "row_id": "b4d48717-85e8-41a0-97b3-8366c9a5acfe"
     },
     {
       "STT": 26,
@@ -2103,20 +2087,20 @@
       "Đầu mối P.HT": "Hoàng R",
       "Mã SR": "SR-032",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "3000",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Archiving Storage",
       "Nhóm tài nguyên": "Backup",
       "Ghi chú": "Thêm 3TB Archiving",
-      "row_id": "c3ae0ac5-1dc6-4f68-95c5-59691ba3b359"
+      "row_id": "32a2bf50-2bc0-4f29-ac7b-38317ad9f343"
     },
     {
       "STT": 27,
@@ -2126,20 +2110,20 @@
       "Đầu mối P.HT": "Trần B",
       "Mã SR": "SR-033",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "500",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "Thêm 500GB SAN (Pending)",
-      "row_id": "1f7f9ec6-7990-47cc-a042-bf74669e2f63"
+      "row_id": "a571a939-5100-4025-a50c-c08006e317b0"
     },
     {
       "STT": 28,
@@ -2149,20 +2133,20 @@
       "Đầu mối P.HT": "Phạm D",
       "Mã SR": "SR-034",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "4",
+      "vCPU": "24",
+      "Cint": "12",
+      "RAM(GB)": "128",
+      "SAN(GB)": "450",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod KVM",
       "Nhóm tài nguyên": "App/Web",
       "Ghi chú": "4 VM",
-      "row_id": "5818b78e-3746-4335-ac73-d067bbbc9bae"
+      "row_id": "6705d91b-0a5e-4d07-89e5-0d2166f912fa"
     },
     {
       "STT": 29,
@@ -2172,20 +2156,20 @@
       "Đầu mối P.HT": "Mai G",
       "Mã SR": "SR-035",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "15",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "20000",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Bigdata Cluster",
       "Nhóm tài nguyên": "Data/BI",
       "Ghi chú": "20TB HDFS",
-      "row_id": "d4d4baa6-ed60-4c19-9957-927275edee90"
+      "row_id": "63953e0b-abe6-4bb6-ada3-281c113eb7c2"
     },
     {
       "STT": 30,
@@ -2195,20 +2179,20 @@
       "Đầu mối P.HT": "Vũ I",
       "Mã SR": "SR-036",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "1000",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Ceph Cluster",
       "Nhóm tài nguyên": "Storage",
       "Ghi chú": "1TB Ceph (Pending)",
-      "row_id": "c576ab23-9915-4524-90b2-2dd0d2305cf6"
+      "row_id": "b70452a6-1dad-461a-ac94-5aca0e3837fa"
     },
     {
       "STT": 31,
@@ -2218,20 +2202,20 @@
       "Đầu mối P.HT": "Đinh L",
       "Mã SR": "SR-037",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "8",
+      "Cint": "4",
+      "RAM(GB)": "32",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "Tăng 8 vCPU",
-      "row_id": "2ed1189c-292b-4b8e-b405-2ada4bb8a8be"
+      "row_id": "133e6df2-736e-459c-9763-1098ca5a4d63"
     },
     {
       "STT": 32,
@@ -2241,20 +2225,20 @@
       "Đầu mối P.HT": "Nguyễn P",
       "Mã SR": "SR-039",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "5",
+      "vCPU": "30",
+      "Cint": "15",
+      "RAM(GB)": "160",
+      "SAN(GB)": "600",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "5 VM Prod",
-      "row_id": "6f6fd73c-dcc2-4019-94bd-96c4d2539ec3"
+      "row_id": "85d90af1-c063-4733-af67-3d68147e5b5f"
     },
     {
       "STT": 33,
@@ -2264,20 +2248,20 @@
       "Đầu mối P.HT": "Hoàng R",
       "Mã SR": "SR-040",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "8",
+      "Cint": "4",
+      "RAM(GB)": "32",
+      "SAN(GB)": "100",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Dev VMW",
       "Nhóm tài nguyên": "App/Web",
       "Ghi chú": "2 VM Web Dev",
-      "row_id": "595129c7-746c-4b68-b51c-62c10a2e33e9"
+      "row_id": "fc2bb2fc-3725-4a5d-8fbe-85fe2a2d19e0"
     },
     {
       "STT": 34,
@@ -2287,20 +2271,20 @@
       "Đầu mối P.HT": "Trần B",
       "Mã SR": "SR-041",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "4",
+      "Cint": "2",
+      "RAM(GB)": "16",
+      "SAN(GB)": "50",
+      "NAS(GB)": "50",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool PoC VMW",
       "Nhóm tài nguyên": "Dev/Test",
       "Ghi chú": "VM PoC và NAS",
-      "row_id": "272acc64-4da7-4fad-942b-9e7f0a3fb28f"
+      "row_id": "2f1e3b24-993b-4630-9030-5e9c1c0f5da8"
     },
     {
       "STT": 35,
@@ -2310,20 +2294,20 @@
       "Đầu mối P.HT": "Phạm D",
       "Mã SR": "SR-042",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "1500",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "SAN Array",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "Thêm 1.5TB SAN (Pending)",
-      "row_id": "bb0059bc-77c3-4997-b4b3-6f18a4be3011"
+      "row_id": "34290875-27bc-4bfd-951b-2d3f1c3ad52f"
     },
     {
       "STT": 36,
@@ -2333,20 +2317,20 @@
       "Đầu mối P.HT": "Mai G",
       "Mã SR": "SR-043",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "5000",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Archiving Storage",
       "Nhóm tài nguyên": "Backup",
       "Ghi chú": "Thêm 5TB Archiving",
-      "row_id": "271e8c6a-5590-4dae-8b1e-144880c7d733"
+      "row_id": "85f22c52-50f0-4013-a9d2-5bce51e33d36"
     },
     {
       "STT": 37,
@@ -2356,20 +2340,20 @@
       "Đầu mối P.HT": "Vũ I",
       "Mã SR": "SR-044",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "3",
+      "vCPU": "12",
+      "Cint": "6",
+      "RAM(GB)": "64",
+      "SAN(GB)": "300",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod KVM",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "3 VM Prod",
-      "row_id": "74e65010-c3e5-4c01-af2f-2b6e91e8ba72"
+      "row_id": "dcbc93df-8e66-4c40-a9f4-b49c7b42bd1a"
     },
     {
       "STT": 38,
@@ -2379,20 +2363,20 @@
       "Đầu mối P.HT": "Trần N",
       "Mã SR": "SR-046",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "8",
+      "Cint": "4",
+      "RAM(GB)": "32",
+      "SAN(GB)": "100",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "2 VM",
-      "row_id": "4bffc59f-13b1-43c3-a7c7-35debd704923"
+      "row_id": "419c0aae-a52f-4982-a0df-c6feac5c460f"
     },
     {
       "STT": 39,
@@ -2402,20 +2386,20 @@
       "Đầu mối P.HT": "Nguyễn P",
       "Mã SR": "SR-047",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "16",
+      "Cint": "8",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "Tăng thêm 16 vCPU cho DB (Pending)",
-      "row_id": "35d30757-33e0-4bfd-b69c-cafdc053a0b4"
+      "row_id": "7efba4fa-095c-4ed8-a693-ada6fd4fe2dd"
     },
     {
       "STT": 40,
@@ -2425,20 +2409,20 @@
       "Đầu mối P.HT": "Hoàng R",
       "Mã SR": "SR-048",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "1000",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "NAS Array",
       "Nhóm tài nguyên": "Storage",
       "Ghi chú": "1TB NAS",
-      "row_id": "84f36243-59b7-4c60-a475-63a224583802"
+      "row_id": "17aaa9f1-ebd1-4384-894d-6a6cc5720ba3"
     },
     {
       "STT": 41,
@@ -2448,20 +2432,20 @@
       "Đầu mối P.HT": "Trần B",
       "Mã SR": "SR-049",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "16",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App/Web",
       "Ghi chú": "Tăng thêm 16GB RAM (Pending)",
-      "row_id": "fd586b5b-f6bf-41f0-9fc3-46f32fc29835"
+      "row_id": "3c326d71-1998-4e8a-95ad-d9e1ef0f0def"
     },
     {
       "STT": 42,
@@ -2471,20 +2455,20 @@
       "Đầu mối P.HT": "Hoàng Y",
       "Mã SR": "SR-050",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "8",
+      "Cint": "4",
+      "RAM(GB)": "32",
+      "SAN(GB)": "150",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Dev VMW",
       "Nhóm tài nguyên": "Dev/Test",
       "Ghi chú": "2 VM Dev",
-      "row_id": "b7782a70-5009-4f9d-a038-277efe8a01e8"
+      "row_id": "6064337e-789f-4bf3-bf87-7037df541976"
     },
     {
       "STT": 43,
@@ -2494,20 +2478,20 @@
       "Đầu mối P.HT": "Phạm D",
       "Mã SR": "SR-051",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "1",
+      "vCPU": "12",
+      "Cint": "6",
+      "RAM(GB)": "64",
+      "SAN(GB)": "300",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Test KVM",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "VM DB Staging",
-      "row_id": "f5526e61-b2d5-440f-8ebb-5e911f13f183"
+      "row_id": "f589d12b-701b-4860-9188-3fa081889864"
     },
     {
       "STT": 44,
@@ -2517,20 +2501,20 @@
       "Đầu mối P.HT": "Mai G",
       "Mã SR": "SR-052",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "3",
+      "vCPU": "24",
+      "Cint": "12",
+      "RAM(GB)": "128",
+      "SAN(GB)": "500",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "3 VM Billing (Pending DB)",
-      "row_id": "dddd2783-ce07-40a3-8cf6-ba854f38624d"
+      "row_id": "03e9cfb2-bdcf-4dda-bb1b-c3c6dd73a697"
     },
     {
       "STT": 45,
@@ -2540,20 +2524,20 @@
       "Đầu mối P.HT": "Vũ I",
       "Mã SR": "SR-053",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "4000",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Ceph Cluster",
       "Nhóm tài nguyên": "Storage",
       "Ghi chú": "4TB Ceph",
-      "row_id": "f556ab64-c966-4e95-8b99-f2fcadb63fdc"
+      "row_id": "5728e052-beb6-4f2e-ab44-55e4081ffa07"
     },
     {
       "STT": 46,
@@ -2563,20 +2547,20 @@
       "Đầu mối P.HT": "Đinh L",
       "Mã SR": "SR-054",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "2",
+      "vCPU": "16",
+      "Cint": "8",
+      "RAM(GB)": "64",
+      "SAN(GB)": "200",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod VMW",
       "Nhóm tài nguyên": "App/Web",
       "Ghi chú": "2 VM Web",
-      "row_id": "363720f5-564c-4521-9f30-2728f012598d"
+      "row_id": "1d775f04-aec5-45f3-a96c-bbbdde0356b6"
     },
     {
       "STT": 47,
@@ -2586,20 +2570,20 @@
       "Đầu mối P.HT": "Trần N",
       "Mã SR": "SR-055",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "8",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "8000",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Bigdata Cluster",
       "Nhóm tài nguyên": "Data/BI",
       "Ghi chú": "8TB HDFS (Pending)",
-      "row_id": "1130df7a-40d6-47e6-af8a-4eab8e41a091"
+      "row_id": "61551a8f-dd7f-46f4-a4f9-9b0f574a79ec"
     },
     {
       "STT": 48,
@@ -2609,20 +2593,20 @@
       "Đầu mối P.HT": "Nguyễn P",
       "Mã SR": "SR-056",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "3",
+      "vCPU": "18",
+      "Cint": "9",
+      "RAM(GB)": "96",
+      "SAN(GB)": "400",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool Prod KVM",
       "Nhóm tài nguyên": "App",
       "Ghi chú": "3 VM Prod",
-      "row_id": "fb4e5035-ece2-448a-90cb-acd2cea7bad5"
+      "row_id": "13b119e9-b422-4212-93d9-003521a2ae69"
     },
     {
       "STT": 49,
@@ -2632,20 +2616,20 @@
       "Đầu mối P.HT": "Mai G",
       "Mã SR": "SR-057",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "4",
+      "vCPU": "20",
+      "Cint": "10",
+      "RAM(GB)": "128",
+      "SAN(GB)": "300",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "0",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Pool PoC VMW",
       "Nhóm tài nguyên": "Dev/Test",
       "Ghi chú": "4 VM PoC",
-      "row_id": "a2c98924-dc69-4c94-ae2a-a5e7e9f2f909"
+      "row_id": "c80578d9-f373-4850-a4bf-fc3813369c63"
     },
     {
       "STT": 50,
@@ -2655,20 +2639,20 @@
       "Đầu mối P.HT": "Phạm D",
       "Mã SR": "SR-058",
       "Qúy cấp phát": "Q1/2025",
-      "Số lượng máy chủ": "01/01/1970",
-      "vCPU": "01/01/1970",
-      "Cint": "01/01/1970",
-      "RAM(GB)": "01/01/1970",
-      "SAN(GB)": "01/01/1970",
-      "NAS(GB)": "01/01/1970",
-      "Ceph(GB)": "01/01/1970",
-      "Bigdata(GB)": "01/01/1970",
-      "Archiving(GB)": "01/01/1970",
-      "S3 Object(GB)": "01/01/1970",
+      "Số lượng máy chủ": "0",
+      "vCPU": "0",
+      "Cint": "0",
+      "RAM(GB)": "0",
+      "SAN(GB)": "0",
+      "NAS(GB)": "0",
+      "Ceph(GB)": "0",
+      "Bigdata(GB)": "0",
+      "Archiving(GB)": "4000",
+      "S3 Object(GB)": "0",
       "Pool/Nguồn tài nguyên": "Archiving Storage",
       "Nhóm tài nguyên": "Backup",
       "Ghi chú": "4TB Archiving",
-      "row_id": "d11f6659-9eaa-48c8-a60d-98494020cce0"
+      "row_id": "c89d7508-74a2-498b-903a-a7ce7c0ef539"
     }
   ]
 }
