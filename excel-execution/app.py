@@ -11,7 +11,7 @@ app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'uploads')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 SIZING_COLUMNS = [
-    "STT","Mã PYC","Đơn vị","Đầu mối tạo PYC","Đầu mối xử lý","Trạng thái","Thời điểm đẩy yêu cầu","Thời gian hoàn thành theo KPI","Thời gian hoàn thành ký PNX và đóng y/c","Thời gian ký bản chốt sizing","Tên dự án - Mục đích sizing","Ghi chú"
+    "STT","Mã PYC","Đơn vị","Đầu mối tạo PYC","Đầu mối xử lý","Trạng thái","Thời điểm đẩy yêu cầu","Thời gian hoàn thành theo KPI","Tiến độ","Thời gian hoàn thành ký PNX và đóng y/c","Thời gian ký bản chốt sizing","Tên dự án - Mục đích sizing","Ghi chú"
 ]
 CAP_PHAT_COLUMNS = [
     "STT","Dự án","Đơn vị","Đầu mối y/c","Đầu mối P.HT","Mã SR","Tiến độ, vướng mắc, đề xuất","Thời gian tiếp nhận y/c","Timeline thực hiện theo GNOC","Thời gian hoàn thành","Hoàn thành"
@@ -61,6 +61,40 @@ CACHE_DIR = os.path.join(os.path.dirname(__file__), 'cache')
 os.makedirs(CACHE_DIR, exist_ok=True)
 CACHE_FILE = os.path.join(CACHE_DIR, 'data_store.json')
 
+def _parse_date(val):
+    if not val:
+        return None
+    try:
+        dt = pd.to_datetime(val, dayfirst=True, errors='coerce')
+        if pd.isna(dt):
+            return None
+        return dt
+    except Exception:
+        return None
+
+def _calc_progress_status(kpi_str):
+    kpi = _parse_date(kpi_str)
+    if not kpi:
+        return ""
+    today = pd.Timestamp('today').normalize()
+    diff = (kpi - today).days
+    if diff < 0:
+        return "Quá hạn"
+    if diff == 0:
+        return "Đến hạn"
+    if diff == 1:
+        return "Còn 1 ngày"
+    if diff == 2:
+        return "Còn 2 ngày"
+    if diff == 3:
+        return "Còn 3 ngày"
+    return ""
+
+def _update_progress_for_row(row):
+    row["Tiến độ"] = _calc_progress_status(
+        row.get("Thời gian hoàn thành theo KPI", "")
+    )
+
 def save_cache():
     try:
         with open(CACHE_FILE, 'w', encoding='utf-8') as f:
@@ -76,6 +110,8 @@ def load_cache():
             if 'Sizing' in loaded:
                 data_store['Sizing'] = sanitize_rows(loaded['Sizing'], SIZING_COLUMNS)
                 ensure_stt(data_store['Sizing'])
+                for row in data_store['Sizing']:
+                    _update_progress_for_row(row)
             if 'CapPhat' in loaded:
                 data_store['CapPhat'] = sanitize_rows(loaded['CapPhat'], CAP_PHAT_COLUMNS)
                 ensure_stt(data_store['CapPhat'])
@@ -186,6 +222,10 @@ def import_excel():
         data_store['Sizing'] = sanitize_rows(sizing_df.to_dict(orient='records'), SIZING_COLUMNS)
         data_store['CapPhat'] = sanitize_rows(cap_phat_df.to_dict(orient='records'), CAP_PHAT_COLUMNS)
         data_store['ChiTiet'] = sanitize_rows(chi_tiet_df.to_dict(orient='records'), CHI_TIET_COLUMNS)
+
+        for row in data_store['Sizing']:
+            _update_progress_for_row(row)
+
         ensure_stt(data_store['Sizing'])
         ensure_stt(data_store['CapPhat'])
         ensure_stt(data_store['ChiTiet'])
@@ -261,6 +301,8 @@ def update_cell():
     if col not in columns:
         return jsonify({'error': 'Invalid column'}), 400
     target_list[row_index][col] = value
+    if sheet == 'Sizing' and col == 'Thời gian hoàn thành theo KPI':
+        _update_progress_for_row(target_list[row_index])
     if col != 'STT':  
         ensure_stt(target_list)
     save_cache()
@@ -280,6 +322,17 @@ def blanknan(val):
 @app.template_filter("format_date")
 def format_date_filter(val):
     return _format_date(val)
+
+@app.template_filter('progress_class')
+def progress_class(status):
+    mapping = {
+        'Quá hạn': 'status-overdue',
+        'Đến hạn': 'status-due',
+        'Còn 1 ngày': 'status-1day',
+        'Còn 2 ngày': 'status-2day',
+        'Còn 3 ngày': 'status-3day'
+    }
+    return mapping.get(status, '')
 
 @app.route('/export')
 def export_excel():

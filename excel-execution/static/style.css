@@ -98,3 +98,9 @@ body { background:#fff; }
     background: #ccc;
     color: #000;
 }
+
+.status-overdue   { color:#d32f2f; font-weight:bold; }  
+.status-due       { color:#ff9800; font-weight:bold; }  
+.status-1day      { color:#ffeb3b; font-weight:bold; }   
+.status-2day      { color:#4caf50; font-weight:bold; }    
+.status-3day      { color:#4caf50; font-weight:bold; }     

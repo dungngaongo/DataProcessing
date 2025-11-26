@@ -42,6 +42,56 @@ document.addEventListener('DOMContentLoaded', () => {
         const yy = kpiDate.getFullYear();
         kpiCell.textContent = `${dd}/${mm}/${yy}`;
 
+        if (progressCell) {
+            const status = computeProgressStatus(raw, kpiCell.textContent);
+            progressCell.textContent = status;
+            const classMap = {
+                'Quá hạn': 'status-overdue',
+                'Đến hạn': 'status-due',
+                'Còn 1 ngày': 'status-1day',
+                'Còn 2 ngày': 'status-2day',
+                'Còn 3 ngày': 'status-3day',
+            };
+            progressCell.className = 'cell';
+            if (classMap[status]) {
+                progressCell.classList.add(classMap[status]);
+            }
+        }
+
+        kpiCell.dispatchEvent(new Event('input', {bubbles:true}));
+
+        if (progressCell) {
+            const status = computeProgressStatus(raw, kpiCell.textContent);
+            progressCell.textContent = status;
+            const classMap = {
+                'Quá hạn': 'status-overdue',
+                'Đến hạn': 'status-due',
+                'Còn 1 ngày': 'status-1day',
+                'Còn 2 ngày': 'status-2day',
+                'Còn 3 ngày': 'status-3day'
+            };
+            progressCell.className = 'cell';
+            if (classMap[status]) {
+                progressCell.classList.add(classMap[status]);
+            }
+        }
+
+        if (row) {
+            const sheetName = 'Sizing';
+            const kpiCol = 'Thời gian hoàn thành theo KPI';
+            const rowIndex = parseInt(row.dataset.row, 10);
+            fetch('/update-cell', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sheet: sheetName,
+                    row:   rowIndex,
+                    col:   kpiCol,
+                    value: kpiCell.textContent.trim()
+                })
+            }).catch(() => console.warn('Không thể lưu KPI lên server'));
+        }
+
         kpiCell.dispatchEvent(new Event('input', {bubbles:true}));
     }, true);  
 
