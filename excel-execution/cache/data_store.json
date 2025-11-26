@@ -799,6 +799,22 @@
       "Tên dự án - Mục đích sizing": "Dự án Cải tiến Hệ thống Quản lý Kho bãi",
       "Ghi chú": "Sizing cho môi trường DEV",
       "row_id": "439087a2-d5b4-499d-9d6e-c79b50a0ae54"
+    },
+    {
+      "STT": 51,
+      "Mã PYC": "PYC-051",
+      "Đơn vị": "CN",
+      "Đầu mối tạo PYC": "CN",
+      "Đầu mối xử lý": "CN",
+      "Trạng thái": "Hoàn thành",
+      "Thời điểm đẩy yêu cầu": "24/11/2025",
+      "Thời gian hoàn thành theo KPI": "27/11/2025",
+      "Tiến độ": "Đến hạn",
+      "Thời gian hoàn thành ký PNX và đóng y/c": "",
+      "Thời gian ký bản chốt sizing": "",
+      "Tên dự án - Mục đích sizing": "",
+      "Ghi chú": "",
+      "row_id": "51ae0d4a-4021-476e-8f6d-d21742682dff"
     }
   ],
   "CapPhat": [

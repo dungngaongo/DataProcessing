@@ -5,11 +5,13 @@
 ## Các Sheet & Cột Chuẩn
 
 ### Sheet "Sizing"
+
 ```
 STT | Mã PYC | Đơn vị | Đầu mối tạo PYC | Đầu mối xử lý | Status | Thời điểm đẩy y/c | Thời gian hoàn thành theo KPI | Thời gian hoàn thành ký PNX và đóng y/c | Thời gian ký bản chốt sizing | Tên dự án - Mục đích sizing | Ghi chú
 ```
 
 ### Sheet "Cấp phát tài nguyên"
+
 ```
 STT | Dự án | Đơn vị | Đầu mối y/c | Đầu mối P.HT | Mã SR | Tiến độ, vướng mắc, đề xuất | Thời gian tiếp nhận y/c | Timeline thực hiện theo GNOC | Thời gian hoàn thành | Hoàn thành
 ```
@@ -30,13 +32,16 @@ STT | Dự án | Đơn vị | Đầu mối y/c | Đầu mối P.HT | Mã SR | Ti
 - Không reload toàn trang: Chỉ vùng bảng thay đổi, giữ trạng thái focus người dùng tốt hơn.
 
 ## Cài Đặt & Chạy
+
 ```powershell
 pip install -r requirements.txt
 python app.py
 ```
+
 Mặc định chạy ở: `http://127.0.0.1:5000`
 
 ## Quy Trình Dữ Liệu
+
 1. Người dùng chọn file Excel và bấm Import.
 2. Server đọc hai sheet bằng `pandas`, chuẩn hoá cột, làm sạch giá trị trống.
 3. Chuyển DataFrame thành list dict lưu trong `data_store` và cache JSON.
@@ -45,17 +50,19 @@ Mặc định chạy ở: `http://127.0.0.1:5000`
 6. Xuất file gọi `/export` dựng workbook mới từ `data_store`.
 
 ## Danh Sách Endpoint
-| Method | Route | Mô tả |
-|--------|-------|------|
-| GET | `/` | Trang chính + 2 bảng |
-| POST | `/import` | Import file Excel, cập nhật bảng |
-| POST | `/update-cell` | Cập nhật 1 ô (JSON) |
-| POST | `/add-row/<sheet>/<after_index>` | Thêm dòng sau chỉ số cho trước |
-| POST | `/delete-row/<sheet>/<row_index>` | Xóa dòng chỉ định |
-| GET | `/export` | Tải file Excel mới |
-| GET | `/sheet/<name>` | Partial render sheet (dùng nội bộ HTMX) |
+
+| Method | Route                               | Mô tả                                    |
+| ------ | ----------------------------------- | ------------------------------------------ |
+| GET    | `/`                               | Trang chính + 2 bảng                     |
+| POST   | `/import`                         | Import file Excel, cập nhật bảng        |
+| POST   | `/update-cell`                    | Cập nhật 1 ô (JSON)                     |
+| POST   | `/add-row/<sheet>/<after_index>`  | Thêm dòng sau chỉ số cho trước       |
+| POST   | `/delete-row/<sheet>/<row_index>` | Xóa dòng chỉ định                     |
+| GET    | `/export`                         | Tải file Excel mới                       |
+| GET    | `/sheet/<name>`                   | Partial render sheet (dùng nội bộ HTMX) |
 
 ## Kiến Trúc & Thư Mục
+
 ```
 excel-execution/
 	app.py               # Flask app + endpoints + cache
@@ -66,6 +73,7 @@ excel-execution/
 ```
 
 ## Ghi Chú Kỹ Thuật
+
 - `pandas` + `openpyxl` để đọc/ghi Excel.
 - Giới hạn upload: 200MB (`MAX_CONTENT_LENGTH`).
 - Dùng HTMX `hx-post` + `hx-target` để thay thế phần bảng.
@@ -73,11 +81,13 @@ excel-execution/
 - Làm sạch dữ liệu với filter Jinja `blanknan` và hàm Python `sanitize_rows`.
 
 ## Mẹo Hiệu Năng
+
 - Nếu file rất lớn: có thể phân trang hoặc lazy render (limit số dòng đầu, thêm nút tải thêm).
 - Sử dụng WebSocket hoặc Server-Sent Events nếu muốn phản hồi thời gian thực cho nhiều người dùng.
 - Có thể chuyển sang streaming đọc Excel chunk nếu kích thước cực lớn.
 
 ## Hướng Mở Rộng
+
 - Undo/redo các thao tác.
 - Mapping ngược từ Cấp phát tài nguyên → Sizing.
 - Tìm kiếm & lọc cột ngay trên giao diện.
@@ -87,13 +97,18 @@ excel-execution/
 - Validate định dạng ngày, mã PYC, mã SR trước khi lưu.
 
 ## Troubleshooting
-| Vấn đề | Nguyên nhân | Cách xử lý |
-|--------|-------------|-----------|
-| Không thấy bảng | Cache rỗng hoặc CSS không load | Hard refresh (Ctrl+Shift+R), kiểm tra Network tab |
-| Hiện "nan" | Filter chưa áp dụng | Đảm bảo đã refresh sau cập nhật mới nhất |
-| Không highlight dự án | Chuỗi không khớp | Kiểm tra viết sai chính tả hoặc khác dấu, dùng chứa một phần |
-| Export trống | Chưa import hoặc xóa hết dữ liệu | Thêm dòng rồi export lại |
+
+| Vấn đề                | Nguyên nhân                          | Cách xử lý                                                           |
+| ------------------------ | -------------------------------------- | ----------------------------------------------------------------------- |
+| Không thấy bảng       | Cache rỗng hoặc CSS không load      | Hard refresh (Ctrl+Shift+R), kiểm tra Network tab                      |
+| Hiện "nan"              | Filter chưa áp dụng                 | Đảm bảo đã refresh sau cập nhật mới nhất                       |
+| Không highlight dự án | Chuỗi không khớp                    | Kiểm tra viết sai chính tả hoặc khác dấu, dùng chứa một phần |
+| Export trống            | Chưa import hoặc xóa hết dữ liệu | Thêm dòng rồi export lại                                            |
 
 ## License
+
 Nội bộ (private). Không phân phối bên ngoài nếu chưa được phép.
 
+& D:\workspace\DataProcessing\.venv\Scripts\python.exe d:/workspace/DataProcessing/excel-execution/app.py
+
+Invoke-RestMethod -Method Post -Uri http://127.0.0.1:5000/trigger-whatsapp-alert

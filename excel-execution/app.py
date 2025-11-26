@@ -16,8 +16,65 @@ import pandas as pd
 from werkzeug.utils import secure_filename
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid
+import requests  
+
+# --- Cảnh báo WhatsApp ---
+
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', '')
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', '')
+TWILIO_WHATSAPP_FROM = os.environ.get('TWILIO_WHATSAPP_FROM', '')  
+
+def _load_phone_recipients():
+    if os.path.exists(PHONE_RECIPIENTS_FILE):
+        try:
+            with open(PHONE_RECIPIENTS_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+def _send_whatsapp(to_number: str, body: str) -> bool:
+    """Gửi tin nhắn WhatsApp qua Twilio. Trả về True nếu thành công."""
+    if not (TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN and TWILIO_WHATSAPP_FROM and to_number):
+        return False
+    url = f"https://api.twilio.com/2010-04-01/Accounts/{TWILIO_ACCOUNT_SID}/Messages.json"
+    data = {
+        'From': TWILIO_WHATSAPP_FROM,
+        'To': to_number,
+        'Body': body
+    }
+    try:
+        resp = requests.post(url, data=data, auth=(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN), timeout=10)
+        return resp.status_code == 201
+    except Exception:
+        return False
+
+def _build_whatsapp_body(row: dict) -> str:
+    proj = str(row.get('Tên dự án - Mục đích sizing', '')).strip()
+    kpi = str(row.get('Thời gian hoàn thành theo KPI', '')).strip()
+    status = str(row.get('Tiến độ', '')).strip()
+    return (
+        f"CẢNH BÁO TIẾN ĐỘ: {status}\n"
+        f"Dự án: {proj}\n"
+        f"KPI: {kpi}\n"
+        f"Vui lòng kiểm tra và xử lý."
+    )
+
+def check_and_send_whatsapp_alerts():
+    """Quét sheet Sizing, gửi WhatsApp cho các dòng 'Đến hạn' hoặc 'Còn 1 ngày'."""
+    _refresh_sizing_progress()
+    recipients = _load_phone_recipients()  
+    sent = 0
+    for row in data_store.get('Sizing', []):
+        status = row.get('Tiến độ', '')
+        if status in ['Đến hạn', 'Còn 1 ngày']:
+            rid = row.get('row_id')
+            to_number = recipients.get(rid) or os.environ.get('WHATSAPP_DEFAULT_TO', 'whatsapp:+84847764566')
+            if to_number and _send_whatsapp(to_number, _build_whatsapp_body(row)):
+                sent += 1
+    return sent
 
 """Khởi tạo ứng dụng và cấu hình chung."""
 app = Flask(__name__)
@@ -85,6 +142,7 @@ ensure_stt(data_store['ChiTiet'])
 CACHE_DIR = os.path.join(os.path.dirname(__file__), 'cache')
 os.makedirs(CACHE_DIR, exist_ok=True)
 CACHE_FILE = os.path.join(CACHE_DIR, 'data_store.json')
+PHONE_RECIPIENTS_FILE = os.path.join(CACHE_DIR, 'phone_recipients.json')  # mapping row_id -> whatsapp phone
 
 """Cố gắng parse chuỗi ngày thành Timestamp; lỗi trả về None."""
 def _parse_date(val):
@@ -561,6 +619,43 @@ def handle_col(sheet, action, col_index):
 
     return jsonify({'error': f'Hành động {action} không được hỗ trợ'}), 400
 
+"""Endpoint thủ công: kích hoạt gửi cảnh báo WhatsApp ngay lập tức."""
+@app.route('/trigger-whatsapp-alerts', methods=['POST'])
+def trigger_whatsapp_alerts():
+    try:
+        count = check_and_send_whatsapp_alerts()
+        return jsonify({'sent': count}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+def _start_whatsapp_daily_scheduler():
+    """Tạo thread nền gửi cảnh báo mỗi ngày lúc 08:00."""
+    import threading, time
+
+    def loop():
+        # Chạy ngay lần đầu để không phải đợi đến 08:00 nếu cần test.
+        try:
+            check_and_send_whatsapp_alerts()
+        except Exception:
+            pass
+        while True:
+            now = datetime.now()
+            next_run = now.replace(hour=8, minute=0, second=0, microsecond=0)
+            if next_run <= now:
+                next_run += timedelta(days=1)
+            sleep_seconds = (next_run - now).total_seconds()
+            time.sleep(sleep_seconds)
+            try:
+                check_and_send_whatsapp_alerts()
+            except Exception:
+                pass
+
+    t = threading.Thread(target=loop, name='whatsapp-scheduler', daemon=True)
+    t.start()
+
 """Điểm vào ứng dụng (chạy development server)."""
 if __name__ == '__main__':
+    # Khởi động scheduler tự động gửi WhatsApp nếu đã cấu hình Twilio FROM
+    if TWILIO_WHATSAPP_FROM:
+        _start_whatsapp_daily_scheduler()
     app.run(debug=True)
