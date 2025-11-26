@@ -9,7 +9,6 @@ document.addEventListener('click', function(e){
   }
 });
 
-// Cell update logic
 document.addEventListener('blur', function(e){
   if(e.target.classList && e.target.classList.contains('cell')){
     const sheet = e.target.dataset.sheet;
@@ -18,7 +17,6 @@ document.addEventListener('blur', function(e){
     const col = e.target.dataset.col;
     const value = e.target.textContent.trim();
 
-    // Debounce quick successive blurs to avoid out-of-order updates
     if(!window.__cellUpdateTimers){ window.__cellUpdateTimers = new Map(); }
     const key = `${sheet}:${rowId || row}:${col}`;
     const prev = window.__cellUpdateTimers.get(key);
@@ -32,9 +30,7 @@ document.addEventListener('blur', function(e){
       window.__cellUpdateTimers.delete(key);
     }, 200));
 
-    // Nếu là Sizing và cột Thời điểm đẩy yêu cầu thì tự động tính KPI
     if(sheet === 'Sizing' && col === 'Thời điểm đẩy yêu cầu'){
-      // Tính ngày làm việc thứ 3 tiếp theo
       const kpiCol = 'Thời gian hoàn thành theo KPI';
       let date = parseDateVN(value);
       if(date){
@@ -42,19 +38,16 @@ document.addEventListener('blur', function(e){
         while(daysAdded < 3){
           date.setDate(date.getDate() + 1);
           const day = date.getDay();
-          if(day !== 0 && day !== 6){ // 0: CN, 6: T7
+          if(day !== 0 && day !== 6){
             daysAdded++;
           }
         }
         const kpiDate = formatDateVN(date);
-        // Gửi lên server cập nhật KPI
-        // Update KPI using stable rowId
         fetch('/update-cell', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sheet, row, rowId, col: kpiCol, value: kpiDate })
         }).catch(() => {});
-        // Cập nhật trực tiếp giao diện
         const table = document.getElementById('sizing-sheet');
         if(table){
           const selector = rowId ? `.data-row[data-row-id="${rowId}"] td[data-col="${kpiCol}"]` : `.data-row[data-row="${row}"] td[data-col="${kpiCol}"]`;
@@ -69,7 +62,6 @@ document.addEventListener('blur', function(e){
 }, true);
 
 function parseDateVN(str){
-  // Chấp nhận dd/mm/yyyy hoặc yyyy-mm-dd
   if(!str) return null;
   let parts = str.split('/');
   if(parts.length === 3){
@@ -92,7 +84,6 @@ function formatDateVN(date){
   return `${d}/${m}/${y}`;
 }
 
-// Project mapping
 document.addEventListener('click', function(e){
   if(e.target.classList && e.target.classList.contains('project-link')){
     const projectName = (e.target.dataset.project || '').trim();
@@ -128,7 +119,6 @@ document.addEventListener('click', function(e){
   }
 });
 
-// CapPhat -> ChiTiet mapping on project click
 document.addEventListener('click', function(e){
   if(e.target.classList && e.target.classList.contains('cap-project-link')){
     const projectName = ((e.target.dataset.capProject || e.target.textContent) || '').trim()
@@ -164,7 +154,6 @@ document.addEventListener('click', function(e){
   }
 });
 
-// Column name update logic
 document.addEventListener('blur', function(e){
   if(e.target.classList && e.target.classList.contains('col-header-name')){
     const sheet = e.target.dataset.sheet;

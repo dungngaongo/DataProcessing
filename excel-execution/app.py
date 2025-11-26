@@ -7,7 +7,7 @@ from datetime import datetime
 import uuid
 
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024  # 200MB limit
+app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024 
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'uploads')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
@@ -53,7 +53,6 @@ def sanitize_rows(rows, columns):
                 if sval.lower() in ['nan', 'nat']:
                     val = ''
             new_row[c] = val
-        # preserve or assign stable row_id
         rid = r.get('row_id') or str(uuid.uuid4())
         new_row['row_id'] = rid
         sanitized.append(new_row)
@@ -85,15 +84,12 @@ def _calc_progress_status(kpi_str):
     today = pd.Timestamp('today').normalize()
     kpi = pd.Timestamp(kpi).normalize()
 
-    # Quá hạn nếu KPI trước hôm nay (không tính ngày làm việc)
     if kpi < today:
         return "Quá hạn"
 
-    # Số ngày làm việc còn lại (loại trừ T7, CN)
     try:
         wdays = len(pd.bdate_range(start=today, end=kpi, closed='right'))
     except Exception:
-        # Fallback nếu có lỗi, dùng vòng lặp thủ công
         d = today
         wdays = 0
         while d < kpi:
@@ -183,16 +179,13 @@ def _format_date(val) -> str:
         return ""
 
 def _read_sheet(df: pd.DataFrame, expected_cols):
-    # Bổ sung cột thiếu với giá trị rỗng
     for col in expected_cols:
         if col not in df.columns:
             df[col] = ""
 
-    # Giữ đúng thứ tự cột
     df = df[expected_cols].fillna("").replace({pd.NaT: ""})
 
     def is_date_column_by_sample(series):
-        # Lấy tối đa 10 giá trị đầu
         sample = series.dropna().head(10)
         if sample.empty:
             return False
@@ -210,7 +203,6 @@ def _read_sheet(df: pd.DataFrame, expected_cols):
     for col in df.columns:
         series = df[col]
         if pd.api.types.is_datetime64_any_dtype(series) or is_date_column_by_sample(series):
-            # Chỉ format nếu thực sự là cột ngày
             def fmt(v):
                 if v is None or (isinstance(v, float) and pd.isna(v)):
                     return ""
@@ -223,7 +215,6 @@ def _read_sheet(df: pd.DataFrame, expected_cols):
                     return str(v).strip()
             processed[col] = series.apply(fmt)
         else:
-            # Giữ nguyên nội dung text; chỉ strip khoảng trắng
             processed[col] = series.astype(str).apply(lambda x: '' if x.lower() in ['nan','nat'] else x.strip())
 
     return pd.DataFrame(processed)[expected_cols]
@@ -408,7 +399,6 @@ def export_excel():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Column execution
 def get_sheet_info(sheet_name):
     if sheet_name == 'Sizing':
         return data_store['Sizing'], SIZING_COLUMNS, 'sizing-sheet'
@@ -487,7 +477,6 @@ def handle_col(sheet, action, col_index):
         for row in rows:
             temp_row = {col: row.get(col, '') for col in new_columns}
             temp_row[new_col_name] = ''
-            # keep row_id stable
             temp_row['row_id'] = row.get('row_id') or str(uuid.uuid4())
             row.clear()
             row.update(temp_row)
@@ -515,7 +504,6 @@ def handle_col(sheet, action, col_index):
 
         for row in rows:
             row.pop(col_name_to_delete, None)
-            # ensure row_id remains
             if 'row_id' not in row:
                 row['row_id'] = str(uuid.uuid4())
 

@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Hỗ trợ định dạng ISO (YYYY‑MM‑DD) hoặc dd/mm/yyyy
         let startDate = new Date(raw);
         if (isNaN(startDate)) {
             const parts = raw.split('/');
