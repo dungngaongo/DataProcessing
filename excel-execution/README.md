@@ -112,3 +112,22 @@ Nội bộ (private). Không phân phối bên ngoài nếu chưa được phép
 & D:\workspace\DataProcessing\.venv\Scripts\python.exe d:/workspace/DataProcessing/excel-execution/app.py
 
 Invoke-RestMethod -Method Post -Uri http://127.0.0.1:5000/trigger-whatsapp-alert
+
+
+List test:
+
+- import
+- export
+- đúng dang dữ liệu
+- auto fill kpi, tiến độ
+- insert/delete/edit row, column
+- mapping between sheet
+- thiet lap canh bao gui ve tin nhan WhatsApp
+
+to do:
+
+- chuan hoa du lieu by id, doi lai mapping bang id
+- xuat bao cao (can lam ro)
+- bang total
+- auto calculate o tinh
+- them cac sheet khac
