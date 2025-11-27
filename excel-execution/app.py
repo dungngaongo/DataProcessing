@@ -108,11 +108,41 @@ def blank_row(columns):
 def initial_rows(columns, count=5):
     return [blank_row(columns) for _ in range(count)]
 
+# --- Cấu hình sheet "Tài nguyên Cloud" ---
+CLOUD_COLUMNS = [
+    # Khối QHĐC 2020
+    "STT","Tiêu chí",
+    "Com_Ceph vCPU","Com_SAN vCPU",
+    "Com_Ceph RAM(TB)","Com_SAN RAM(TB)",
+    "CEPH(GB)","SAN(GB)","NAS(GB)","Ghi chú",
+
+    # Khối Private Cloud
+    "PC Tiêu chí",
+    "PC Com_Ceph vCPU","PC Com_SAN vCPU",
+    "PC Com_Ceph RAM(GB)","PC Com_SAN RAM(GB)",
+    "PC CEPH(GB)","PC SAN(GB)","PC NAS(GB)","NAS(theo đầu mới VHKTT gửi tháng 3 2025)","PC Ghi chú",
+
+    # Số liệu tổng hợp năm
+    "Tổng TN 2021","Đã cấp phát 2021","TN còn lại 2021",
+    "Tổng TN 2023","Đã cấp phát 2023","TN còn lại 2023",
+
+    # Khối QHĐC 2021
+    "2021 Tiêu chí",
+    "2021 Com_Ceph vCPU","2021 Com_SAN vCPU",
+    "2021 Com_Ceph RAM(GB)","2021 Com_SAN RAM(GB)",
+    "2021 CEPH(GB)","2021 SAN(GB)","2021 NAS(GB)","2021 NAS(theo đầu mới VHKTT gửi tháng 3 2025)","2021 Ghi chú",
+
+    # Khối QHĐC 2022
+    "2022 vCPU","2022 RAM(GB)","2022 CEPH(GB)","2022 Com_SAN","2022 SAN(GB)","2022 NAS(GB)","Object(GB)",
+    "Com_Bigdata vCPU","Com_Bigdata RAM","Bigdata(GB)","Archiving(GB)","Bare_metal vCPU","Bare_metal RAM","2022 Ghi chú"
+]
+
 """Bộ nhớ dữ liệu chính trong runtime (3 sheet)."""
 data_store = {
     'Sizing': initial_rows(SIZING_COLUMNS),
     'CapPhat': initial_rows(CAP_PHAT_COLUMNS),
-    'ChiTiet': initial_rows(CHI_TIET_COLUMNS)
+    'ChiTiet': initial_rows(CHI_TIET_COLUMNS),
+    'Cloud': initial_rows(CLOUD_COLUMNS)
 }
 
 """Đánh lại số thứ tự STT theo vị trí hiện tại."""
@@ -180,6 +210,19 @@ def _fix_chitiet_numeric_rows(rows):
 ensure_stt(data_store['Sizing'])
 ensure_stt(data_store['CapPhat'])
 ensure_stt(data_store['ChiTiet'])
+ensure_stt(data_store['Cloud'])
+
+def ensure_cloud_min_rows():
+    """Đảm bảo sheet Cloud có tối thiểu 6 hàng để đủ nhãn (2020 + Private Cloud)."""
+    target = data_store.get('Cloud', [])
+    needed = 6 - len(target)
+    if needed > 0:
+        for _ in range(needed):
+            target.append(blank_row(CLOUD_COLUMNS))
+        ensure_stt(target)
+    data_store['Cloud'] = target
+
+ensure_cloud_min_rows()
 
 """Thiết lập đường dẫn cache để lưu/khôi phục `data_store`."""
 CACHE_DIR = os.path.join(os.path.dirname(__file__), 'cache')
@@ -271,6 +314,10 @@ def load_cache():
                 # Sửa các ô số nếu từng bị lưu dạng ngày (01/01/1970, ...)
                 _fix_chitiet_numeric_rows(data_store['ChiTiet'])
                 ensure_stt(data_store['ChiTiet'])
+            if 'Cloud' in loaded:
+                data_store['Cloud'] = sanitize_rows(loaded['Cloud'], CLOUD_COLUMNS)
+                ensure_stt(data_store['Cloud'])
+                ensure_cloud_min_rows()
         except Exception:
             pass
 
@@ -285,9 +332,11 @@ def index():
         sizing_columns=SIZING_COLUMNS,
         cap_phat_columns=CAP_PHAT_COLUMNS,
         chi_tiet_columns=CHI_TIET_COLUMNS,
+        cloud_columns=CLOUD_COLUMNS,
         sizing_rows=data_store['Sizing'],
         cap_phat_rows=data_store['CapPhat'],
-        chi_tiet_rows=data_store['ChiTiet']
+        chi_tiet_rows=data_store['ChiTiet'],
+        cloud_rows=data_store['Cloud']
     )
 
 """Chuẩn hoá hiển thị ngày về định dạng dd/mm/YYYY (hoặc rỗng)."""
@@ -368,14 +417,17 @@ def import_excel():
         sizing_df = pd.read_excel(xl, sheet_name='Sizing') if 'Sizing' in xl.sheet_names else pd.DataFrame(columns=SIZING_COLUMNS)
         cap_phat_df = pd.read_excel(xl, sheet_name='Cấp phát TN') if 'Cấp phát TN' in xl.sheet_names else pd.DataFrame(columns=CAP_PHAT_COLUMNS)
         chi_tiet_df = pd.read_excel(xl, sheet_name='Chi tiết') if 'Chi tiết' in xl.sheet_names else pd.DataFrame(columns=CHI_TIET_COLUMNS)
+        cloud_df = pd.read_excel(xl, sheet_name='Tài nguyên Cloud') if 'Tài nguyên Cloud' in xl.sheet_names else pd.DataFrame(columns=CLOUD_COLUMNS)
 
         sizing_df = _read_sheet(sizing_df, SIZING_COLUMNS)
         cap_phat_df = _read_sheet(cap_phat_df, CAP_PHAT_COLUMNS)
         chi_tiet_df = _read_sheet(chi_tiet_df, CHI_TIET_COLUMNS)
+        cloud_df = _read_sheet(cloud_df, CLOUD_COLUMNS)
 
         data_store['Sizing'] = sanitize_rows(sizing_df.to_dict(orient='records'), SIZING_COLUMNS)
         data_store['CapPhat'] = sanitize_rows(cap_phat_df.to_dict(orient='records'), CAP_PHAT_COLUMNS)
         data_store['ChiTiet'] = sanitize_rows(chi_tiet_df.to_dict(orient='records'), CHI_TIET_COLUMNS)
+        data_store['Cloud'] = sanitize_rows(cloud_df.to_dict(orient='records'), CLOUD_COLUMNS)
         _fix_chitiet_numeric_rows(data_store['ChiTiet'])
 
         _refresh_sizing_progress()
@@ -383,18 +435,20 @@ def import_excel():
         ensure_stt(data_store['Sizing'])
         ensure_stt(data_store['CapPhat'])
         ensure_stt(data_store['ChiTiet'])
+        ensure_stt(data_store['Cloud'])
+        ensure_cloud_min_rows()
         save_cache()
 
         return render_template('tables.html', sizing_columns=SIZING_COLUMNS, cap_phat_columns=CAP_PHAT_COLUMNS,
-                               chi_tiet_columns=CHI_TIET_COLUMNS,
-                               sizing_rows=data_store['Sizing'], cap_phat_rows=data_store['CapPhat'], chi_tiet_rows=data_store['ChiTiet'])
+                       chi_tiet_columns=CHI_TIET_COLUMNS, cloud_columns=CLOUD_COLUMNS,
+                       sizing_rows=data_store['Sizing'], cap_phat_rows=data_store['CapPhat'], chi_tiet_rows=data_store['ChiTiet'], cloud_rows=data_store['Cloud'])
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 """Render partial cho một sheet bất kỳ (HTMX sử dụng)."""
 @app.route('/sheet/<name>')
 def sheet(name):
-    if name not in ['Sizing', 'CapPhat', 'ChiTiet']:
+    if name not in ['Sizing', 'CapPhat', 'ChiTiet', 'Cloud']:
         abort(404)
     if name == 'Sizing':
         columns = SIZING_COLUMNS
@@ -402,9 +456,12 @@ def sheet(name):
     elif name == 'CapPhat':
         columns = CAP_PHAT_COLUMNS
         sheet_id = 'cap-phat-sheet'
-    else:
+    elif name == 'ChiTiet':
         columns = CHI_TIET_COLUMNS
         sheet_id = 'chi-tiet-sheet'
+    else:
+        columns = CLOUD_COLUMNS
+        sheet_id = 'cloud-sheet'
     if name == 'Sizing':
         _refresh_sizing_progress()
     rows = data_store[name]
@@ -413,9 +470,9 @@ def sheet(name):
 """Thêm một hàng mới sau vị trí chỉ định trong sheet."""
 @app.route('/add-row/<sheet>/<int:after_index>', methods=['POST'])
 def add_row(sheet, after_index):
-    if sheet not in ['Sizing', 'CapPhat', 'ChiTiet']:
+    if sheet not in ['Sizing', 'CapPhat', 'ChiTiet', 'Cloud']:
         abort(404)
-    columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else CHI_TIET_COLUMNS)
+    columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else (CHI_TIET_COLUMNS if sheet == 'ChiTiet' else CLOUD_COLUMNS))
     new_row = {col: '' for col in columns}
     new_row['row_id'] = str(uuid.uuid4())
     target_list = data_store[sheet]
@@ -427,13 +484,13 @@ def add_row(sheet, after_index):
     if sheet == 'Sizing':
         _refresh_sizing_progress()
     save_cache()
-    sheet_id = 'sizing-sheet' if sheet == 'Sizing' else ('cap-phat-sheet' if sheet == 'CapPhat' else 'chi-tiet-sheet')
+    sheet_id = 'sizing-sheet' if sheet == 'Sizing' else ('cap-phat-sheet' if sheet == 'CapPhat' else ('chi-tiet-sheet' if sheet == 'ChiTiet' else 'cloud-sheet'))
     return render_template('sheet.html', sheet_name=sheet, sheet_id=sheet_id, columns=columns, rows=target_list)
 
 """Xoá một hàng theo chỉ số trong sheet."""
 @app.route('/delete-row/<sheet>/<int:row_index>', methods=['POST'])
 def delete_row(sheet, row_index):
-    if sheet not in ['Sizing', 'CapPhat', 'ChiTiet']:
+    if sheet not in ['Sizing', 'CapPhat', 'ChiTiet', 'Cloud']:
         abort(404)
     target_list = data_store[sheet]
     if row_index < 0 or row_index >= len(target_list):
@@ -444,8 +501,8 @@ def delete_row(sheet, row_index):
     if sheet == 'Sizing':
         _refresh_sizing_progress()
     save_cache()
-    columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else CHI_TIET_COLUMNS)
-    sheet_id = 'sizing-sheet' if sheet == 'Sizing' else ('cap-phat-sheet' if sheet == 'CapPhat' else 'chi-tiet-sheet')
+    columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else (CHI_TIET_COLUMNS if sheet == 'ChiTiet' else CLOUD_COLUMNS))
+    sheet_id = 'sizing-sheet' if sheet == 'Sizing' else ('cap-phat-sheet' if sheet == 'CapPhat' else ('chi-tiet-sheet' if sheet == 'ChiTiet' else 'cloud-sheet'))
     return render_template('sheet.html', sheet_name=sheet, sheet_id=sheet_id, columns=columns, rows=target_list)
 
 """Cập nhật một ô dữ liệu (JSON) và xử lý phụ thuộc tiến độ/KPI."""
@@ -458,7 +515,7 @@ def update_cell():
     col = data.get('col')
     value = data.get('value', '')
 
-    if sheet not in ['Sizing', 'CapPhat', 'ChiTiet']:
+    if sheet not in ['Sizing', 'CapPhat', 'ChiTiet', 'Cloud']:
         return jsonify({'error': 'Invalid sheet'}), 400
     target_list = data_store[sheet]
     target_row = None
@@ -473,7 +530,7 @@ def update_cell():
         if not isinstance(row_index, int) or row_index < 0 or row_index >= len(target_list):
             return jsonify({'error': 'Invalid row index'}), 400
         target_row = target_list[row_index]
-    columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else CHI_TIET_COLUMNS)
+    columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else (CHI_TIET_COLUMNS if sheet == 'ChiTiet' else CLOUD_COLUMNS))
     if col not in columns:
         return jsonify({'error': 'Invalid column'}), 400
     target_row[col] = value
@@ -532,10 +589,12 @@ def export_excel():
             sizing_df = build_df(data_store['Sizing'], SIZING_COLUMNS)
             cap_df = build_df(data_store['CapPhat'], CAP_PHAT_COLUMNS)
             chi_tiet_df = build_df(data_store['ChiTiet'], CHI_TIET_COLUMNS)
+            cloud_df = build_df(data_store['Cloud'], CLOUD_COLUMNS)
 
             sizing_df.to_excel(writer, sheet_name='Sizing', index=False)
             cap_df.to_excel(writer, sheet_name='Cấp phát TN', index=False)
             chi_tiet_df.to_excel(writer, sheet_name='Chi tiết', index=False)
+            cloud_df.to_excel(writer, sheet_name='Tài nguyên Cloud', index=False)
         return send_file(path, as_attachment=True, download_name=filename)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -548,11 +607,13 @@ def get_sheet_info(sheet_name):
         return data_store['CapPhat'], CAP_PHAT_COLUMNS, 'cap-phat-sheet'
     elif sheet_name == 'ChiTiet':
         return data_store['ChiTiet'], CHI_TIET_COLUMNS, 'chi-tiet-sheet'
+    elif sheet_name == 'Cloud':
+        return data_store['Cloud'], CLOUD_COLUMNS, 'cloud-sheet'
     abort(404)
 
 """Cập nhật danh sách cột chuẩn tương ứng theo tên sheet."""
 def update_columns_constant(sheet_name, new_columns):
-    global SIZING_COLUMNS, CAP_PHAT_COLUMNS, CHI_TIET_COLUMNS
+    global SIZING_COLUMNS, CAP_PHAT_COLUMNS, CHI_TIET_COLUMNS, CLOUD_COLUMNS
 
     if sheet_name == 'Sizing':
         SIZING_COLUMNS = new_columns
@@ -560,6 +621,8 @@ def update_columns_constant(sheet_name, new_columns):
         CAP_PHAT_COLUMNS = new_columns
     elif sheet_name == 'ChiTiet':
         CHI_TIET_COLUMNS = new_columns
+    elif sheet_name == 'Cloud':
+        CLOUD_COLUMNS = new_columns
 
 """Đổi tên cột trong một sheet và đồng bộ dữ liệu hàng tương ứng."""
 @app.route('/update-col-name', methods=['POST'])

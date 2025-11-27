@@ -198,5 +198,193 @@
             </tbody>
         </table>
     </div>
+        <div id="cloud-sheet" class="sheet">
+            <div class="cloud-section indent">
+                <div class="section-bar">Tài nguyên QHĐC 2020</div>
+                <div class="cloud-subtitle">Hiện trạng tài nguyên còn dư</div>
+                {% set labels2020 = [
+                    'TN còn lại sau KH Q4',
+                    'TN trong KH Q4',
+                    'TN đã sử dụng trong Q4',
+                    'TN còn lại 2021',
+                    'Sử dụng 2021',
+                    'TN còn lại'
+                ] %}
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">&nbsp;</th>
+                            <th colspan="2">vCPU</th>
+                            <th colspan="2">RAM(TB)</th>
+                            <th rowspan="2">CEPH(GB)</th>
+                            <th rowspan="2">SAN(GB)</th>
+                            <th rowspan="2">NAS(GB)</th>
+                            <th rowspan="2" class="cloud-note-col">Ghi chú</th>
+                        </tr>
+                        <tr class="cloud-subrow">
+                            <th>Com_Ceph</th>
+                            <th>Com_SAN</th>
+                            <th>Com_Ceph</th>
+                            <th>Com_SAN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in cloud_rows %}
+                        <tr class="data-row" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}">
+                            <td class="cell" style="font-weight:600; background:#eaf1fb;">{{ labels2020[loop.index0] if loop.index0 < labels2020|length else '' }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="Com_Ceph vCPU">{{ row['Com_Ceph vCPU']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="Com_SAN vCPU">{{ row['Com_SAN vCPU']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="Com_Ceph RAM(TB)">{{ row['Com_Ceph RAM(TB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="Com_SAN RAM(TB)">{{ row['Com_SAN RAM(TB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="CEPH(GB)">{{ row['CEPH(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="SAN(GB)">{{ row['SAN(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="NAS(GB)">{{ row['NAS(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="Ghi chú">{{ row['Ghi chú']|blanknan }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% if not cloud_rows or cloud_rows|length == 0 %}
+                        <tr><td colspan="9" class="empty">(Chưa có dữ liệu)</td></tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cloud-section indent">
+                <div class="section-bar">Private Cloud</div>
+                <div class="cloud-subtitle">Hiện trạng tài nguyên còn dư</div>
+                {% set labelsPC = [
+                    'Tổng TN 2021','Đã cấp phát 2021','TN còn lại 2021',
+                    'Tổng TN 2023','Đã cấp phát 2023','TN còn lại 2023'
+                ] %}
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th colspan="2">vCPU</th>
+                            <th colspan="2">RAM(GB)</th>
+                            <th>CEPH(GB)</th><th>SAN(GB)</th><th>NAS(GB)</th>
+                            <th class="cloud-wide-col">NAS(theo đầu mới VHKTT gửi tháng 3 2025)</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                        <tr class="cloud-subrow">
+                            <th></th>
+                            <th>Com_Ceph</th><th>Com_SAN</th>
+                            <th>Com_Ceph</th><th>Com_SAN</th>
+                            <th></th><th></th><th></th><th></th><th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in cloud_rows %}
+                        <tr class="data-row" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}">
+                            <td class="cell" style="font-weight:600; background:#eaf1fb;">{{ labelsPC[loop.index0] if loop.index0 < labelsPC|length else '' }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="PC Com_Ceph vCPU">{{ row['PC Com_Ceph vCPU']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="PC Com_SAN vCPU">{{ row['PC Com_SAN vCPU']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="PC Com_Ceph RAM(GB)">{{ row['PC Com_Ceph RAM(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="PC Com_SAN RAM(GB)">{{ row['PC Com_SAN RAM(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="PC CEPH(GB)">{{ row['PC CEPH(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="PC SAN(GB)">{{ row['PC SAN(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="PC NAS(GB)">{{ row['PC NAS(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="NAS(theo đầu mới VHKTT gửi tháng 3 2025)">{{ row['NAS(theo đầu mới VHKTT gửi tháng 3 2025)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="PC Ghi chú">{{ row['PC Ghi chú']|blanknan }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cloud-section indent">
+                <div class="section-bar">Tài nguyên QHĐC 2021</div>
+                <div class="cloud-subtitle">Hiện trạng tài nguyên còn dư</div>
+                {% set labels2021 = [
+                    'Tổng TN', 'Đã cấp phát', 'TN còn lại'
+                ] %}
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th colspan="2">vCPU</th>
+                            <th colspan="2">RAM(GB)</th>
+                            <th>CEPH(GB)</th><th>SAN(GB)</th><th>NAS(GB)</th>
+                            <th>NAS(theo đầu mới VHKTT gửi tháng 3 2025)</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                        <tr class="cloud-subrow">
+                            <th></th>
+                            <th>Com_Ceph</th><th>Com_SAN</th>
+                            <th>Com_Ceph</th><th>Com_SAN</th>
+                            <th></th><th></th><th></th><th></th><th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in cloud_rows[:3] %}
+                        <tr class="data-row" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}">
+                            <td class="cell" style="font-weight:600; background:#eaf1fb;">{{ labels2021[loop.index0] if loop.index0 < labels2021|length else '' }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2021 Com_Ceph vCPU">{{ row['2021 Com_Ceph vCPU']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2021 Com_SAN vCPU">{{ row['2021 Com_SAN vCPU']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2021 Com_Ceph RAM(GB)">{{ row['2021 Com_Ceph RAM(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2021 Com_SAN RAM(GB)">{{ row['2021 Com_SAN RAM(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2021 CEPH(GB)">{{ row['2021 CEPH(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2021 SAN(GB)">{{ row['2021 SAN(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2021 NAS(GB)">{{ row['2021 NAS(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2021 NAS(theo đầu mới VHKTT gửi tháng 3 2025)">{{ row['2021 NAS(theo đầu mới VHKTT gửi tháng 3 2025)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2021 Ghi chú">{{ row['2021 Ghi chú']|blanknan }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cloud-section">
+                <div class="section-bar">Tài nguyên QHĐC 2022</div>
+                <div class="cloud-subtitle">Hiện trạng tài nguyên còn dư</div>
+                {% set labels2022 = ['Tổng TN','Đã cấp phát','TN còn lại'] %}
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">&nbsp;</th>
+                            <th colspan="2">Com_Ceph</th>
+                            <th rowspan="2">CEPH(GB)</th>
+                            <th colspan="2">Com_SAN</th>
+                            <th rowspan="2">SAN(GB)</th>
+                            <th rowspan="2">NAS(GB)</th>
+                            <th rowspan="2">Object(GB)</th>
+                            <th colspan="2">Com_Bigdata</th>
+                            <th rowspan="2">Bigdata(GB)</th>
+                            <th rowspan="2">Archiving(GB)</th>
+                            <th colspan="2">Bare_metal</th>
+                            <th rowspan="2">Ghi chú</th>
+                        </tr>
+                        <tr class="cloud-subrow">
+                            <th>vCPU</th><th>RAM</th>
+                            <th>vCPU</th><th>RAM</th>
+                            <th>vCPU</th><th>RAM</th>
+                            <th>vCPU</th><th>RAM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in cloud_rows[:3] %}
+                        <tr class="data-row" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}">
+                            <td class="cell" style="font-weight:600; background:#eaf1fb;">{{ labels2022[loop.index0] if loop.index0 < labels2022|length else '' }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Com_Ceph vCPU">{{ row['2022 Com_Ceph vCPU']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Com_Ceph RAM">{{ row['2022 Com_Ceph RAM']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 CEPH(GB)">{{ row['2022 CEPH(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Com_SAN vCPU">{{ row['2022 Com_SAN vCPU']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Com_SAN RAM">{{ row['2022 Com_SAN RAM']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 SAN(GB)">{{ row['2022 SAN(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 NAS(GB)">{{ row['2022 NAS(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Object(GB)">{{ row['2022 Object(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Com_Bigdata vCPU">{{ row['2022 Com_Bigdata vCPU']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Com_Bigdata RAM">{{ row['2022 Com_Bigdata RAM']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Bigdata(GB)">{{ row['2022 Bigdata(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Archiving(GB)">{{ row['2022 Archiving(GB)']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Bare_metal vCPU">{{ row['2022 Bare_metal vCPU']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Bare_metal RAM">{{ row['2022 Bare_metal RAM']|blanknan }}</td>
+                            <td contenteditable="true" class="cell" data-sheet="Cloud" data-row="{{ loop.index0 }}" data-row-id="{{ row['row_id'] }}" data-col="2022 Ghi chú">{{ row['2022 Ghi chú']|blanknan }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 </div>
 <script src="{{ url_for('static', filename='js/kpi.js') }}"></script>

@@ -17,8 +17,8 @@ html, body { height: 100%; margin:0; padding:0; font-family: Arial, sans-serif; 
 .sheet { position:relative; width:100%; display:none; }
 .sheet.active { display:block; }
 .excel-table { border-collapse:collapse; width:100%; min-width:1500px; background:white; }
-.excel-table th, .excel-table td { border:1px solid #ccc; padding:4px 6px; font-size:12px; }
-.excel-table th { background:#fafafa; position:sticky; top:27.319px; z-index:11; }
+.excel-table th, .excel-table td { border:1px solid #8db4e3; padding:4px 6px; font-size:12px; }
+.excel-table th { background:#dbe5f1; position:sticky; top:27.319px; z-index:11; }
 .excel-table tbody tr:nth-child(even){ background:#fbfbfb; }
 .empty { text-align:center; color:#666; }
 .sheet-tabs {
@@ -72,7 +72,7 @@ body { background:#fff; }
     min-width: 120px;
     outline: none;
     cursor: text;
-    background: #fafafa;
+    background: #dbe5f1;
 }
 .col-header-name:focus {
     background: #ffffe0;
@@ -113,3 +113,34 @@ body { background:#fff; }
 .status-1day      { color:#ffeb3b; font-weight:bold; }   
 .status-2day      { color:#4caf50; font-weight:bold; }    
 .status-3day      { color:#4caf50; font-weight:bold; }     
+
+/* Cloud sections styling */
+.cloud-section { margin: 18px 0; }
+.cloud-section.indent { margin-left: 24px; margin-right: 24px; }
+.cloud-section .section-bar {
+    background: #4f81bd;
+    color: #fff;
+    padding: 6px 10px;
+    font-weight: 600;
+    border: 1px solid #4f81bd;
+    text-align: center;
+}
+.cloud-subtitle {
+    background: #dbe5f1;
+    border-left: 1px solid #8db4e3;
+    border-right: 1px solid #8db4e3;
+    border-bottom: 1px solid #8db4e3;
+    padding: 6px 10px;
+    font-weight: 600;
+    text-align: center;
+}
+.excel-table.cloud-header th {
+    background: #ffffff;
+    font-weight: 600;
+    border-color: #8db4e3;
+}
+.excel-table.cloud-grid th, .excel-table.cloud-grid td {
+    border-color: #8db4e3;
+}
+.cloud-note-col { width: 160px; }
+.cloud-wide-col { width: 200px; }
