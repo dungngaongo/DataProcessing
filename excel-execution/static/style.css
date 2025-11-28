@@ -45,16 +45,7 @@ body { background:#fff; }
 .delete-row-btn:hover { background:#d32f2f; }
 
 /* Highlight/hiệu ứng khi map dự án giữa các sheet */
-.project-link { cursor:pointer; background:#fff8e1; }
-.project-link:hover { background:#ffe0b2; }
-.cap-project-link { cursor:pointer; background:#fff8e1; }
-.cap-project-link:hover { background:#ffe0b2; }
-.mapped-highlight { animation: flash-highlight 2s ease-in-out; background:#c8e6c9 !important; }
-@keyframes flash-highlight {
-    0% { background:#c8e6c9; }
-    50% { background:#a5d6a7; }
-    100% { background:#c8e6c9; }
-}
+/* (ĐÃ BỎ) Các class mapping giữa bảng đã được gỡ bỏ */
 
 .export-btn { background:#1976d2; color:#fff; padding:4px 10px; text-decoration:none; font-size:12px; border-radius:3px; }
 .export-btn:hover { background:#1565c0; }

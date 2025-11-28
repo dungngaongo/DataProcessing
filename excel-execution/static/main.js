@@ -95,77 +95,7 @@ function formatDateVN(date){
   return `${d}/${m}/${y}`;
 }
 
-// Mapping từ Sizing → Cấp phát TN theo "Tên dự án"
-document.addEventListener('click', function(e){
-  if(e.target.classList && e.target.classList.contains('project-link')){
-    const projectName = (e.target.dataset.project || '').trim();
-    if(!projectName){ return; }
-    const capTab = document.querySelector('.sheet-tab[data-sheet="cap-phat-sheet"]');
-    if(capTab){ capTab.click(); }
-    setTimeout(() => {
-      const rows = document.querySelectorAll('#cap-phat-sheet .data-row');
-      let targetRow = null;
-      const lowerName = projectName.toLowerCase();
-      rows.forEach(r => {
-        if(targetRow) return;
-        const projCell = r.querySelector('td[data-col="Dự án"]');
-        if(projCell){
-          const text = projCell.textContent.trim().toLowerCase();
-          if(text){
-            if(text === lowerName || text.includes(lowerName)){
-              targetRow = r;
-            }
-          }
-        }
-      });
-      if(targetRow){
-        targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        targetRow.classList.add('mapped-row');
-        targetRow.querySelectorAll('td').forEach(td => td.classList.add('mapped-highlight'));
-        setTimeout(() => {
-          targetRow.querySelectorAll('td').forEach(td => td.classList.remove('mapped-highlight'));
-          targetRow.classList.remove('mapped-row');
-        }, 2500);
-      }
-    }, 80);
-  }
-});
-
-// Mapping từ Cấp phát TN → Chi tiết theo "Dự án"
-document.addEventListener('click', function(e){
-  if(e.target.classList && e.target.classList.contains('cap-project-link')){
-    const projectName = ((e.target.dataset.capProject || e.target.textContent) || '').trim()
-    if(!projectName){ return; }
-    const chiTietTab = document.querySelector('.sheet-tab[data-sheet="chi-tiet-sheet"]');
-    if(chiTietTab){ chiTietTab.click(); }
-    setTimeout(() => {
-      const rows = document.querySelectorAll('#chi-tiet-sheet .data-row');
-      let targetRow = null;
-      const lowerName = projectName.toLowerCase();
-      rows.forEach(r => {
-        if(targetRow) return;
-        const projCell = r.querySelector('td[data-col="Dự án"]');
-        if(projCell){
-          const text = (projCell.textContent || '').trim().toLowerCase();
-          if(text){
-            if(text === lowerName || text.includes(lowerName)){
-              targetRow = r;
-            }
-          }
-        }
-      });
-      if(targetRow){
-        targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        targetRow.classList.add('mapped-row');
-        targetRow.querySelectorAll('td').forEach(td => td.classList.add('mapped-highlight'));
-        setTimeout(() => {
-          targetRow.querySelectorAll('td').forEach(td => td.classList.remove('mapped-highlight'));
-          targetRow.classList.remove('mapped-row');
-        }, 2500);
-      }
-    }, 80);
-  }
-});
+// (ĐÃ BỎ) Logic mapping giữa các bảng được gỡ bỏ theo yêu cầu.
 
 // Đổi tên cột trực tiếp trên header, đồng bộ lên server
 document.addEventListener('blur', function(e){
