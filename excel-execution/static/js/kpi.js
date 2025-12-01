@@ -27,22 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let startDate = new Date(raw);
-        if (isNaN(startDate)) {
-            const parts = raw.split('/');
-            if (parts.length === 3) {
-                const d = parseInt(parts[0], 10);
-                const m = parseInt(parts[1], 10) - 1;
-                const y = parseInt(parts[2], 10);
-                startDate = new Date(y, m, d);
-            }
-        }
-        if (isNaN(startDate)) {
-            console.warn('Định dạng ngày không hợp lệ:', raw);
+        // Luôn parse theo định dạng Việt Nam dd/mm/yyyy để tránh lẫn mm/dd
+        const startDate = parseVNDate(raw);
+        if (!startDate) {
+            console.warn('Định dạng ngày không hợp lệ (dd/mm/yyyy):', raw);
             return;
         }
 
-        const kpiDate = addWorkingDays(startDate, 3);
+        const kpiDate = addWorkingDays(startDate, 2);
 
         const dd = String(kpiDate.getDate()).padStart(2, '0');
         const mm = String(kpiDate.getMonth() + 1).padStart(2, '0');
@@ -115,14 +107,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Parse ngày từ chuỗi dạng dd/mm/yyyy hoặc Date-compatible
     function parseVNDate(text){
         if(!text) return null;
-        let parts = text.split('/');
-        if(parts.length === 3){
-            const d = parseInt(parts[0],10), m = parseInt(parts[1],10)-1, y = parseInt(parts[2],10);
-            const dt = new Date(y,m,d);
-            return isNaN(dt) ? null : dt;
-        }
-        const t = new Date(text);
-        return isNaN(t) ? null : t;
+        const parts = text.split('/');
+        if(parts.length !== 3) return null;
+        const d = parseInt(parts[0],10);
+        const m = parseInt(parts[1],10) - 1;
+        const y = parseInt(parts[2],10);
+        if(isNaN(d) || isNaN(m) || isNaN(y)) return null;
+        const dt = new Date(y, m, d);
+        return isNaN(dt) ? null : dt;
     }
 
     // Cộng thêm số ngày làm việc (bỏ thứ 7, chủ nhật)

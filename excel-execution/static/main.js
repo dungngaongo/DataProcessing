@@ -45,7 +45,7 @@ document.addEventListener('blur', function(e){
       let date = parseDateVN(value);
       if(date){
         let daysAdded = 0;
-        while(daysAdded < 3){
+        while(daysAdded < 2){
           date.setDate(date.getDate() + 1);
           const day = date.getDay();
           if(day !== 0 && day !== 6){
@@ -74,17 +74,11 @@ document.addEventListener('blur', function(e){
 // Tiện ích parse/format ngày theo dạng Việt Nam (dd/mm/yyyy)
 function parseDateVN(str){
   if(!str) return null;
-  let parts = str.split('/');
-  if(parts.length === 3){
-    let d = parseInt(parts[0],10), m = parseInt(parts[1],10)-1, y = parseInt(parts[2],10);
-    if(!isNaN(d) && !isNaN(m) && !isNaN(y)) return new Date(y,m,d);
-  }
-  parts = str.split('-');
-  if(parts.length === 3){
-    let y = parseInt(parts[0],10), m = parseInt(parts[1],10)-1, d = parseInt(parts[2],10);
-    if(!isNaN(d) && !isNaN(m) && !isNaN(y)) return new Date(y,m,d);
-  }
-  return null;
+  const parts = str.split('/');
+  if(parts.length !== 3) return null;
+  const d = parseInt(parts[0],10), m = parseInt(parts[1],10)-1, y = parseInt(parts[2],10);
+  if(isNaN(d) || isNaN(m) || isNaN(y)) return null;
+  return new Date(y,m,d);
 }
 
 function formatDateVN(date){

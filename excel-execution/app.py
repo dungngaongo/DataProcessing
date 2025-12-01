@@ -24,6 +24,7 @@ import requests
 TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', '')
 TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', '')
 TWILIO_WHATSAPP_FROM = os.environ.get('TWILIO_WHATSAPP_FROM', '')  
+TWILIO_CONTENT_SID = os.environ.get('TWILIO_CONTENT_SID', '')  
 
 def _load_phone_recipients():
     if os.path.exists(PHONE_RECIPIENTS_FILE):
@@ -34,19 +35,33 @@ def _load_phone_recipients():
             return {}
     return {}
 
-def _send_whatsapp(to_number: str, body: str) -> bool:
-    """Gửi tin nhắn WhatsApp qua Twilio. Trả về True nếu thành công."""
+def _send_whatsapp(to_number: str, body: str, variables: dict | None = None) -> bool:
+    """Gửi tin nhắn WhatsApp qua Twilio. Trả về True nếu thành công.
+
+    Nếu có `TWILIO_CONTENT_SID`, sẽ gửi qua Content API (template) để tránh lỗi 63016 (ngoài 24h window).
+    `variables` là dict cho ContentVariables (JSON string) nếu dùng template có placeholders.
+    """
     if not (TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN and TWILIO_WHATSAPP_FROM and to_number):
         return False
     url = f"https://api.twilio.com/2010-04-01/Accounts/{TWILIO_ACCOUNT_SID}/Messages.json"
     data = {
         'From': TWILIO_WHATSAPP_FROM,
-        'To': to_number,
-        'Body': body
+        'To': to_number
     }
+    if TWILIO_CONTENT_SID:
+        # Gửi bằng Content Template SID
+        data['ContentSid'] = TWILIO_CONTENT_SID
+        if variables:
+            try:
+                data['ContentVariables'] = json.dumps(variables, ensure_ascii=False)
+            except Exception:
+                pass
+    else:
+        # Gửi freeform body (chỉ hoạt động trong 24h session)
+        data['Body'] = body
     try:
         resp = requests.post(url, data=data, auth=(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN), timeout=10)
-        return resp.status_code == 201
+        return resp.status_code in (200, 201)
     except Exception:
         return False
 
@@ -61,6 +76,35 @@ def _build_whatsapp_body(row: dict) -> str:
         f"Vui lòng kiểm tra và xử lý."
     )
 
+def _build_sr_reminder_body(row: dict) -> str:
+    proj = str(row.get('Dự án', '')).strip()
+    received = str(row.get('Thời gian tiếp nhận y/c', '')).strip()
+    return (
+        f"NHẮC TẠO MÃ SR\n"
+        f"Dự án: {proj}\n"
+        f"Tiếp nhận: {received}\n"
+        f"Yêu cầu: Vui lòng tạo mã SR trong ngày hoặc muộn nhất ngày hôm sau."
+    )
+
+def _build_sr_overdue_body(row: dict) -> str:
+    proj = str(row.get('Dự án', '')).strip()
+    received = str(row.get('Thời gian tiếp nhận y/c', '')).strip()
+    return (
+        f"ĐÃ ĐẾN HẠN TẠO MÃ SR\n"
+        f"Dự án: {proj}\n"
+        f"Tiếp nhận: {received}\n"
+        f"Vui lòng tạo mã SR ngay để đảm bảo tiến độ."
+    )
+
+def _build_sr_deadline_body(row: dict, due_label: str, created_str: str) -> str:
+    proj = str(row.get('Dự án', '')).strip()
+    return (
+        f"NHẮC TIẾN ĐỘ MÃ SR ({due_label})\n"
+        f"Dự án: {proj}\n"
+        f"Ngày tạo mã SR: {created_str}\n"
+        f"Deadline: 2 ngày sau ngày tạo mã SR."
+    )
+
 def check_and_send_whatsapp_alerts():
     """Quét sheet Sizing, gửi WhatsApp cho các dòng 'Đến hạn' hoặc 'Còn 1 ngày'."""
     _refresh_sizing_progress()
@@ -71,8 +115,67 @@ def check_and_send_whatsapp_alerts():
         if status in ['Đến hạn', 'Còn 1 ngày']:
             rid = row.get('row_id')
             to_number = recipients.get(rid) or os.environ.get('WHATSAPP_DEFAULT_TO', 'whatsapp:+84847764566')
-            if to_number and _send_whatsapp(to_number, _build_whatsapp_body(row)):
+            if to_number and _send_whatsapp(to_number, _build_whatsapp_body(row), variables={
+                "project": str(row.get('Tên dự án - Mục đích sizing', '')).strip(),
+                "kpi": str(row.get('Thời gian hoàn thành theo KPI', '')).strip(),
+                "status": str(row.get('Tiến độ', '')).strip()
+            }):
                 sent += 1
+    # Quét sheet Cấp phát TN: nếu đã tiếp nhận hôm nay hoặc hôm qua mà chưa có 'Mã SR' -> nhắc tạo SR
+    try:
+        today = pd.Timestamp('today').normalize()
+        for row in data_store.get('CapPhat', []):
+            sr = str(row.get('Mã SR', '')).strip()
+            recv = _parse_date(row.get('Thời gian tiếp nhận y/c', ''))
+            if not sr and recv:
+                recv = pd.Timestamp(recv).normalize()
+                delta_days = (today - recv).days
+                if 0 <= delta_days <= 1:
+                    rid = row.get('row_id')
+                    to_number = recipients.get(rid) or os.environ.get('WHATSAPP_DEFAULT_TO', 'whatsapp:+84847764566')
+                    if to_number:
+                        if delta_days == 0:
+                            # Ngày tiếp nhận: gửi nhắc tạo SR
+                            if _send_whatsapp(to_number, _build_sr_reminder_body(row), variables={
+                                "project": str(row.get('Dự án', '')).strip(),
+                                "received": str(row.get('Thời gian tiếp nhận y/c', '')).strip()
+                            }):
+                                sent += 1
+                        elif delta_days == 1:
+                            # Ngày hôm sau: gửi cảnh báo đã đến hạn tạo SR
+                            if _send_whatsapp(to_number, _build_sr_overdue_body(row), variables={
+                                "project": str(row.get('Dự án', '')).strip(),
+                                "received": str(row.get('Thời gian tiếp nhận y/c', '')).strip()
+                            }):
+                                sent += 1
+    except Exception:
+        pass
+    # Nhắc tiến độ sau khi đã có Mã SR: Deadline = 2 ngày sau ngày tạo mã SR (calendar days)
+    try:
+        sr_map = _load_sr_created_map()
+        today = pd.Timestamp('today').normalize()
+        for row in data_store.get('CapPhat', []):
+            sr = str(row.get('Mã SR', '')).strip()
+            rid = row.get('row_id')
+            if sr and rid and rid in sr_map:
+                created_str = sr_map.get(rid, '')
+                created_dt = _parse_date(created_str)
+                if not created_dt:
+                    continue
+                created_dt = pd.Timestamp(created_dt).normalize()
+                deadline = created_dt + pd.Timedelta(days=2)
+                days_left = (deadline - today).days
+                if days_left in [0, 1]:
+                    due_label = 'Đến hạn' if days_left == 0 else 'Còn 1 ngày'
+                    to_number = recipients.get(rid) or os.environ.get('WHATSAPP_DEFAULT_TO', 'whatsapp:+84847764566')
+                    if to_number and _send_whatsapp(to_number, _build_sr_deadline_body(row, due_label, created_str), variables={
+                        "project": str(row.get('Dự án', '')).strip(),
+                        "created": created_str,
+                        "due": due_label
+                    }):
+                        sent += 1
+    except Exception:
+        pass
     return sent
 
 """Khởi tạo ứng dụng và cấu hình chung."""
@@ -229,6 +332,7 @@ CACHE_DIR = os.path.join(os.path.dirname(__file__), 'cache')
 os.makedirs(CACHE_DIR, exist_ok=True)
 CACHE_FILE = os.path.join(CACHE_DIR, 'data_store.json')
 PHONE_RECIPIENTS_FILE = os.path.join(CACHE_DIR, 'phone_recipients.json')  # mapping row_id -> whatsapp phone
+CAP_PHAT_SR_CREATED_FILE = os.path.join(CACHE_DIR, 'cap_phat_sr_created.json')  # mapping row_id -> Ngày tạo mã SR (dd/mm/YYYY)
 
 """Cố gắng parse chuỗi ngày thành Timestamp; lỗi trả về None."""
 def _parse_date(val):
@@ -292,6 +396,22 @@ def save_cache():
     try:
         with open(CACHE_FILE, 'w', encoding='utf-8') as f:
             json.dump(data_store, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+def _load_sr_created_map():
+    if os.path.exists(CAP_PHAT_SR_CREATED_FILE):
+        try:
+            with open(CAP_PHAT_SR_CREATED_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+def _save_sr_created_map(mapping: dict):
+    try:
+        with open(CAP_PHAT_SR_CREATED_FILE, 'w', encoding='utf-8') as f:
+            json.dump(mapping, f, ensure_ascii=False, indent=2)
     except Exception:
         pass
 
@@ -533,9 +653,20 @@ def update_cell():
     columns = SIZING_COLUMNS if sheet == 'Sizing' else (CAP_PHAT_COLUMNS if sheet == 'CapPhat' else (CHI_TIET_COLUMNS if sheet == 'ChiTiet' else CLOUD_COLUMNS))
     if col not in columns:
         return jsonify({'error': 'Invalid column'}), 400
+    prev_val = target_row.get(col, '')
     target_row[col] = value
     if sheet == 'Sizing' and col == 'Thời gian hoàn thành theo KPI':
         _update_progress_for_row(target_row)
+    # Khi tạo Mã SR (CapPhat) từ rỗng -> có giá trị: ghi lại 'Ngày tạo mã SR' (ẩn) vào map
+    if sheet == 'CapPhat' and col == 'Mã SR':
+        try:
+            rid = target_row.get('row_id')
+            if rid and (not str(prev_val).strip()) and str(value).strip():
+                sr_map = _load_sr_created_map()
+                sr_map[rid] = datetime.now().strftime('%d/%m/%Y')
+                _save_sr_created_map(sr_map)
+        except Exception:
+            pass
     save_cache()
     return ('', 204)
 
