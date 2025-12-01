@@ -71,6 +71,38 @@
             {% endif %}
             </tbody>
         </table>
+        {% if sizing_summary_years and sizing_summary_rows %}
+        <div class="sizing-summary">
+            <table class="excel-table" style="margin-top:12px;">
+                <thead>
+                    <tr>
+                        <th>Owner</th>
+                        {% for y in sizing_summary_years %}
+                            <th>Q1/{{ y }}</th>
+                            <th>Q2/{{ y }}</th>
+                            <th>Q3/{{ y }}</th>
+                            <th>Q4/{{ y }}</th>
+                        {% endfor %}
+                        <th>Owner FALSE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in sizing_summary_rows %}
+                    <tr>
+                        <td class="cell" style="font-weight:600;">{{ r.owner }}</td>
+                        {% for y in sizing_summary_years %}
+                            <td class="cell">{{ r.quarters[y][1] }}</td>
+                            <td class="cell">{{ r.quarters[y][2] }}</td>
+                            <td class="cell">{{ r.quarters[y][3] }}</td>
+                            <td class="cell">{{ r.quarters[y][4] }}</td>
+                        {% endfor %}
+                        <td class="cell">{{ r.owner_false }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
     </div>
     <div id="cap-phat-sheet" class="sheet">
         <table class="excel-table">
@@ -191,6 +223,36 @@
             {% endif %}
             </tbody>
         </table>
+        {% if chitiet_group_totals and chitiet_sum_cols %}
+        <div class="chi-tiet-summary">
+            <table class="excel-table" style="margin-top:12px;">
+                <thead>
+                    <tr>
+                        <th>Nhóm tài nguyên</th>
+                        {% for c in chitiet_sum_cols %}
+                            <th>{{ c }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grp, sums in chitiet_group_totals.items() %}
+                    <tr>
+                        <td class="cell" style="font-weight:600;">{{ grp }}</td>
+                        {% for c in chitiet_sum_cols %}
+                            <td class="cell">{{ sums[c] }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td class="cell" style="font-weight:700;background:#f3f6fb;">Tổng</td>
+                        {% for c in chitiet_sum_cols %}
+                            <td class="cell" style="font-weight:700;background:#f3f6fb;">{{ chitiet_total_row[c] }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
     </div>
         <div id="cloud-sheet" class="sheet">
             <div class="cloud-section indent">

@@ -447,6 +447,82 @@ load_cache()
 @app.route('/')
 def index():
     _refresh_sizing_progress()
+    # Tính bảng tổng hợp Sizing theo quý/năm và Owner
+    def _quarter_of(dt: pd.Timestamp) -> int:
+        m = int(dt.month)
+        return 1 if m<=3 else (2 if m<=6 else (3 if m<=9 else 4))
+    allowed_owners = ["khanhnd23","ductn","vinhtq18","thongnv31","tuanha3"]
+    owners = []
+    year_set = set()
+    counts = {}
+    reject_counts = {}
+    for r in data_store.get('Sizing', []):
+        owner = str(r.get('Đầu mối xử lý','')).strip() or ''
+        if owner and owner in allowed_owners:
+            if owner not in owners:
+                owners.append(owner)
+        # đếm trạng thái Từ chối
+        status = str(r.get('Trạng thái','')).strip().lower()
+        if owner and owner in allowed_owners:
+            reject_counts[owner] = reject_counts.get(owner, 0) + (1 if status == 'từ chối' else 0)
+        # quý/năm từ Thời điểm đẩy yêu cầu
+        dt = _parse_date(r.get('Thời điểm đẩy yêu cầu',''))
+        if dt:
+            y = int(pd.Timestamp(dt).year)
+            q = _quarter_of(pd.Timestamp(dt))
+            year_set.add(y)
+            key = (owner, y, q)
+            if owner in allowed_owners:
+                counts[key] = counts.get(key, 0) + 1
+    years = sorted(list(year_set))
+    # Chuẩn hoá dữ liệu cho template
+    sizing_summary_rows = []
+    # Cố định thứ tự theo allowed_owners
+    owners = [o for o in allowed_owners if o in owners]
+    for owner in owners:
+        row = {'owner': owner, 'quarters': {}, 'owner_false': reject_counts.get(owner, 0)}
+        for y in years:
+            row['quarters'][y] = {
+                1: counts.get((owner, y, 1), 0),
+                2: counts.get((owner, y, 2), 0),
+                3: counts.get((owner, y, 3), 0),
+                4: counts.get((owner, y, 4), 0)
+            }
+        sizing_summary_rows.append(row)
+    # Hàng tổng
+    total_row = {'owner': 'Tổng', 'quarters': {}, 'owner_false': sum(reject_counts.values())}
+    for y in years:
+        total_row['quarters'][y] = {
+            1: sum(counts.get((o, y, 1), 0) for o in owners),
+            2: sum(counts.get((o, y, 2), 0) for o in owners),
+            3: sum(counts.get((o, y, 3), 0) for o in owners),
+            4: sum(counts.get((o, y, 4), 0) for o in owners)
+        }
+    sizing_summary_rows.append(total_row)
+    # Tính tổng hợp Chi tiết theo 'Nhóm tài nguyên'
+    CHI_TIET_SUM_COLS = [
+        'vCPU','Cint','RAM(GB)','SAN(GB)','NAS(GB)','Ceph(GB)','Bigdata(GB)','Archiving(GB)','S3 Object(GB)'
+    ]
+    chitiet_group_totals = {}
+    for r in data_store.get('ChiTiet', []):
+        group = str(r.get('Nhóm tài nguyên','')).strip() or ''
+        if not group:
+            continue
+        if group not in chitiet_group_totals:
+            chitiet_group_totals[group] = {c: 0 for c in CHI_TIET_SUM_COLS}
+        for c in CHI_TIET_SUM_COLS:
+            try:
+                val = r.get(c, '')
+                num = pd.to_numeric(val, errors='coerce')
+                if not pd.isna(num):
+                    chitiet_group_totals[group][c] += float(num)
+            except Exception:
+                pass
+    # Hàng tổng cộng
+    chitiet_total_row = {c: 0 for c in CHI_TIET_SUM_COLS}
+    for grp, sums in chitiet_group_totals.items():
+        for c in CHI_TIET_SUM_COLS:
+            chitiet_total_row[c] += sums.get(c, 0)
     return render_template(
         'index.html',
         sizing_columns=SIZING_COLUMNS,
@@ -456,7 +532,12 @@ def index():
         sizing_rows=data_store['Sizing'],
         cap_phat_rows=data_store['CapPhat'],
         chi_tiet_rows=data_store['ChiTiet'],
-        cloud_rows=data_store['Cloud']
+        cloud_rows=data_store['Cloud'],
+        sizing_summary_years=years,
+        sizing_summary_rows=sizing_summary_rows,
+        chitiet_group_totals=chitiet_group_totals,
+        chitiet_sum_cols=CHI_TIET_SUM_COLS,
+        chitiet_total_row=chitiet_total_row
     )
 
 """Chuẩn hoá hiển thị ngày về định dạng dd/mm/YYYY (hoặc rỗng)."""
