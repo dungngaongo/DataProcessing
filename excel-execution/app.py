@@ -12,9 +12,19 @@ Cấu trúc tổng quát:
 """
 
 from flask import Flask, render_template, request, jsonify, abort, send_file
+from typing import Optional, List
 import pandas as pd
 from werkzeug.utils import secure_filename
 import os
+try:
+    # Tự động nạp biến môi trường từ file .env nếu có
+    from dotenv import load_dotenv
+    # Ưu tiên tìm .env trong thư mục dự án hiện tại (excel-execution)
+    _ENV_PATH = os.path.join(os.path.dirname(__file__), '.env')
+    load_dotenv(_ENV_PATH)
+except Exception:
+    # Không bắt buộc phải có python-dotenv; nếu thiếu sẽ dùng biến môi trường hệ thống
+    pass
 import json
 from datetime import datetime, timedelta
 import uuid
@@ -26,6 +36,47 @@ TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', '')
 TWILIO_WHATSAPP_FROM = os.environ.get('TWILIO_WHATSAPP_FROM', '')  
 TWILIO_CONTENT_SID = os.environ.get('TWILIO_CONTENT_SID', '')  
 
+# Mapping cố định giữa "đầu mối" và số WhatsApp
+OWNER_PHONE_MAP = {
+    "thongnv31": "whatsapp:+84333629091",
+    "ductn8": "whatsapp:+84335371306",
+    "khanhnd23": "whatsapp:+84383522722",
+    "vinhtq18": "whatsapp:+84968468868",
+    "haipn": "whatsapp:+84962422102",
+    "dungnt": "whatsapp:+84847764566",
+}
+
+ALWAYS_NOTIFY = ["thongnv31", "haipn", "dungnt"]
+ALWAYS_NOTIFY_NUMBERS = [OWNER_PHONE_MAP[k] for k in ALWAYS_NOTIFY if OWNER_PHONE_MAP.get(k)]
+
+def _prepare_message_for_recipient(sheet_name: str, row: dict, to_number: str, base_body: str, variables: Optional[dict]):
+    if variables is None:
+        variables = {}
+    body = base_body
+    try:
+        if to_number in ALWAYS_NOTIFY_NUMBERS:
+            if sheet_name == 'Sizing':
+                owner_label = 'Đầu mối xử lý'
+                owner_value = str(row.get('Đầu mối xử lý', '')).strip()
+            elif sheet_name == 'CapPhat':
+                owner_label = 'Đầu mối P.HT'
+                owner_value = str(row.get('Đầu mối P.HT', '')).strip()
+            else:
+                owner_label = 'Đầu mối'
+                owner_value = ''
+            if owner_value:
+                body = f"{base_body}\nĐầu mối phụ trách: {owner_value}"
+            # Bổ sung biến cho template (gộp sẵn câu để template dùng trực tiếp nếu cần)
+            variables = {
+                **variables,
+                "owner_label": owner_label,
+                "owner": owner_value,
+                "owner_supervisor": (f"Đầu mối phụ trách: {owner_value}" if owner_value else "")
+            }
+    except Exception:
+        pass
+    return body, variables
+
 def _load_phone_recipients():
     if os.path.exists(PHONE_RECIPIENTS_FILE):
         try:
@@ -35,7 +86,7 @@ def _load_phone_recipients():
             return {}
     return {}
 
-def _send_whatsapp(to_number: str, body: str, variables: dict | None = None) -> bool:
+def _send_whatsapp(to_number: str, body: str, variables: Optional[dict] = None) -> bool:
     """Gửi tin nhắn WhatsApp qua Twilio. Trả về True nếu thành công.
 
     Nếu có `TWILIO_CONTENT_SID`, sẽ gửi qua Content API (template) để tránh lỗi 63016 (ngoài 24h window).
@@ -65,6 +116,59 @@ def _send_whatsapp(to_number: str, body: str, variables: dict | None = None) -> 
     except Exception:
         return False
 
+def _get_recipients_for_row(sheet_name: str, row: dict) -> List[str]:
+    """Xác định danh sách số WhatsApp cần gửi dựa vào sheet và cột đầu mối.
+
+    - Sizing: dùng "Đầu mối xử lý" để chọn số chính, đồng thời luôn thêm số của haipn và thongnv31.
+    - CapPhat: dùng "Đầu mối P.HT" để chọn số chính, đồng thời luôn thêm số của haipn và thongnv31.
+    - Nếu có cấu hình trong `cache/phone_recipients.json` theo row_id, sẽ ưu tiên thêm vào danh sách.
+    - Rà trùng, chỉ giữ số hợp lệ bắt đầu bằng "whatsapp:+".
+    """
+    recipients_cfg = _load_phone_recipients()
+    res = []
+    rid = row.get('row_id')
+    if sheet_name == 'Sizing':
+        key = str(row.get('Đầu mối xử lý', '')).strip()
+    elif sheet_name == 'CapPhat':
+        key = str(row.get('Đầu mối P.HT', '')).strip()
+    else:
+        key = ''
+        # Normalize: ductn -> ductn8
+        if key.lower() == 'ductn':
+            key = 'ductn8'
+    # Số chính theo đầu mối
+    if key:
+        num = OWNER_PHONE_MAP.get(key)
+        if num:
+            res.append(num)
+    # Luôn gửi tới các đầu mối luôn nhận
+    for always in ALWAYS_NOTIFY:
+        num = OWNER_PHONE_MAP.get(always)
+        if num:
+            res.append(num)
+    # Nếu có mapping theo row_id, thêm vào
+    if rid:
+        user_num = recipients_cfg.get(rid)
+        if user_num:
+            res.append(user_num)
+    # Nếu không có ai, dùng mặc định môi trường
+    default_to = os.environ.get('WHATSAPP_DEFAULT_TO', '')
+    if not res and default_to:
+        res.append(default_to)
+    # Lọc hợp lệ và unique
+    uniq = []
+    seen = set()
+    for n in res:
+        n = str(n).strip()
+        if not n:
+            continue
+        if not n.startswith('whatsapp:+'):
+            continue
+        if n not in seen:
+            uniq.append(n)
+            seen.add(n)
+    return uniq
+
 def _build_whatsapp_body(row: dict) -> str:
     proj = str(row.get('Tên dự án - Mục đích sizing', '')).strip()
     kpi = str(row.get('Thời gian hoàn thành theo KPI', '')).strip()
@@ -74,6 +178,17 @@ def _build_whatsapp_body(row: dict) -> str:
         f"Dự án: {proj}\n"
         f"KPI: {kpi}\n"
         f"Vui lòng kiểm tra và xử lý."
+    )
+
+def _build_kpi_overdue_body(row: dict, days_overdue: int) -> str:
+    proj = str(row.get('Tên dự án - Mục đích sizing', '')).strip()
+    kpi = str(row.get('Thời gian hoàn thành theo KPI', '')).strip()
+    label = f"Muộn {days_overdue} ngày" if days_overdue > 0 else "Quá hạn"
+    return (
+        f"CẢNH BÁO TIẾN ĐỘ: {label}\n"
+        f"Dự án: {proj}\n"
+        f"KPI: {kpi}\n"
+        f"Vui lòng xử lý gấp để không ảnh hưởng tiến độ."
     )
 
 def _build_sr_reminder_body(row: dict) -> str:
@@ -102,7 +217,7 @@ def _build_sr_deadline_body(row: dict, due_label: str, created_str: str) -> str:
         f"NHẮC TIẾN ĐỘ MÃ SR ({due_label})\n"
         f"Dự án: {proj}\n"
         f"Ngày tạo mã SR: {created_str}\n"
-        f"Deadline: 2 ngày sau ngày tạo mã SR."
+        f"YÊU CẦU: THEO DÕI TIẾN ĐỘ DỰ ÁN."
     )
 
 def check_and_send_whatsapp_alerts():
@@ -111,16 +226,39 @@ def check_and_send_whatsapp_alerts():
     recipients = _load_phone_recipients()  
     sent = 0
     for row in data_store.get('Sizing', []):
-        status = row.get('Tiến độ', '')
+        status = str(row.get('Tiến độ', '')).strip()
+        to_numbers = _get_recipients_for_row('Sizing', row)
+        if not to_numbers:
+            continue
+        # Gửi cảnh báo đến hạn / còn 1 ngày
         if status in ['Đến hạn', 'Còn 1 ngày']:
-            rid = row.get('row_id')
-            to_number = recipients.get(rid) or os.environ.get('WHATSAPP_DEFAULT_TO', 'whatsapp:+84847764566')
-            if to_number and _send_whatsapp(to_number, _build_whatsapp_body(row), variables={
-                "project": str(row.get('Tên dự án - Mục đích sizing', '')).strip(),
-                "kpi": str(row.get('Thời gian hoàn thành theo KPI', '')).strip(),
-                "status": str(row.get('Tiến độ', '')).strip()
-            }):
-                sent += 1
+            for num in to_numbers:
+                base_body = _build_whatsapp_body(row)
+                vars0 = {
+                    "project": str(row.get('Tên dự án - Mục đích sizing', '')).strip(),
+                    "kpi": str(row.get('Thời gian hoàn thành theo KPI', '')).strip(),
+                    "status": status
+                }
+                body, vars1 = _prepare_message_for_recipient('Sizing', row, num, base_body, vars0)
+                if _send_whatsapp(num, body, variables=vars1):
+                    sent += 1
+        # Thêm cảnh báo muộn 1 ngày, muộn 2 ngày theo KPI
+        kpi_dt = _parse_date(row.get('Thời gian hoàn thành theo KPI', ''))
+        if kpi_dt:
+            today = pd.Timestamp('today').normalize()
+            kpi_norm = pd.Timestamp(kpi_dt).normalize()
+            overdue_days = (today - kpi_norm).days
+            if overdue_days in [1, 2]:
+                for num in to_numbers:
+                    base_body = _build_kpi_overdue_body(row, overdue_days)
+                    vars0 = {
+                        "project": str(row.get('Tên dự án - Mục đích sizing', '')).strip(),
+                        "kpi": str(row.get('Thời gian hoàn thành theo KPI', '')).strip(),
+                        "status": f"Muộn {overdue_days} ngày"
+                    }
+                    body, vars1 = _prepare_message_for_recipient('Sizing', row, num, base_body, vars0)
+                    if _send_whatsapp(num, body, variables=vars1):
+                        sent += 1
     # Quét sheet Cấp phát TN: nếu đã tiếp nhận hôm nay hoặc hôm qua mà chưa có 'Mã SR' -> nhắc tạo SR
     try:
         today = pd.Timestamp('today').normalize()
@@ -130,24 +268,49 @@ def check_and_send_whatsapp_alerts():
             if not sr and recv:
                 recv = pd.Timestamp(recv).normalize()
                 delta_days = (today - recv).days
-                if 0 <= delta_days <= 1:
-                    rid = row.get('row_id')
-                    to_number = recipients.get(rid) or os.environ.get('WHATSAPP_DEFAULT_TO', 'whatsapp:+84847764566')
-                    if to_number:
+                if 0 <= delta_days <= 3:
+                    to_numbers = _get_recipients_for_row('CapPhat', row)
+                    if to_numbers:
                         if delta_days == 0:
                             # Ngày tiếp nhận: gửi nhắc tạo SR
-                            if _send_whatsapp(to_number, _build_sr_reminder_body(row), variables={
-                                "project": str(row.get('Dự án', '')).strip(),
-                                "received": str(row.get('Thời gian tiếp nhận y/c', '')).strip()
-                            }):
-                                sent += 1
+                            for num in to_numbers:
+                                base_body = _build_sr_reminder_body(row)
+                                vars0 = {
+                                    "project": str(row.get('Dự án', '')).strip(),
+                                    "received": str(row.get('Thời gian tiếp nhận y/c', '')).strip()
+                                }
+                                body, vars1 = _prepare_message_for_recipient('CapPhat', row, num, base_body, vars0)
+                                if _send_whatsapp(num, body, variables=vars1):
+                                    sent += 1
                         elif delta_days == 1:
                             # Ngày hôm sau: gửi cảnh báo đã đến hạn tạo SR
-                            if _send_whatsapp(to_number, _build_sr_overdue_body(row), variables={
-                                "project": str(row.get('Dự án', '')).strip(),
-                                "received": str(row.get('Thời gian tiếp nhận y/c', '')).strip()
-                            }):
-                                sent += 1
+                            for num in to_numbers:
+                                base_body = _build_sr_overdue_body(row)
+                                vars0 = {
+                                    "project": str(row.get('Dự án', '')).strip(),
+                                    "received": str(row.get('Thời gian tiếp nhận y/c', '')).strip()
+                                }
+                                body, vars1 = _prepare_message_for_recipient('CapPhat', row, num, base_body, vars0)
+                                if _send_whatsapp(num, body, variables=vars1):
+                                    sent += 1
+                        elif delta_days in [2, 3]:
+                            # Muộn 1-2 ngày kể từ hạn tạo SR nếu chưa tạo mã SR
+                            label = f"Muộn {delta_days-1} ngày"
+                            body = (
+                                f"NHẮC TẠO MÃ SR ({label})\n"
+                                f"Dự án: {str(row.get('Dự án', '')).strip()}\n"
+                                f"Tiếp nhận: {str(row.get('Thời gian tiếp nhận y/c', '')).strip()}\n"
+                                f"Vui lòng tạo mã SR ngay để đảm bảo tiến độ."
+                            )
+                            for num in to_numbers:
+                                vars0 = {
+                                    "project": str(row.get('Dự án', '')).strip(),
+                                    "received": str(row.get('Thời gian tiếp nhận y/c', '')).strip(),
+                                    "status": label
+                                }
+                                body2, vars1 = _prepare_message_for_recipient('CapPhat', row, num, body, vars0)
+                                if _send_whatsapp(num, body2, variables=vars1):
+                                    sent += 1
     except Exception:
         pass
     # Nhắc tiến độ sau khi đã có Mã SR: Deadline = 2 ngày sau ngày tạo mã SR (calendar days)
@@ -167,13 +330,17 @@ def check_and_send_whatsapp_alerts():
                 days_left = (deadline - today).days
                 if days_left in [0, 1]:
                     due_label = 'Đến hạn' if days_left == 0 else 'Còn 1 ngày'
-                    to_number = recipients.get(rid) or os.environ.get('WHATSAPP_DEFAULT_TO', 'whatsapp:+84847764566')
-                    if to_number and _send_whatsapp(to_number, _build_sr_deadline_body(row, due_label, created_str), variables={
-                        "project": str(row.get('Dự án', '')).strip(),
-                        "created": created_str,
-                        "due": due_label
-                    }):
-                        sent += 1
+                    to_numbers = _get_recipients_for_row('CapPhat', row)
+                    for num in to_numbers:
+                        base_body = _build_sr_deadline_body(row, due_label, created_str)
+                        vars0 = {
+                            "project": str(row.get('Dự án', '')).strip(),
+                            "created": created_str,
+                            "due": due_label
+                        }
+                        body, vars1 = _prepare_message_for_recipient('CapPhat', row, num, base_body, vars0)
+                        if _send_whatsapp(num, body, variables=vars1):
+                            sent += 1
     except Exception:
         pass
     return sent
@@ -451,7 +618,7 @@ def index():
     def _quarter_of(dt: pd.Timestamp) -> int:
         m = int(dt.month)
         return 1 if m<=3 else (2 if m<=6 else (3 if m<=9 else 4))
-    allowed_owners = ["khanhnd23","ductn","vinhtq18","thongnv31","tuanha3"]
+    allowed_owners = ["khanhnd23","ductn8","vinhtq18","thongnv31","tuanha3"]
     owners = []
     year_set = set()
     counts = {}
@@ -598,7 +765,12 @@ def _read_sheet(df: pd.DataFrame, expected_cols):
             processed[col] = series.apply(_clean_numeric_string)
         else:
             # Không cố parse ngày ở các cột còn lại; giữ nguyên như chuỗi sạch.
-            processed[col] = series.astype(str).apply(lambda x: '' if x.lower() in ['nan','nat'] else x.strip())
+            processed[col] = series.astype(str).apply(lambda x: '' if x.lower() in ['nan','nat'] else x.strip() and _clean_and_normalize(x))
+            def _clean_and_normalize(x):
+                s = str(x)
+                if col == 'Đầu mối xử lý' and s.lower() == 'ductn':
+                    return 'ductn8'
+                return s
 
     return pd.DataFrame(processed)[expected_cols]
 
@@ -951,26 +1123,43 @@ def trigger_whatsapp_alerts():
         return jsonify({'error': str(e)}), 500
 
 def _start_whatsapp_daily_scheduler():
-    """Tạo thread nền gửi cảnh báo mỗi ngày lúc 08:00."""
     import threading, time
 
+    FIXED_TIMES = [
+        (9, 0),   
+        (13, 30),
+        (16, 0), 
+    ]
+
+    def next_schedule_after(now: datetime) -> datetime:
+        today = now.date()
+        # Tìm mốc thời gian gần nhất còn lại trong ngày
+        for h, m in FIXED_TIMES:
+            candidate = datetime(year=today.year, month=today.month, day=today.day, hour=h, minute=m, second=0, microsecond=0)
+            if candidate > now:
+                return candidate
+        # Nếu không còn mốc trong ngày, chuyển sang mốc đầu tiên của ngày hôm sau
+        tomorrow = now + timedelta(days=1)
+        ymd = tomorrow.date()
+        h, m = FIXED_TIMES[0]
+        return datetime(year=ymd.year, month=ymd.month, day=ymd.day, hour=h, minute=m, second=0, microsecond=0)
+
     def loop():
-        # Chạy ngay lần đầu để không phải đợi đến 08:00 nếu cần test.
-        try:
-            check_and_send_whatsapp_alerts()
-        except Exception:
-            pass
+        # Không gửi ngay khi khởi động; chỉ gửi theo các mốc cố định.
         while True:
-            now = datetime.now()
-            next_run = now.replace(hour=8, minute=0, second=0, microsecond=0)
-            if next_run <= now:
-                next_run += timedelta(days=1)
-            sleep_seconds = (next_run - now).total_seconds()
-            time.sleep(sleep_seconds)
             try:
-                check_and_send_whatsapp_alerts()
+                now = datetime.now()
+                next_run = next_schedule_after(now)
+                sleep_seconds = (next_run - now).total_seconds()
+                time.sleep(max(sleep_seconds, 0))
+                # Đến mốc giờ: gửi cảnh báo
+                try:
+                    check_and_send_whatsapp_alerts()
+                except Exception:
+                    pass
             except Exception:
-                pass
+                # Nếu có lỗi bất ngờ, ngủ 1 phút rồi thử lại để không chết thread
+                time.sleep(60)
 
     t = threading.Thread(target=loop, name='whatsapp-scheduler', daemon=True)
     t.start()

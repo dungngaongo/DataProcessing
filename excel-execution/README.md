@@ -111,8 +111,7 @@ Nội bộ (private). Không phân phối bên ngoài nếu chưa được phép
 
 & D:\workspace\DataProcessing\.venv\Scripts\python.exe d:/workspace/DataProcessing/excel-execution/app.py
 
-Invoke-RestMethod -Method Post -Uri http://127.0.0.1:5000/trigger-whatsapp-alert
-
+Invoke-RestMethod -Method Post -Uri http://127.0.0.1:5000/trigger-whatsapp-alerts
 
 List test:
 
