@@ -745,6 +745,17 @@ def _read_sheet(df: pd.DataFrame, expected_cols):
         n = (name or "").lower()
         return any(kw.lower() in n for kw in DATE_KEYWORDS)
 
+    # Helper làm sạch chuỗi và chuẩn hoá giá trị theo cột
+    def _normalize_cell(col_name: str, value: str) -> str:
+        s = str(value)
+        s = s.strip()
+        if not s:
+            return ""
+        # Chuẩn hoá owner ductn -> ductn8 cho sheet Sizing
+        if col_name == 'Đầu mối xử lý' and s.lower() == 'ductn':
+            return 'ductn8'
+        return s
+
     processed = {}
     for col in df.columns:
         series = df[col]
@@ -764,13 +775,10 @@ def _read_sheet(df: pd.DataFrame, expected_cols):
             # Ép về dạng số và xuất chuỗi số; tránh bị hiểu thành ngày
             processed[col] = series.apply(_clean_numeric_string)
         else:
-            # Không cố parse ngày ở các cột còn lại; giữ nguyên như chuỗi sạch.
-            processed[col] = series.astype(str).apply(lambda x: '' if x.lower() in ['nan','nat'] else x.strip() and _clean_and_normalize(x))
-            def _clean_and_normalize(x):
-                s = str(x)
-                if col == 'Đầu mối xử lý' and s.lower() == 'ductn':
-                    return 'ductn8'
-                return s
+            # Không cố parse ngày ở các cột còn lại; giữ nguyên như chuỗi sạch và chuẩn hoá cần thiết.
+            processed[col] = series.astype(str).apply(
+                lambda x: '' if str(x).strip().lower() in ['nan','nat'] else _normalize_cell(col, x)
+            )
 
     return pd.DataFrame(processed)[expected_cols]
 
