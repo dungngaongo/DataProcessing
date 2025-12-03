@@ -636,6 +636,9 @@ def index():
         dt = _parse_date(r.get('Thời điểm đẩy yêu cầu',''))
         if dt:
             y = int(pd.Timestamp(dt).year)
+            # Bỏ qua các năm không hợp lệ (ví dụ: 1970 do lỗi parse Excel)
+            if y < 2000 or y > 2100:
+                continue
             q = _quarter_of(pd.Timestamp(dt))
             year_set.add(y)
             key = (owner, y, q)
@@ -1135,8 +1138,8 @@ def _start_whatsapp_daily_scheduler():
 
     FIXED_TIMES = [
         (9, 0),   
-        (13, 30),
-        (16, 0), 
+        (14, 0),
+        (16, 30), 
     ]
 
     def next_schedule_after(now: datetime) -> datetime:
