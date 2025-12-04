@@ -1175,6 +1175,22 @@ def _start_whatsapp_daily_scheduler():
     t = threading.Thread(target=loop, name='whatsapp-scheduler', daemon=True)
     t.start()
 
+"""Endpoint debug: xem cấu hình môi trường hiện tại."""
+@app.route('/debug-env', methods=['GET'])
+def debug_env():
+    cfg = {
+        'TWILIO_ACCOUNT_SID': os.environ.get('TWILIO_ACCOUNT_SID', ''),
+        'TWILIO_AUTH_TOKEN': os.environ.get('TWILIO_AUTH_TOKEN', ''),
+        'TWILIO_WHATSAPP_FROM': os.environ.get('TWILIO_WHATSAPP_FROM', ''),
+        'TWILIO_CONTENT_SID': os.environ.get('TWILIO_CONTENT_SID', ''),
+        'WHATSAPP_DEFAULT_TO': os.environ.get('WHATSAPP_DEFAULT_TO', ''),
+    }
+    try:
+        print('[DEBUG-ENV]', cfg)
+    except Exception:
+        pass
+    return jsonify(cfg), 200
+
 """Điểm vào ứng dụng (chạy development server)."""
 if __name__ == '__main__':
     # Khởi động scheduler tự động gửi WhatsApp nếu đã cấu hình Twilio FROM

@@ -113,6 +113,8 @@ Nội bộ (private). Không phân phối bên ngoài nếu chưa được phép
 
 Invoke-RestMethod -Method Post -Uri http://127.0.0.1:5000/trigger-whatsapp-alerts
 
+Invoke-RestMethod -Method Get -Uri http://127.0.0.1:5000/debug-env
+
 List test:
 
 - import
